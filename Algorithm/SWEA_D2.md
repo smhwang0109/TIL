@@ -1,6 +1,6 @@
 # SW Expert Academy Algorithm D2
 
-### 1976.
+### 1976. 시각 덧셈
 ``` python
 T = int(input())
 
@@ -22,7 +22,7 @@ for case in range(1,T+1):
 
 ```
 
-### 1974.
+### 1974. 스도쿠 검증
 ``` python
 def horizontal():
     for i in range(9):
@@ -84,7 +84,7 @@ for case in range(1,T+1):
 
 
 
-### 1970.
+### 1970. 쉬운 거스름돈
 ``` python
 T = int(input())
 
@@ -101,7 +101,7 @@ for case in range(1,T+1):
         M -= i*count
 ```
 
-### 1859.
+### 1859. 백만 장자 프로젝트
 ``` python
 T = int(input())
 
@@ -117,7 +117,7 @@ for case in range(1,T+1):
     print('#{} {}'.format(case, count))
 ```
 
-### 1926.
+### 1926. 간단한 369게임
 ``` python
 T = input()
 l = len(T)
@@ -154,7 +154,7 @@ for n in range(1,num+1):
 
 ```
 
-### 2007.
+### 2007. 패턴 마디의 길이
 ``` python
 T = int(input())
 
@@ -297,17 +297,38 @@ for case in range(1, T+1):
 ### 1979. 어디에 단어가 들어갈 수 있을까
 ``` python
 
+T = int(input())
+for case in range(1, T+1):
+    num = list(map(int,input().split()))
+    puzzle_list = []
+    for i in range(num[0]):
+        puzzle = input()
+        puzzle_list.append(puzzle)
 
+    if '1 '*num[1]+'0' in 
 
 ```
 
-### 
+### 1966. 숫자를 정렬하자
 ``` python
+
+T = int(input())
+for case in range(1, T+1):
+    test_case = int(input())
+    num = sorted(list(map(int,input().split())))
+    print('#{}'.format(case), end=' ')
+    for i in range(test_case):
+        if i == test_case-1:
+            print(num[i])
+        else:
+            print(num[i], end = ' ')
 
 ```
 
-### 
+### 1961. 숫자 배열 회전
 ``` python
+
+
 
 ```
 
