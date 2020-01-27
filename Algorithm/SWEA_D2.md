@@ -304,8 +304,19 @@ for case in range(1, T+1):
     for i in range(num[0]):
         puzzle = input()
         puzzle_list.append(puzzle)
-
-    if '1 '*num[1]+'0' in 
+    count_sum = 0
+    count_horizontal = 0
+    for n in range(num[1],num[0]+1):
+        for k in range(num[0]):
+            if n == num[1]:
+                if '1 '*n in puzzle_list[k]:
+                    count_horizontal += 1
+            else:
+                if '1 '*n in puzzle_list[k]:
+                    count_horizontal -= 1
+            if count_horizontal > 0:
+                count_sum += count_horizontal
+    print(count_sum)
 
 ```
 
@@ -573,15 +584,58 @@ for case in range(1, T+1):
 
 ### 1285. 아름이의 돌 던지기
 ``` python
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    count = 0
+    scores = list(map(abs,map(int,input().split())))
+    for i in scores:
+        if i == min(scores):
+            count += 1
+
+    print('#{} {} {}'.format(case,min(scores),count))
+        
+```
+
+### 1284. 수도 요금 경쟁
+``` python
+
+T = int(input())
+for case in range(1, T+1):
+    inp = list(map(int,input().split()))
+    P = inp[0]*inp[4]
+    if inp[2] > inp[4]:
+        Q = inp[1]
+    else:
+        Q = inp[1]+inp[3]*(inp[4]-inp[2])
+
+    if P > Q:
+        print('#{} {}'.format(case, Q))
+    else:
+        print('#{} {}'.format(case, P))
 
 ```
 
-### 
+### 1204. 최빈수 구하기
 ``` python
 
-```
+T = int(input())
+for case in range(1, T+1):
+    test_num = int(input())
+    scores = list(map(int,input().split()))
+    score_count = 0
+    for n in scores:
+        count = 0
+        for k in scores:
+            if n == k:
+                count +=1
+        if count > score_count:
+            score_count = count
+            score = n
+        elif count == score_count:
+            if score < n:
+                score = n
+    print('#{} {}'.format(test_num, score))
 
-### 
-``` python
 
 ```
