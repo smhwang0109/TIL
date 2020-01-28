@@ -80,10 +80,6 @@ for case in range(1,T+1):
 ```
 
 
-
-
-
-
 ### 1970. 쉬운 거스름돈
 ``` python
 T = int(input())
@@ -301,22 +297,33 @@ T = int(input())
 for case in range(1, T+1):
     num = list(map(int,input().split()))
     puzzle_list = []
-    for i in range(num[0]):
-        puzzle = input()
-        puzzle_list.append(puzzle)
     count_sum = 0
-    count_horizontal = 0
-    for n in range(num[1],num[0]+1):
+    for i in range(num[0]):
+        puzzle = list(map(int,input().split()))
+        puzzle_list.append(puzzle)
+    for j in range(num[0]):
+        count = 0
         for k in range(num[0]):
-            if n == num[1]:
-                if '1 '*n in puzzle_list[k]:
-                    count_horizontal += 1
-            else:
-                if '1 '*n in puzzle_list[k]:
-                    count_horizontal -= 1
-            if count_horizontal > 0:
-                count_sum += count_horizontal
-    print(count_sum)
+            if puzzle_list[j][k] == 0:
+                if count == num[1]:
+                    count_sum += 1
+                count = 0
+            elif puzzle_list[j][k] == 1:
+                count += 1
+        if count == num[1]:
+            count_sum += 1
+
+        count = 0
+        for l in range(num[0]):
+            if puzzle_list[l][j] == 0:
+                if count == num[1]:
+                    count_sum += 1
+                count = 0
+            elif puzzle_list[l][j] == 1:
+                count += 1
+        if count == num[1]:
+            count_sum += 1
+    print('#{} {}'.format(case, count_sum))
 
 ```
 
@@ -556,7 +563,33 @@ for case in range(1, T+1):
 ### 1928. Base64 Decoder
 ``` python
 
-
+T = int(input())
+for case in range(1, T+1):
+    S = input()
+    bit_all = ''
+    for l in S:
+        if 43 == ord(l):
+            byte = bin(ord(l) + 19)
+        elif 47 == ord(l):
+            byte = bin(ord(l) + 16)
+        elif ord(l) < 64:
+            byte = bin(ord(l)+4)
+        elif ord(l) < 96:
+            byte = bin(ord(l)-65)
+        elif 96 < ord(l):
+            byte = bin(ord(l)-97+26)
+        bit = str(byte.lstrip('0b'))
+        while len(bit) != 6:
+            bit = '0' + bit
+        bit_all += bit
+    word_final = []
+    for i in range(0, len(bit_all), 8):
+        word = ''
+        for j in range(8):
+            word += bit_all[i+j]
+        word_final.append(chr(int(word,2)))
+    print('#{} {}'.format(case,''.join(word_final)))
+    
 
 ```
 
