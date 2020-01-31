@@ -129,35 +129,94 @@ for case in range(1,T+1):
     print('#{} {}'.format(case,result))
 ```
 
-### 
+### 1215. 회문1
 
 ```python
+for case in range(1,11):
+    N = int(input())
+    All = []
+    count = 0
+    for i in range(8):
+        s = input()
+        # 1. 이중 for 문
+        # 2. 구문 다 합친 후
+        All.append(s)
+    for i in range(8):
+        for j in range(8-N+1):
+            k = All[i][j:j+N]
+            if k == ''.join(list(reversed(k))):
+                count += 1
+            l = []
+            for g in range(N):
+                l.append(All[j+g][i])
+            if l == list(reversed(l)):
+                count += 1
+    print('#{} {}'.format(case,count))
+
+```
+
+### 1230. 암호문3
+
+```python
+T = 10
+for case in range(1,T+1):
+    N = int(input())
+    original = list(map(int,input().split()))
+    C = int(input())
+    change = input().split()
+    for idx, ch in enumerate(change):
+        if ch == 'I':
+            for n in range(int(change[idx+2])):
+                original.insert(int(change[idx+1])+n, int(change[idx+3+n]))
+        if ch == 'D':
+            for n in range(int(change[idx+2])):
+                original.remove(original[int(change[idx+1])])
+        if ch == 'A':
+            for n in range(int(change[idx+1])):
+                original.append(int(change[idx+2+n]))
+    print('#{}'.format(case),end='')
+    for i in range(10):
+        print(' {}'.format(original[i]),end='')
+    print()
 
 
 ```
 
-### 
+### 3431. 준환이의 운동관리
 
 ```python
-
+T = int(input())
+for case in range(1,T+1):
+    L, U, X = list(map(int,input().split()))
+    if X < L:
+        result = L-X
+    elif X > U:
+        result = -1
+    else:
+        result = 0
+    print('#{} {}'.format(case, result))
 
 ```
 
-### 
+### 1217. 거듭 제곱
 
 ```python
+def my_pow(M, new = 1):
+    new *= N
+    if M == 1:
+        return new
+    return my_pow(M-1, new)
 
+T = 10
+for case in range(1,T+1):
+    test = input()
+    N, M = list(map(int,input().split()))
+    new = 1
+    print('#{} {}'.format(case,my_pow(M)))
 
 ```
 
-### 
-
-```python
-
-
-```
-
-### 
+### 1220. Magnetic
 
 ```python
 
