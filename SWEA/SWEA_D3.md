@@ -374,7 +374,370 @@ for case in range(1,T+1):
 ### 4751. 다솔이의 다이아몬드 장식
 
 ```python
+T = int(input())
+for case in range(1,T+1):
+    word = input()
+    for idx in range(len(word)):
+        if idx != len(word)-1:
+            print('..#.',end = '')
+        else:
+            print('..#..')
+    for idx in range(len(word)):
+        if idx != len(word)-1:
+            print('.#.#',end = '')
+        else:
+            print('.#.#.')
+    for idx, w in enumerate(word):
+        if idx != len(word) - 1:
+            print('#.'+w+'.', end='')
+        else:
+            print('#.'+w+'.#')
+    for idx in range(len(word)):
+        if idx != len(word)-1:
+            print('.#.#',end = '')
+        else:
+            print('.#.#.')
+    for idx in range(len(word)):
+        if idx != len(word)-1:
+            print('..#.',end = '')
+        else:
+            print('..#..')
 
+```
+
+```python
+# 참고. 제일짧은 코드 길이
+for t in range(int(input())):
+    a=input()
+    b=len(a)-1
+    c=[f"..#{'...#'*b}..",f".#{'.#.#'*b}.#.",f"#.{'.#.'.join(a)}.#"]
+    for i in [0,1,2,1,0]:
+        print(c[i])
+```
+
+### 1234. 비밀번호
+
+```python
+for case in range(1, 11):
+    N, numbers = input().split()
+    result = []
+    for n in numbers:
+        result.append(n)
+    while True:
+        count = 0
+        for i in range(len(result)-1):
+            if result[i] == result[i+1]:
+                result.pop(i)
+                result.pop(i)
+                count += 1
+                break
+        if count == 0:
+            break
+    print('#{} {}'.format(case, ''.join(result)))
+
+```
+
+### 1213. String
+
+```python
+for case in range(1, 11):
+    T = input()
+    s = input()
+    Str = input()
+    count = 0
+    for i in range(len(Str)-len(s)+1):
+        if Str[i:].startswith(s):
+            count += 1
+    print('#{} {}'.format(case, count))
+    
+```
+
+### 1240. 단순 2진 암호코드
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+
+    v, h = map(int, input().split())
+    d = {'0001101': 0,
+         '0011001': 1,
+         '0010011': 2,
+         '0111101': 3,
+         '0100011': 4,
+         '0110001': 5,
+         '0101111': 6,
+         '0111011': 7,
+         '0110111': 8,
+         '0001011': 9,}
+    for i in range(v):
+        l = input()
+        if '1' in l:
+            L = l
+    code = []
+    for i in range(len(L)):
+        for key in d.keys():
+            if L[i:].startswith(key):
+                if d[key] != 0 and d[key] != 9:
+                    code = L[i:i+56]
+                    break
+                else:
+                    for key2 in d.keys():
+                        if L[i+49:].startswith(key2):
+                            code = L[i:i+56]
+                            break
+        if code:
+            break
+    numbers = []
+    for i in range(0,56,7):
+        numbers.append(d[code[i:i+7]])
+    sum1 = sum2 = 0
+    for idx,n in enumerate(numbers):
+        if idx%2:
+            sum2 += n
+        else:
+            sum1 += n
+    if (sum1*3+sum2)%10 == 0:
+        result = sum1 + sum2
+    else:
+        result = 0
+
+    print('#{} {}'.format(case, result))
+
+
+```
+
+### 3314. 보충학습과 평균
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    scores = list(map(int,input().split()))
+    for idx in range(len(scores)):
+        if scores[idx] < 40:
+            scores[idx] = 40
+    result = int(sum(scores) / 5)
+
+    print('#{} {}'.format(case, result))
+
+
+```
+
+### 1228. 암호문1
+
+```python
+T = 10
+for case in range(1, T + 1):
+    N = int(input())
+    original = list(map(int,input().split()))
+    M = int(input())
+    change = input().split()
+    for idx, c in enumerate(change):
+        if c == 'I':
+            for i in range(int(change[idx+2])-1,-1,-1):
+                original.insert(int(change[idx+1]), int(change[idx+3+i]))
+    print('#{} {}'.format(case, ' '.join(map(str,original[0:10]))))
+
+```
+
+### 2805. 농작물 수확하기
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    N = int(input())
+    sum0 = 0
+    for i in range(N):
+        values = []
+        for n in input():
+            values.append(int(n))
+        if i <= N // 2:
+            sum0 += sum(values[N // 2 - i : N // 2 + i + 1])
+        else:
+            sum0 += sum(values[N // 2 - (N-i-1): N // 2 + (N-i-1) + 1])
+
+    print('#{} {}'.format(case, sum0))
+
+```
+
+### 3456. 직사각형 길이 찾기
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    numbers = list(map(int,input().split()))
+    for n in numbers:
+        if numbers.count(n) == 1 or numbers.count(n) == 3:
+            result = n
+    print('#{} {}'.format(case, result))
+
+```
+
+### 1209. Sum
+
+```python
+T = 10
+for case in range(1, T + 1):
+    test = input()
+    numbers = []
+    Sum_list = []
+    for i in range(100):
+        number = list(map(int,input().split()))
+        Sum_list.append(sum(number))
+        numbers.append(number)
+    for i in range(100):
+        sum0 = 0
+        for j in range(100):
+            sum0 += numbers[j][i]
+        Sum_list.append(sum0)
+    sum1 = 0
+    for i in range(100):
+        sum1 += numbers[i][i]
+    Sum_list.append(sum1)
+
+    print('#{} {}'.format(case, max(Sum_list)))
+
+```
+
+### 1229. 암호문2
+
+```python
+T = 10
+for case in range(1, T + 1):
+    N = int(input())
+    original = list(map(int,input().split()))
+    M = int(input())
+    change = input().split()
+    for idx, c in enumerate(change):
+        if c == 'I':
+            for i in range(int(change[idx+2])-1,-1,-1):
+                original.insert(int(change[idx+1]), int(change[idx+3+i]))
+        if c == 'D':
+            for i in range(int(change[idx+2])):
+                p = original.pop(int(change[idx+1]))
+
+
+    print('#{} {}'.format(case, ' '.join(map(str,original[0:10]))))
+
+```
+
+### 5431. 민석이의 과제 체크하기
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    N, K = map(int,input().split())
+    check = list(map(int, input().split()))
+    b = []
+    for n in range(1,N+1):
+        if n not in check:
+            b.append(n)
+
+    print('#{} {}'.format(case, ' '.join(list(map(str,sorted(b))))))
+
+```
+
+### 4466. 최대 성적표 만들기
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    N, K = map(int,input().split())
+    scores = list(map(int, input().split()))
+    scores = list(reversed(sorted(scores)))
+    S = []
+    for k in range(K):
+        S.append(scores[k])
+
+    print('#{} {}'.format(case, sum(S)))
+
+```
+
+### 영준이의 신비한 뿔의 숲
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    N, M = map(int,input().split())
+    for m in range(M+1):
+        if N== m*2+(M-m):
+            break
+
+    print('#{} {} {}'.format(case, M-m, m))
+
+```
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    N, M = map(int,input().split())
+    m = N-M
+
+    print('#{} {} {}'.format(case, M-m, m))
+
+```
+
+### 5162. 두가지 빵의 딜레마
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    A,B,C = map(int,input().split())
+    print('#{} {}'.format(case, C//min(A,B)))
+```
+
+### 5515. 2016년 요일 맞추기
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    m,d = map(int,input().split())
+    y = {1:31,2:29,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}
+    sum_d = 0
+    if m == 1:
+        result = ((d - 1) % 7 + 4) % 7
+    else:
+        for i in range(1,m):
+            sum_d += y[i]
+        sum_d += d
+        result = ((sum_d - 1) % 7 + 4) % 7
+
+
+    print('#{} {}'.format(case, result))
+```
+
+### 5549. 홀수일까 짝수일까
+
+```python
+T = int(input())
+for case in range(1, T + 1):
+    n = int(input())
+    if n % 2:
+        result = 'Odd'
+    else:
+        result = 'Even'
+    print('#{} {}'.format(case, result))
+
+```
+
+### GNS
+
+```python
+d = {'ZRO':0,'ONE':1,'TWO':2,'THR':3,'FOR':4,'FIV':5,'SIX':6,'SVN':7,'EGT':8,'NIN':9,}
+dd = {}
+for key, value in d.items():
+    dd[value] = key
+
+T = int(input())
+for case in range(1, T + 1):
+    N = input()
+    K = input().split()
+    for i in range(len(K)):
+        K[i] = d[K[i]]
+    K = sorted(K)
+    for i in range(len(K)):
+        K[i] = dd[K[i]]
+
+    print('#{} {}'.format(case, ' '.join(K)))
 
 ```
 
@@ -382,6 +745,11 @@ for case in range(1,T+1):
 
 ```python
 
+```
+
+### 
+
+```python
 
 ```
 
@@ -389,26 +757,15 @@ for case in range(1,T+1):
 
 ```python
 
-
 ```
 
 ### 
 
 ```python
 
-
 ```
 
-### 
-
-```python
 
 
-```
-
-### 
-
-```python
 
 
-```
