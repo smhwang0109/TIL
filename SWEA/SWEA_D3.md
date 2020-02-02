@@ -219,47 +219,159 @@ for case in range(1,T+1):
 ### 1220. Magnetic
 
 ```python
+def X_90(L):
+    t = []
+    for i in range(100):
+        k = []
+        t.append(k)
+        for j in range(100):
+            k.append(0)
+    for i in range(100):
+        for j in range(100):
+            t[i][99-j] = L[j][i]
+    return t
+
+T = 10
+for case in range(1,T+1):
+    N = input()
+    table = []
+    for _ in range(100):
+        table.append(list(map(int,input().split())))
+    table = X_90(table)
+    for i in range(100):
+        for j in range(100):
+            if table[i][j] == 2:
+                table[i][:j] = [0]*j
+                break
+        for k in range(100):
+            if table[i][99-k] == 1:
+                table[i][99-k+1:] = [0]*k
+                break
+    search = [0, 1]
+    count = 0
+    for i in range(100):
+        for j in range(100):
+            if table[i][j] not in search:
+                search[1] = table[i][j]
+                if table[i][j] == 1:
+                    count+=1
+    print('#{} {}'.format(case,count))    
+```
+
+### 1289. 원재의 메모리 복구하기
+
+```python
 T = int(input())
 for case in range(1,T+1):
-    
+    N = input()
+    search = '0'
+    count = 0
+    for n in N:
+        if n != search:
+            search = n
+            count += 1
+
+
+    print('#{} {}'.format(case,count))
+
 ```
 
-### 
+### 4406. 모음이 보이지 않는 사람
 
 ```python
-
-
+T = int(input())
+for case in range(1,T+1):
+    word = input()
+    s = ''
+    for w in word:
+        if w not in 'aeiou':
+            s += w
+    print('#{} {}'.format(case,s))
 ```
 
-### 
+### 1225. 암호생성기
 
 ```python
+T = 10
+for case in range(1,T+1):
+    test = input()
+    num = list(map(int, input().split()))
+    while True:
+        for count in range(1,6):
+            if num[0] - count > 0:
+                num.append(num.pop(0)-count)
+            else:
+                n = num.pop(0)
+                num.append(0)
+                break
+        if num[7] == 0:
+            break
+    result = list(map(str,num))
 
-
+    print('#{} {}'.format(case,' '.join(result)))
 ```
 
-### 
+### 1216. 회문2
 
 ```python
+def X_90(L):
+    t = []
+    for i in range(100):
+        k = []
+        t.append(k)
+        for j in range(100):
+            k.append(0)
+    for i in range(100):
+        for j in range(100):
+            t[i][99-j] = L[j][i]
+    return t
 
+T = 10
+for case in range(1,T+1):
+    test = input()
+    num_list = []
+    for i in range(100):
+        num = input()
+        num_list.append(num)
+    result = 0
+    # 가로 검사
+    for i in range(100):
+        for j in range(100):
+            for k in range(100-j-1):
+                a = num_list[i][j:100-k]
+                if result < len(a):
+                    if a == ''.join(list(reversed(a))):
+                        result = len(a)
+                        break
+    num_list = X_90(num_list)
+
+    #세로 검사
+    for i in range(100):
+        for j in range(100):
+            for k in range(100-j-1):
+                a = num_list[i][j:100-k]
+                if result < len(a):
+                    if a == list(reversed(a)):
+                        result = len(a)
+                        break
+
+
+    print('#{} {}'.format(case,result))
 
 ```
 
-### 
+### 5601. 쥬스 나누기
 
 ```python
-
-
-```
-
-### 
-
-```python
-
+T = int(input())
+for case in range(1,T+1):
+    people = input()
+    result = ['1/'+people]*int(people)
+    print('#{} {}'.format(case,' '.join(result)))
 
 ```
 
-### 
+### 4751. 다솔이의 다이아몬드 장식
 
 ```python
 
