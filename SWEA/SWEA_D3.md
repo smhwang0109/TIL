@@ -741,6 +741,103 @@ for case in range(1, T + 1):
 
 ```
 
+### 5789. 현주의 상자 바꾸기
+
+```python
+T = int(input())
+for case in range(1,T+1):
+    N, Q = list(map(int,input().split()))
+    result = [0]*N
+    for i in range(1,Q+1):
+        L,R = list(map(int,input().split()))
+        for j in range(L,R+1):
+            result[j-1] = i
+    
+    print('#{} {}'.format(case,' '.join(list(map(str,result)))))
+```
+
+### 5356. 의석이의 세로로 말해요
+
+```python
+T = int(input())
+for case in range(1,T+1):
+    S_list = []
+    L_list = []
+    for i in range(5):
+        S = list(input())
+        S_list.append(S)
+        L_list.append(len(S))
+
+    for idx, l in enumerate(L_list):
+        if l < max(L_list):
+            for i in range(l, max(L_list)):
+                S_list[idx].append(None)
+    result = ''
+    for i in range(max(L_list)):
+        for j in range(5):
+            if S_list[j][i] != None:
+                result += S_list[j][i]
+
+    print('#{} {}'.format(case,result))
+```
+
+### 5603. 건초더미
+
+```python
+T = int(input())
+for case in range(1,T+1):
+    N = int(input())
+
+    S_list = []
+
+    for i in range(N):
+        S = int(input())
+        S_list.append(S)
+    r = sum(S_list) // N
+    count = 0
+    for n in S_list:
+        if n > r:
+            count += n-r
+
+    print('#{} {}'.format(case,count))
+```
+
+### 4676. 늘어지는 소리 만들기
+
+```python
+T = int(input())
+for case in range(1,T+1):
+    S = list(input())
+    N = int(input())
+    H = list(map(int,input().split()))
+    for i in H:
+        if i != 0:
+            S[i-1] += '-'
+        else:
+            S[0] = '-' + S[0]
+
+
+    print('#{} {}'.format(case,''.join(S)))
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
 ### 
 
 ```python
@@ -764,6 +861,344 @@ for case in range(1, T + 1):
 ```python
 
 ```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+
 
 
 
