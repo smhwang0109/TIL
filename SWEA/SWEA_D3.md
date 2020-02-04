@@ -904,16 +904,39 @@ for case in range(1, T+1):
 ### 5948. 새샘이의 7-3-5
 
 ```python
+T = int(input())
+for case in range(1, T + 1):
+    numbers = list(map(int, input().split()))
+    l = set()
+    for i in numbers:
+        for j in numbers:
+            for k in numbers:
+                if i < j and j < k:
+                    s = i + j + k
+                    l.add(s)
+
+    print('#{} {}'.format(case, sorted(list(l))[-5]))
 
 ```
 
-### 
+### 3131. 100만 이하의 모든 소수
 
 ```python
+l = [False,False] + [True]*1000000
 
+for i in range(2, 1001):
+    if l[i]:
+        for j in range(2*i, 1000000, i):
+            l[j] = False
+
+for k in range(1000000):
+    if k == 2:
+        print(k, end='')
+    elif l[k]:
+        print('',k, end='')
 ```
 
-### 
+### 3809. 화섭이의 정수 나열
 
 ```python
 
