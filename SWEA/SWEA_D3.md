@@ -820,25 +820,88 @@ for case in range(1,T+1):
     print('#{} {}'.format(case,''.join(S)))
 ```
 
-### 
+### 4299. 태혁이의 사랑은 타이밍
 
 ```python
+T = int(input())
+for case in range(1, T+1):
+    D, H, M = list(map(int,input().split()))
+    if D - 11 < 0:
+        result = -1
+    elif D == 11 and H - 11 < 0:
+        result = -1        
+    elif D == 11 and H == 11 and M - 11 < 0:
+        result = -1
+    else:
+        result = (D - 11) * 24 * 60 + (H - 11) * 60 + M - 11
+    print('#{} {}'.format(case, result))
+```
+
+### 3499. 퍼펙트 셔플
+
+```python
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    numbers = input().split()
+    result = []
+    if N % 2 == 0:
+        first = numbers[0:N//2]
+        second = numbers[N//2:]
+        for i in range(N//2):
+            result.append(first[i])
+            result.append(second[i])
+    else:
+        first = numbers[0:N//2+1]
+        second = numbers[N//2+1:]
+        for i in range(N//2):
+            result.append(first[i])
+            result.append(second[i])
+        result.append(first[-1])
+
+    print('#{} {}'.format(case, ' '.join(result)))
+```
+
+### 1493. 수의 새로운 연산
+
+```python
+def ja(n):
+    count = 1
+    s1 = 1
+    s2 = 1
+    while True:
+        if s1 <= n and s2 >= n:
+            count -= 1
+            break
+        s1 += count
+        count += 1
+        s2 += count
+    a = n - s1
+    n = [1 + a, count + 1 - a]
+    return n
+
+T = int(input())
+for case in range(1, T+1):
+    p, q = map(int, input().split())
+    p = ja(p)
+    q = ja(q)
+
+    r = []
+    for i in range(2):
+        r.append(p[i]+q[i])
+    a = r[0] - 1
+    r = [r[0]-a,r[1]+a]
+    count = r[1]
+    s1 = 1
+    for i in range(1,count):
+        s1 += i
+    result = s1 + a
+
+    print('#{} {}'.format(case, result))
 
 ```
 
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
+### 5948. 새샘이의 7-3-5
 
 ```python
 
