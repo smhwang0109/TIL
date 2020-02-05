@@ -77,21 +77,26 @@ for case in range(1,T+1):
 ### 6190. 정곤이의 단조 증가하는 수
 
 ```python
-
 T = int(input())
 for case in range(1,T+1):
-    N = int(input())
-    A = list(map(int,input().split()))
-    # result = [num1 * num2  for num1 in A for num2 in A  if num1 != num2 for i in range(len(str(num1 * num2))-1) if int(str(num1 * num2)[i])<= int(str(num1 * num2)[i+1])]
-    for num1 in A:
-        for num2 in A:
-            if num1 != num2:
-                s = str(num1 * num2)
-                for i in range(len(s)-1):
-                    if int(s[i]) <= int(s[i+1]):
-                        result.append(num1 * num2)
-    print('#{} {}'.format(case, max(result)))
+    N = input()
+    A = input().split()
+    result = 0
+    for i in range(len(A)):
+        for j in range(i+1,len(A)):
+            s = str(int(A[i]) * int(A[j]))
+            count = 1
+            for k in range(len(s)-1):
+                if s[k] > s[k+1]:
+                    count = 0
+                    break
+            if count == 1:
+                if result < int(s):
+                    result = int(s)
+    if result == 0:
+        result = -1
 
+    print('#{} {}'.format(case, result))
 ```
 
 ### 1206. View
@@ -942,15 +947,134 @@ for k in range(1000000):
 
 ```
 
-### 
+### 4047. 영준이의 카드 카운팅
 
 ```python
+def det(l, n):
+    card = int(cards[n + 1:n + 3])
+    if card not in l:
+        l.append(card)
+    else:
+        global p
+        p = 'ERROR'
+
+T = int(input())
+for case in range(1, T + 1):
+    cards = input()
+    card_list = []
+    S = []
+    D = []
+    H = []
+    C = []
+    p = 1
+    result = []
+    for i in range(0,len(cards),3):
+        if cards[i] == 'S':
+            det(S, i)
+        elif cards[i] == 'D':
+            det(D, i)
+        elif cards[i] == 'H':
+            det(H, i)
+        else:
+            det(C, i)
+    if p != 1:
+        Result = ' ERROR'
+    else:
+        result.append(str(13 - len(S)))
+        result.append(str(13 - len(D)))
+        result.append(str(13 - len(H)))
+        result.append(str(13 - len(C)))
+        Result = ''
+        for i in range(4):
+            Result += ' ' + result[i]
+
+    print('#{}{}'.format(case, Result))
 
 ```
 
-### 
+### 1873. 상호의 배틀필드
 
 ```python
+T = int(input())
+for case in range(1, T + 1):
+    H, W = map(int, input().split())
+    m_list = []
+    for h in range(H+2):
+        if h == 0 or h == H+1:
+            m_list.append(['-']*(W+2))
+        else:
+            m = list(input())
+            m_list.append(['-']+m+['-'])
+    # 전체는 H+2 * W+2 짜리 배열
+    N = int(input())
+    spot = ['^','v','<','>']
+    for command in input():
+        for h in range(H+1):
+            for k in spot:
+                if k in m_list[h]:
+                    i = h
+                    j = m_list[h].index(k)
+                    d = k
+                    break
+        if command == 'U':
+            if m_list[i-1][j] == '.':
+                m_list[i][j] = '.'
+                m_list[i-1][j] = '^'
+            else:
+                m_list[i][j] = '^'
+        elif command == 'D':
+            if m_list[i+1][j] == '.':
+                m_list[i][j] = '.'
+                m_list[i+1][j] = 'v'
+            else:
+                m_list[i][j] = 'v'
+        elif command == 'L':
+            if m_list[i][j-1] == '.':
+                m_list[i][j] = '.'
+                m_list[i][j-1] = '<'
+            else:
+                m_list[i][j] = '<'
+        elif command == 'R':
+            if m_list[i][j+1] == '.':
+                m_list[i][j] = '.'
+                m_list[i][j+1] = '>'
+            else:
+                m_list[i][j] = '>'
+        else:
+            if d == '>':
+                for k in range(j,W+1):
+                    if m_list[i][k] == '#':
+                        break
+                    elif m_list[i][k] == '*':
+                        m_list[i][k] = '.'
+                        break
+            elif d == '<':
+                for k in range(j-1,0,-1):
+                    if m_list[i][k] == '#':
+                        break
+                    elif m_list[i][k] == '*':
+                        m_list[i][k] = '.'
+                        break
+            elif d == '^':
+                for k in range(i-1,0,-1):
+                    if m_list[k][j] == '#':
+                        break
+                    elif m_list[k][j] == '*':
+                        m_list[k][j] = '.'
+                        break
+            elif d == 'v':
+                for k in range(i,H+1):
+                    if m_list[k][j] == '#':
+                        break
+                    elif m_list[k][j] == '*':
+                        m_list[k][j] = '.'
+                        break
+    result = []
+    for i in range(1,len(m_list)-1):
+        result.append(m_list[i][1:-1])
+    print('#{} '.format(case),end='')
+    for i in range(H):
+        print(''.join(result[i]))
 
 ```
 
