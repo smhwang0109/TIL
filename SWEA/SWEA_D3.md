@@ -1078,33 +1078,91 @@ for case in range(1, T + 1):
 
 ```
 
-### 
+### 3260. 두 수의 덧셈
 
 ```python
+T = int(input())
+for case in range(1, T + 1):
+    A, B = map(int,input().split())
+    
+    print('#{} {}'.format(case, A+B))
+```
+
+### 2817. 부분 수열의 합
+
+```python
+from itertools import combinations
+
+T = int(input())
+for case in range(1, T + 1):
+    N, K = map(int,input().split())
+    numbers = list(map(int,input().split()))
+    count = 0
+    for i in range(1, N+1):
+        a = list(combinations(numbers, i))
+        for j in a:
+            if sum(j) == K:
+                count += 1
+    print('#{} {}'.format(case, count))
 
 ```
 
-### 
+### 4789. 성공적인 공연 기획
 
 ```python
+T = int(input())
+for case in range(1, T + 1):
+    N_list = list(map(int,list(input())))
+    count = 0
+    for i in range(len(N_list)):
+        if N_list[i] != 0 and sum(N_list[:i])+count < i:
+            count += i - (sum(N_list[:i]) + count)
+    print('#{} {}'.format(case, count))
 
 ```
 
-### 
+### 4371. 항구에 들어오는 배
 
 ```python
+T = int(input())
+for case in range(1, T + 1):
+    N = int(input())
+    boat = []
+    for i in range(N):
+        n = int(input())
+        p = 0
+        if  n != 1:
+            for b in boat:
+                if (n - 1) % b == 0:
+                    p = 1
+                    break
+            if p == 0:
+                boat.append(n-1)
+    count = len(boat)
+
+    print('#{} {}'.format(case, count))
 
 ```
 
-### 
+### 6019. 기차 사이의 파리
 
 ```python
+T = int(input())
+for case in range(1, T + 1):
+    D, A, B, F = map(int,input().split())
+    direc = 'B'
+    count = 0
+    while D > 0.000001:
+        if direc == 'B':
+            count += F * (D / (B + F))
+            D -= (D / (B + F)) * (A + B)
+            direc = 'A'
+        else:
+            count += F * (D / (A + F))
+            D -= (D / (A + F)) * (A + B)
+            direc = 'B'
 
-```
-
-### 
-
-```python
+    print('#{} {}'.format(case, count))
 
 ```
 
