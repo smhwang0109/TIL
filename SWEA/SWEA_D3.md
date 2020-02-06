@@ -1179,77 +1179,66 @@ for case in range(1, T + 1):
         test.append(n)
     while N > 0:
         idx = []
-        start_N = N
-        print(test)
         m = max(test)
         for i in range(len(numbers)):
             if numbers[i] == m:
                 idx.append(i)
-        print(idx)
         if len(idx) == 1:
             for new_i in range(len(numbers)):
-                if idx[0] > new_i:
+                if idx[0] > new_i and m > numbers[new_i]:
                     numbers[new_i], numbers[idx[0]] = numbers[idx[0]], numbers[new_i]
                     N -= 1
+                    break
         else:
             if N >= len(idx):
-                for i in range(len(numbers)):
-                    if numbers[i] == m:
-                        idx.append(i)
                 id = idx[-1]
-                temp_list = []
-                temp = {}
+                temp = []
                 for new_i in range(id):
-                    if new_i not in idx:
-                        temp[numbers[new_i]] = new_i
-                        temp_list.append(numbers[new_i])
-            else:
-                new_idx = idx[-1:-N-1]
+                    if new_i not in idx and m > numbers[new_i]:
+                        temp.append([new_i,numbers[new_i]])
+                temp = temp[:len(idx)]
+                temp_list = []
+                while temp != []:
+                    l = 0
+                    max0 = 0
+                    for r in range(len(temp)):
+                        if max0 < temp[r][1]:
+                            max0 = temp[r][1]
+                            l = r
+                    temp_list.append(temp.pop(l))
+                for id, t in enumerate(temp_list):
+                    numbers[t[0]], numbers[idx[id]] = numbers[idx[id]], numbers[t[0]]
+                    N -= 1
+            else: # N < len(idx)
+                new_idx = idx[-N:]
                 id = idx[-1]
-                temp_list = []
-                temp = {}
+                temp = []
                 for new_i in range(id):
-                    if new_i not in idx:
-                        temp[numbers[new_i]] = new_i
-                        temp_list.append(numbers[new_i])
+                    if new_i not in idx and m > numbers[new_i]:
+                        temp.append([new_i,numbers[new_i]])
+                temp = temp[:N]
+                temp_list = []
+                while temp != []:
+                    l = 0
+                    max0 = 0
+                    for r in range(len(temp)):
+                        if max0 < temp[r][1]:
+                            max0 = temp[r][1]
+                            l = r
+                    temp_list.append(temp.pop(l))
+                for id, t in enumerate(temp_list):
+                    numbers[t[0]], numbers[new_idx[id]] = numbers[new_idx[id]], numbers[t[0]]
+                    N -= 1
 
-            if len(temp_list) < len(idx):
-                if N < len(temp_list):
-                    temp_list = list(reversed(sorted(temp_list[:N])))
-            elif len(idx) <= N:
-                temp_list = list(reversed(sorted(temp_list[:len(idx)])))
+        test.remove(m)
+        if test == []:
+            if N % 2==0:
+                break
             else:
-                temp_list = list(reversed(sorted(temp_list[:N])))
-            for id, t in enumerate(temp_list):
-                numbers[temp[t]], numbers[idx[-(id+1)]] = numbers[idx[-(id+1)]], numbers[temp[t]]
-                N -= 1
-        test.remove(m)
+                numbers[-1], numbers[-2] = numbers[-2], numbers[-1]
+                break
 
-    print(numbers)
-```
-
-```python
-T = int(input())
-for case in range(1, T + 1):
-    numbers, N = input().split()
-    N = int(N)
-    numbers = list(map(int,numbers))
-    test = []
-    for n in numbers:
-        test.append(n)
-    for n in range(N):
-        idx = []
-        m = max(test)
-        for i in range(len(numbers)):
-            if numbers[i] == m:
-                idx.append(i)
-        for i in range(len(numbers)):
-            if i < idx[1-n]:
-                if numbers[i] != m:
-                    numbers[i], numbers[idx[-1-n]] = numbers[idx[-1-n]], numbers[i]
-                    break
-        test.remove(m)
-    print(numbers)
+    print('#{} {}'.format(case, ''.join(map(str, numbers))))
 ```
 
 ### 4615. 재미있는 오셀로 게임
@@ -1393,22 +1382,76 @@ for case in range(1, T + 1):
     print('#{} {} {}'.format(case, B, W))
 ```
 
-### 
+### 3376. 파도반 수열
 
 ```python
-
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    N_list = [1,1,1]
+    for i in range(3,N):
+        N_list.append(N_list[i-2]+N_list[i-3])
+    print('#{} {}'.format(case, N_list[N-1]))
 ```
 
-### 
+### 3233. 정삼각형 분할 놀이
 
 ```python
-
+T = int(input())
+for case in range(1, T+1):
+    A, B = map(int,input().split())
+    result = 0
+    for i in range(1,A//B+1):
+        if i == A//B:
+            result += i
+        else:
+            result += 2*i
+    print('#{} {}'.format(case, result))
 ```
 
-### 
+### 햄버거 다이어트
 
 ```python
+from itertools import combinations
 
+T = int(input())
+for case in range(1, T+1):
+    N, L = map(int,input().split())
+    TK_list = []
+    K_list = []
+    for i in range(N):
+        Ti, Ki = map(int,input().split())
+        TK_list.append([Ti,Ki])
+        K_list.append(Ki)
+    result = []
+    for i in range(1,N+1):
+        for j in combinations(K_list, i):
+            if sum(j) < 1000:
+                result.append(j)
+    scores = []
+    for i in result:
+        score = 0
+        for j in i:
+            for tk in TK_list:
+                if j == tk[1]:
+                    score += tk[0]
+        scores.append(score)
+
+    # scores = []
+    # for i in result:
+    #     score = 0
+    #     temp_all = []
+    #     temp = []
+    #     for j in i:
+    #         count = 0
+    #         for tk in TK_list:
+    #             if j == tk[1]:
+    #                 temp.append(tk[0])
+    #         temp_all.append(temp)
+    #     scores.append(score)
+
+
+    print('#{} {}'.format(case, max(scores)))
 ```
 
 ### 
