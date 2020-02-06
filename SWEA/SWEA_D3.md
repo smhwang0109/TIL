@@ -1166,16 +1166,231 @@ for case in range(1, T + 1):
 
 ```
 
-### 
+### 1244. 최대 상금
 
 ```python
+T = int(input())
+for case in range(1, T + 1):
+    numbers, N = input().split()
+    N = int(N)
+    numbers = list(map(int,numbers))
+    test = []
+    for n in numbers:
+        test.append(n)
+    while N > 0:
+        idx = []
+        start_N = N
+        print(test)
+        m = max(test)
+        for i in range(len(numbers)):
+            if numbers[i] == m:
+                idx.append(i)
+        print(idx)
+        if len(idx) == 1:
+            for new_i in range(len(numbers)):
+                if idx[0] > new_i:
+                    numbers[new_i], numbers[idx[0]] = numbers[idx[0]], numbers[new_i]
+                    N -= 1
+        else:
+            if N >= len(idx):
+                for i in range(len(numbers)):
+                    if numbers[i] == m:
+                        idx.append(i)
+                id = idx[-1]
+                temp_list = []
+                temp = {}
+                for new_i in range(id):
+                    if new_i not in idx:
+                        temp[numbers[new_i]] = new_i
+                        temp_list.append(numbers[new_i])
+            else:
+                new_idx = idx[-1:-N-1]
+                id = idx[-1]
+                temp_list = []
+                temp = {}
+                for new_i in range(id):
+                    if new_i not in idx:
+                        temp[numbers[new_i]] = new_i
+                        temp_list.append(numbers[new_i])
 
+            if len(temp_list) < len(idx):
+                if N < len(temp_list):
+                    temp_list = list(reversed(sorted(temp_list[:N])))
+            elif len(idx) <= N:
+                temp_list = list(reversed(sorted(temp_list[:len(idx)])))
+            else:
+                temp_list = list(reversed(sorted(temp_list[:N])))
+            for id, t in enumerate(temp_list):
+                numbers[temp[t]], numbers[idx[-(id+1)]] = numbers[idx[-(id+1)]], numbers[temp[t]]
+                N -= 1
+        test.remove(m)
+
+    print(numbers)
 ```
 
-### 
+```python
+T = int(input())
+for case in range(1, T + 1):
+    numbers, N = input().split()
+    N = int(N)
+    numbers = list(map(int,numbers))
+    test = []
+    for n in numbers:
+        test.append(n)
+    for n in range(N):
+        idx = []
+        m = max(test)
+        for i in range(len(numbers)):
+            if numbers[i] == m:
+                idx.append(i)
+        for i in range(len(numbers)):
+            if i < idx[1-n]:
+                if numbers[i] != m:
+                    numbers[i], numbers[idx[-1-n]] = numbers[idx[-1-n]], numbers[i]
+                    break
+        test.remove(m)
+    print(numbers)
+```
+
+### 4615. 재미있는 오셀로 게임
 
 ```python
+def check(s):
+    board[i][j] = s
+    # 위 검사
+    for k in range(i - 1, -1, -1):
+        if board[k][j] == s:
+            p = 0
+            for l in range(i - 1, k, -1):
+                if board[l][j] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(i - 1, k, -1):
+                board[l][j] = s
+            break
+    # 아래 검사
+    for k in range(i + 1, N):
+        if board[k][j] == s:
+            p = 0
+            for l in range(i + 1, k):
+                if board[l][j] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(i + 1, k):
+                board[l][j] = s
+            break
+    # 오른쪽
+    for k in range(j + 1, N):
+        if board[i][k] == s:
+            p = 0
+            for l in range(j + 1, k):
+                if board[i][l] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(j + 1, k):
+                board[i][l] = s
+            break
+    # 왼쪽
+    for k in range(j - 1, -1, -1):
+        if board[i][k] == s:
+            p = 0
+            for l in range(j - 1, k, -1):
+                if board[i][l] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(j - 1, k, -1):
+                board[i][l] = s
+            break
 
+    # 대각선 검사
+    # 왼쪽 - 위
+    for k in range(1, min(i + 1, j + 1)):
+        if board[i - k][j - k] == s:
+            p = 0
+            for l in range(1, k):
+                if board[i - l][j - l] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(1, k):
+                board[i - l][j - l] = s
+            break
+    # 왼쪽 - 아래
+    for k in range(1, min(N - i, j + 1)):
+        if board[i + k][j - k] == s:
+            p = 0
+            for l in range(1, k):
+                if board[i + l][j - l] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(1, k):
+                board[i + l][j - l] = s
+            break
+    # 오른쪽 - 위
+    for k in range(1, min(i + 1, N - j)):
+        if board[i - k][j + k] == s:
+            p = 0
+            for l in range(1, k):
+                if board[i - l][j + l] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(1, k):
+                board[i - l][j + l] = s
+            break
+    # 오른쪽 - 아래
+    for k in range(1, min(N - i, N - j)):
+        if board[i + k][j + k] == s:
+            p = 0
+            for l in range(1, k):
+                if board[i + l][j + l] == 0:
+                    p = 1
+                    break
+            if p == 1:
+                break
+            for l in range(1, k):
+                board[i + l][j + l] = s
+            break
+
+T = int(input())
+for case in range(1, T + 1):
+    N, M = map(int,input().split())
+    board = []
+    for _ in range(N):
+        board.append([0]*N)
+    board[N // 2 - 1][N // 2 - 1] = 'W'
+    board[N // 2 - 1][N // 2] = 'B'
+    board[N // 2][N // 2 - 1] = 'B'
+    board[N // 2][N // 2] = 'W'
+
+    for _ in range(M):
+        j, i, color = map(int,input().split())
+        i = i - 1
+        j = j - 1
+        if color == 1:
+            check('B')
+        else:
+            check('W')
+
+    B = 0
+    W = 0
+    for i in board:
+        B += i.count('B')
+        W += i.count('W')
+
+    print('#{} {} {}'.format(case, B, W))
 ```
 
 ### 
