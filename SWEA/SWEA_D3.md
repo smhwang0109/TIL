@@ -1454,34 +1454,118 @@ for case in range(1, T+1):
     print('#{} {}'.format(case, max(scores)))
 ```
 
-### 
+### 5986. 새샘이와 세 소수
 
 ```python
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    prime = []
+    for i in range(1, N):
+        count = 0
+        for j in range(1,i):
+            if i % j == 0:
+                count += 1
+        if count == 1:
+            prime.append(i)
+    result = 0
+    r_list = []
+    for a in range(len(prime)):
+        for b in range(a, len(prime)):
+            for c in range(b, len(prime)):
+                if prime[a] + prime[b] + prime[c] == N and [prime[a],prime[b],prime[c]] not in r_list:
+                    r_list.append([prime[a],prime[b],prime[c]])
+                    result += 1
 
+    print('#{} {}'.format(case, result))
 ```
 
-### 
+### 1860. 진기의 최고급 붕어빵
 
 ```python
-
+T = int(input())
+for case in range(1,T+1):
+    N,M,K = map(int,input().split())
+    guest = sorted(list(map(int,input().split())))
+    Sum0 = 0
+    result = 'Possible'
+    if N % K == 0:
+        N //= K
+    else:
+        N = N // K + 1
+    for i in range(N):
+        if guest[K*i] < M*(i+1):
+            result = 'Impossible'
+            break
+    print('#{} {}'.format(case, result))
 ```
 
-### 
+### 4522. 세상의 모든 팰린드롬
 
 ```python
+T = int(input())
+for case in range(1, T+1):
+    S = list(input())
+    l = len(S)
 
+    front = S[:l//2]
+    back = S[l-1:(l-1)//2:-1]
+    if l == 1:
+        result = 'Exist'
+    for i in range(len(front)):
+        if front[i] != '?' and back[i] != '?' and front[i] != back[i]:
+            result = 'Not exist'
+            break
+        result = 'Exist'
+
+    print('#{} {}'.format(case, result))
 ```
 
-### 
+### 4698. 테네스의 특별한 소수
 
 ```python
+T = int(input())
+for case in range(1, T+1):
+    D,A,B = map(int,input().split())
+    if A <= 1:
+        result = [False,False] + [True]*(B-1)
+    else:
+        result = [False]*A + [True]*(B-A+1)
+    if B < 1001:
+        for i in range(2,B+1):
+            if result[i]:
+                for j in range(2*i, B+1, i):
+                    result[j] = False
+    else:
+        for i in range(2,1001):
+            if result[i]:
+                for j in range(2*i, B+1, i):
+                    result[j] = False
+    count = 0
+    for i in range(len(result)):
+        if result[i] == True and str(D) in str(i):
+            count += 1
 
+
+    print('#{} {}'.format(case, count))
 ```
 
-### 
+### 3975. 승률 비교하기
 
 ```python
-
+T = int(input())
+answer = []
+for case in range(1, T+1):
+    A,B,C,D = map(int, input().split())
+    if A * D > C * B:
+        result = 'ALICE'
+    elif A*D < C*B:
+        result = 'BOB'
+    else:
+        result = 'DRAW'
+    answer.append(result)
+for i in range(len(answer)):
+    print('#{} {}'.format(i+1, answer[i]))
 ```
 
 ### 
