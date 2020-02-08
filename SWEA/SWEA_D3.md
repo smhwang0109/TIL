@@ -1568,33 +1568,112 @@ for i in range(len(answer)):
     print('#{} {}'.format(i+1, answer[i]))
 ```
 
-### 
+### 6057. 그래프의 삼각형
 
 ```python
+T = int(input())
+for case in range(1,T+1):
+    N, M = map(int, input().split())
+    D = {}
+    for i in range(1,N+1):
+        D[i] = []
+    for i in range(M):
+        x, y = map(int, input().split())
+        D[x].append(y)
+        D[y].append(x)
+    count = 0
+    for i in range(1, N+1):
+        for j in range(len(D[i])):
+            for k in range(len(D[D[i][j]])):
+                if D[D[i][j]][k] != i:
+                    if i in D[D[D[i][j]][k]]:
+                        count += 1
+    print('#{} {}'.format(case, (count//2)//3))
+```
+
+### 1491. 원재의 벽 꾸미기
+
+```python
+T = int(input())
+for case in range(1, T+1):
+    N,A,B = map(int,input().split())
+    result = []
+    for R in range(1,int(N**(1/2))+1):
+        for C in range(1,int(N/R)+1):
+            if R*C <= N:
+                value = A * abs(R - C) + B * (N - R * C)
+                result.append(value)
+
+
+    print('#{} {}'.format(case, min(result)))
+```
+
+### 3304. 최장 공통 부분 수열
+
+```python
+from itertools import combinations
+
+T = int(input())
+for case in range(1,T+1):
+    S1, S2 = input().split()
+    result = 0
+    for i in range(min(len(S1),len(S2)),0,-1):
+        for c in combinations(S1,i):
+            if c in combinations(S2,i):
+                result = i
+                break
+        if result != 0:
+            break
+
+
+    print('#{} {}'.format(case, result))
+
+```
+
+### 세상의 모든 팰린드롬 2
+
+```python
+T = int(input())
+for case in range(1,T+1):
+    S = input()
+    if len(S) == 1:
+        result = 'Exist'
+    elif '*' in S:
+        S = S.split('*')
+        m = min(len(S[0]),len(S[-1]))
+        if list(S[0])[:m] == list(reversed(list(S[-1])))[:m]:
+            result = 'Exist'
+        else:
+            result = 'Not exist'
+    else:
+        if list(S)[:(len(S)-1)//2+1] == list(reversed(list(S)[(len(S)-1)//2+1:])):
+            result = 'Exist'
+        else:
+            result = 'Not exist'
+
+    print('#{} {}'.format(case, result))
 
 ```
 
 ### 
 
 ```python
+T = int(input())
+for case in range(1,T+1):
+    N = int(input())
+    S1 = 1
+    S2 = 1
+    S3 = 2
+    s2 = 1
+    s3 = 2
+    for i in range(2,N+1):
+        S1 += i
+        s2 += 2
+        S2 += s2
+        s3 += 2
+        S3 += s3
 
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
+    print('#{} {} {} {}'.format(case, S1, S2, S3))
 
 ```
 
