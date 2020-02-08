@@ -1,1 +1,0 @@
-alias jn="jupyter notbook"
