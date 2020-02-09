@@ -1630,7 +1630,7 @@ for case in range(1,T+1):
 
 ```
 
-### 세상의 모든 팰린드롬 2
+### 4579. 세상의 모든 팰린드롬 2
 
 ```python
 T = int(input())
@@ -1655,7 +1655,7 @@ for case in range(1,T+1):
 
 ```
 
-### 
+### 3408. 세가지 합 구하기
 
 ```python
 T = int(input())
@@ -1677,211 +1677,195 @@ for case in range(1,T+1):
 
 ```
 
-### 
+### 5688. 세제곱근을 찾아라
 
 ```python
+T = int(input())
+for case in range(1,T+1):
+    N = int(input())
+    x = N**(1/3)
+    if abs(x - round(x)) < 0.00001:
+        result = round(x)
+    else:
+        result = -1
+
+    print('#{} {}'.format(case, result))
 
 ```
 
-### 
+### 3282. 0/1 Knapsack
 
 ```python
+from itertools import combinations
+T = int(input())
+for case in range(1,T+1):
+    N, K = map(int, input().split())
+    A = []
+    for i in range(N):
+        V_C = list(map(int, input().split()))
+        A.append(V_C)
+    max_C = 0
+    for i in range(N):
+        for j in combinations(A, i):
+            sum0 = 0
+            sum1 = 0
+            for k in j:
+                sum0 += k[0]
+                sum1 += k[1]
+            if sum0 <= K:
+                if max_C < sum1:
+                    max_C = sum1
+
+    print('#{} {}'.format(case, max_C))
 
 ```
 
-### 
+### 3750. Digit sum
 
 ```python
-
+T = int(input())
+for case in range(1,T+1):
+    n = int(input())
+    while n//10 != 0:
+        sum0 = 0
+        for i in range(1,len(str(n))+1):
+            sum0 += (n % 10**i)//10**(i-1)
+        n = sum0
+    print('#{} {}'.format(case, n))
 ```
 
-### 
+### 문자열 교집합
 
 ```python
-
+T = int(input())
+answers = []
+for case in range(1,T+1):
+    N_M = input()
+    N_list = set(input().split())
+    M_list = set(input().split())
+    answers.append(len(N_list&M_list))
+for i in range(len(answers)):
+    print('#{} {}'.format(i+1, answers[i]))
 ```
 
-### 
+### 2930. 힙
 
 ```python
-
+T = int(input())
+for case in range(1,T+1):
+    N = int(input())
+    result = []
+    R = []
+    for i in range(N):
+        N_list = list(map(int,input().split()))
+        if N_list[0] == 1:
+            if result == []:
+                result.append(N_list[1])
+            else:
+                p = 0
+                for j in range(len(result)):
+                    if N_list[1] > result[j]:
+                        result.insert(j, N_list[1])
+                        p = 1
+                        break
+                if p == 0:
+                    result.append(N_list[1])
+        else:
+            if result != []:
+                R.append(result.pop(0))
+            else:
+                R.append(-1)
+    print('#{} {}'.format(case, ' '.join(map(str,R))))
 ```
 
-### 
+### 2814. 최장 경로
 
 ```python
+T = int(input())
+for case in range(1,T+1):
+    N, M = map(int,input().split())
+    result = []
+    inp = [1]
+    count = 0
+    max_c = 0
+    D = {}
+    for i in range(1, N+1):
+        D[i] = []
+    for i in range(M):
+        i1, i2 = map(int,input().split())
+        D[i1].append(i2)
+        D[i2].append(i1)
+    for i in range(1,N+1):
+        for j in D[i]:
+            result = []
+            count += 1
+            while True:
 
+    print('#{} {}'.format(case, ' '.join(map(str,R))))
 ```
 
-### 
+### 5607. 조합
 
 ```python
+T = int(input())
+for case in range(1,T+1):
+    N, R = map(int,input().split())
+    u = 1
+    l = 1
+    if N//2 < R:
+        for i in range(N,R,-1):
+            u *= i
+        for j in range(1,N-R+1):
+            l *= j
+    else:
+        for i in range(N,N-R,-1):
+            u *= i
+        for j in range(1,R+1):
+            l *= j
+    result = (u/j)%1234567891
 
+
+
+    print('#{} {}'.format(case, int(result)))
 ```
 
-### 
+### 5293. 이진 문자열 복원
 
 ```python
-
+T = int(input())
+for case in range(1,T+1):
+    A,B,C,D = map(int, input().split())
+    count = 0
+    while A != 0 and B != 0 and C != 0 and D != 0:
+        A -= 1
+        B -= 1
+        C -= 1
+        D -= 1
+        count += 1
+    if A == 0 and B == 0 and C == 0 and D ==0:
+        result = '00110'*count
+    elif [A,B,C,D].count(0) == 3:
+        result = '00'*A + '01'*B +'10'*C +'11'*D
+    elif abs(B-C) > 1:
+        result = 'impossible'
+    elif B == 0 and C == 0:
+        if count == 0:
+            result = 'impossible'
+        elif count == 1:
+            result = '0' * A + '001' + '1' * D + '10'
+        else:
+            result = '00110'*(count-1) + '0'*A + '01' + '1'*D +'10'
+    else:
+        if B > C:
+            result = '00110' + '0110'*(count-1) + '0'*A + '10'*C + '1' + '1'*D
+        elif B < C:
+            result = '11001' + '1001'*(count-1) + '1'*D + '01'*B + '0' + '0'*A
+        else:
+            result = '00110' + '0110'*(count-1) + '0'*A + '1'*D + '10'*C
+    print('#{} {}'.format(case, result))
 ```
 
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
+### 3032. 홍준이의 숫자 놀이
 
 ```python
 
