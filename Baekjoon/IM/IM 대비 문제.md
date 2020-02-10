@@ -163,59 +163,13 @@ for _ in range(N):
     if max_H < H:
         max_H = H
         max_start_L = L
-    elif max_H == H:
-        end_H = H
         max_end_L = L
-    M[L] = H
-if max_H != end_H:
-    max_end_L = max_start_L
-L_list = sorted(L_list)
-height = 0
-area = 0
-curr_L = 0
-for i in L_list[:L_list.index(max_start_L)+1]:
-    if height < M[i]:
-        area += height*(i-curr_L)
-        height = M[i]
-        curr_L = i
-
-area += height*(max_end_L - max_start_L +1)
-
-while height != 0:
-    max_H = 0
-    initial_L = max_end_L
-    for i in L_list[L_list.index(max_end_L)+1:]:
-        if max_H < M[i]:
-            max_H = M[i]
-            max_end_L = i
-    width = max_end_L - initial_L
-    height = max_H
-    area += height*width
-print(area)
-
-```
-
-```python
-
-N = int(input())
-M = [0]*1001
-max_H = 0
-L_list = []
-max_start_L = 0
-max_end_L = 0
-end_H = 0
-for _ in range(N):
-    L, H = map(int,input().split())
-    L_list.append(L)
-    if max_H < H:
-        max_H = H
-        max_start_L = L
     elif max_H == H:
-        end_H = H
-        max_end_L = L
+        if max_start_L > L:
+            max_start_L = L
+        if max_end_L < L:
+            max_end_L = L
     M[L] = H
-if max_H != end_H:
-    max_end_L = max_start_L
 end = max(L_list)
 M = M[:end+1]
 height = 0
@@ -229,7 +183,6 @@ for i in range(max_start_L+1):
         height = M[i]
 
 area += height*(max_end_L - max_start_L +1)
-
 
 start_point = len(M)-1
 height = M[-1]
@@ -308,16 +261,74 @@ print(t+1)
 
 ```
 
-### 
+### 2477. 참외밭
 
 ```python
-
+N = int(input())
+D = {1:[],2:[],3:[],4:[]}
+for i in range(6):
+    n, l = map(int, input().split())
+    if i == 0:
+        first = n
+    if i == 1:
+        second = n
+    if i == 4 and first == n:
+        D[n].insert(0,l)
+    elif i == 5 and second == n:
+        D[n].insert(0,l)
+    else:
+        D[n].append(l)
+if len(D[1]) == 1:
+    for i in range(3,5):
+        if len(D[i]) == 2:
+            if i == 3:
+                area = D[1][0]*D[i][1] + D[2][0]*D[i][0]
+            else:
+                area = D[1][0]*D[i][0] + D[2][1]*D[i][1]
+else:
+    for i in range(3, 5):
+        if len(D[i]) == 2:
+            if i == 3:
+                area = D[2][0] * D[i][0] + D[1][1] * D[i][1]
+            else:
+                area = D[2][0] * D[i][1] + D[1][0] * D[i][0]
+print(N*area)
 ```
 
-### 
+### 2527. 직사각형
 
 ```python
-
+di = [0,0,1,-1]
+dj = [1,-1,0,0]
+for case in range(4):
+    M = []
+    L = list(map(int,input().split()))
+    for i in range(max(L[3], L[7]) + 1):
+        M.append([0]*(max(L[2],L[6])+1))
+    for i in range(L[1],L[3]+1):
+        for j in range(L[0],L[2]+1):
+            M[i][j] += 1
+    for i in range(L[5],L[7]+1):
+        for j in range(L[4],L[6]+1):
+            M[i][j] += 1
+    result = 'd'
+    for i in range(max(L[3], L[7])+1):
+        for j in range(max(L[2],L[6])+1):
+            if M[i][j] == 2:
+                cnt = 0
+                for k in range(4):
+                    if M[i+di[k]][j+dj[k]] == 2:
+                        cnt += 1
+                if cnt == 0:
+                    result = 'c'
+                elif cnt == 1:
+                    result = 'b'
+                else:
+                    result = 'a'
+                break
+        if result != 'd':
+            break
+    print(result)
 ```
 
 ### 
