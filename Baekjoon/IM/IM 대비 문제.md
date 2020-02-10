@@ -151,7 +151,7 @@ print(N*6-min(result))
 ```python
 
 N = int(input())
-M = [0]*1000
+M = [0]*1001
 max_H = 0
 L_list = []
 max_start_L = 0
@@ -195,21 +195,116 @@ print(area)
 
 ```
 
-### 
-
 ```python
+
+N = int(input())
+M = [0]*1001
+max_H = 0
+L_list = []
+max_start_L = 0
+max_end_L = 0
+end_H = 0
+for _ in range(N):
+    L, H = map(int,input().split())
+    L_list.append(L)
+    if max_H < H:
+        max_H = H
+        max_start_L = L
+    elif max_H == H:
+        end_H = H
+        max_end_L = L
+    M[L] = H
+if max_H != end_H:
+    max_end_L = max_start_L
+end = max(L_list)
+M = M[:end+1]
+height = 0
+area = 0
+curr_L = 0
+start_point = 0
+for i in range(max_start_L+1):
+    if M[i] > height:
+        area += (i - start_point) * height
+        start_point = i
+        height = M[i]
+
+area += height*(max_end_L - max_start_L +1)
+
+
+start_point = len(M)-1
+height = M[-1]
+for j in range(len(M)-1,max_end_L-1,-1):
+    if M[j] > height:
+        area += (start_point-j) * height
+        start_point = j
+        height = M[j]
+
+
+print(area)
 
 ```
 
-### 
+### 2559. 수열
 
 ```python
+N, K = map(int,input().split())
+N_list = list(map(int, input().split()))
+s = 0
+for i in range(K):
+    s += N_list[i]
+S1 = [s]
 
+for i in range(K,N):
+    S1.append(S1[-1]+N_list[i]-N_list[i-K])
+print(max(S1))
 ```
 
-### 
+### 2578. 빙고
 
 ```python
+board = []
+check = []
+for i in range(5):
+    b = list(map(int, input().split()))
+    board.append(b)
+    check.append([0]*5)
+
+tell = []
+for i in range(5):
+    tell += list(map(int, input().split()))
+for t in range(len(tell)):
+    bingo = 0
+    for i in range(5):
+        if tell[t] in board[i]:
+            j = board[i].index(tell[t])
+            break
+    check[i][j] = 1
+    l_u = 0
+    r_u = 0
+    for k in range(5):
+        if check[k][k] == 1:
+            l_u += 1
+        if check[4-k][k] == 1:
+            r_u += 1
+        if sum(check[k]) == 5:
+            bingo += 1
+        down = 0
+        for i in range(5):
+            if check[i][k] == 1:
+                down += 1
+        if down == 5:
+            bingo += 1
+    if l_u == 5:
+        bingo += 1
+    if r_u == 5:
+        bingo += 1
+
+    if bingo >= 3:
+        break
+
+
+print(t+1)
+
 
 ```
 
