@@ -298,97 +298,337 @@ print(N*area)
 ### 2527. 직사각형
 
 ```python
-di = [0,0,1,-1]
-dj = [1,-1,0,0]
 for case in range(4):
-    M = []
-    L = list(map(int,input().split()))
-    for i in range(max(L[3], L[7]) + 1):
-        M.append([0]*(max(L[2],L[6])+1))
-    for i in range(L[1],L[3]+1):
-        for j in range(L[0],L[2]+1):
-            M[i][j] += 1
-    for i in range(L[5],L[7]+1):
-        for j in range(L[4],L[6]+1):
-            M[i][j] += 1
-    result = 'd'
-    for i in range(max(L[3], L[7])+1):
-        for j in range(max(L[2],L[6])+1):
-            if M[i][j] == 2:
-                cnt = 0
-                for k in range(4):
-                    if M[i+di[k]][j+dj[k]] == 2:
-                        cnt += 1
-                if cnt == 0:
-                    result = 'c'
-                elif cnt == 1:
-                    result = 'b'
-                else:
-                    result = 'a'
-                break
-        if result != 'd':
-            break
+    x1, y1, x2, y2, p1, q1, p2, q2 = map(int,input().split())
+    if x1 > p2 or y2 < q1 or x2 < p1 or y1 > q2:
+        result = 'd'
+    elif x1 == p2 and y1 == q2 or x2 == p1 and y2 == q1 or x1 == p2 and y2 == q1 or x2 == p1 and y1 == q2:
+        result = 'c'
+    elif x2 == p1 or x1 == p2 or y2 == q1 or y1 == q2:
+        result = 'b'
+    else:
+        result = 'a'
     print(result)
 ```
 
-### 
+### 10157. 자리배정
 
 ```python
+C, R = map(int, input().split())
+K = int(input())
+S = [[-1]*(C+2)]
+for r in range(R):
+    S.append([-1]+[0]*C+[-1])
+S.append([-1]*(C+2))
+result = [0]
+if K > C*R:
+    result = [0]
+else:
+    i = 1
+    j = 1
+    k = 1
+    while k <= K:
+        #위
+        while True:
+            if S[i][j] == 0:
+                S[i][j] = k
+                if k == K:
+                    result = [j, i]
+                    break
+                k += 1
+                i += 1
+            else:
+                j += 1
+                i -= 1
+                break
+        if result != [0]:
+            break
+        #오른쪽
+        while True:
+            if S[i][j] == 0:
+                S[i][j] = k
+                if k == K:
+                    result = [j, i]
+                    break
+                k += 1
+                j += 1
+            else:
+                i -= 1
+                j -= 1
+                break
+        if result != [0]:
+            break
+        #아래
+        while True:
+            if S[i][j] == 0:
+                S[i][j] = k
+                if k == K:
+                    result = [j, i]
+                    break
+                k += 1
+                i -= 1
+            else:
+                j -= 1
+                i += 1
+                break
+        if result != [0]:
+            break
+        #왼쪽
+        while True:
+            if S[i][j] == 0:
+                S[i][j] = k
+                if k == K:
+                    result = [j,i]
+                    break
+                k += 1
+                j -= 1
+            else:
+                i += 1
+                j += 1
+                break
+        if result != [0]:
+            break
+print(' '.join(map(str, result)))
+```
+
+### 10158. 개미
+
+```python
+w, h = map(int, input().split())
+p, q = map(int, input().split())
+t = int(input())
+
+i = 1
+j = 1
+for _ in range(t):
+    if q+i < 0 or q+i > h:
+        i = -i
+    elif p+j < 0 or p+j > w:
+        j = -j
+    q += i
+    p += j
+print(p,q)
 
 ```
 
-### 
-
 ```python
+w, h = map(int, input().split())
+p, q = map(int, input().split())
+t = int(input())
 
+if ((p+t)//w)%2 == 0:
+    f_p = (p+t) % w
+else:
+    f_p = w - (p + t) % w
+
+if ((q+t)//h)%2 == 0:
+    f_q = (q+t) % h
+else:
+    f_q = h - (q + t) % h
+
+print(f_p,f_q)
 ```
 
-### 
+### 10163. 색종이
 
 ```python
+N = int(input())
 
+M = []
+for _ in range(101):
+    M.append([0]*101)
+
+for n in range(1, N+1):
+    j, i, W, H = map(int, input().split())
+    for h in range(H):
+        for w in range(W):
+            M[i+h][j+w] = n
+for n in range(1, N+1):
+    cnt = 0
+    for i in range(101):
+        cnt += M[i].count(n)
+    print(cnt)
 ```
 
-### 
+### 13300. 방 배정
 
 ```python
 
+N, K = map(int, input().split())
+
+D = {}
+
+for g in range(1,7):
+    D[g] = {0:0, 1:0}
+
+for _ in range(N):
+    s, g = map(int, input().split())
+    D[g][s] += 1
+
+room_cnt = 0
+for g in range(1,7):
+    for i in range(2):
+        if D[g][i] != 0:
+            room_cnt += (D[g][i]-1)//K +1
+
+print(room_cnt)
 ```
 
-### 
+### 14696. 딱지놀이
 
 ```python
+N = int(input())
+A = []
+B = []
 
+for _ in range(N):
+    n, *A = list(map(int, input().split()))
+    n, *B = list(map(int, input().split()))
+    for j in range(4,0,-1):
+        if A.count(j) > B.count(j):
+            print('A')
+            break
+        elif A.count(j) < B.count(j):
+            print('B')
+            break
+        else:
+            if j == 1:
+                print('D')
 ```
 
-### 
+### 2309. 일곱 난쟁이
 
 ```python
+import itertools
 
+H = []
+
+for _ in range(9):
+    h = int(input())
+    H.append(h)
+
+for h in itertools.combinations(H,7):
+    if sum(h) == 100:
+        break
+for i in sorted(h):
+    print(i)
 ```
 
-### 
+### 2605. 줄 세우기
 
 ```python
+N = int(input())
+arr = []
+numbers = list(map(int, input().split()))
 
+for n in range(1, N+1):
+    arr.insert(n-1 - numbers[n-1],n)
+
+print(' '.join(map(str, arr)))
 ```
 
-### 
+### 2563. 색종이
 
 ```python
+M = []
+for _ in range(101):
+    M.append([0]*101)
 
+N = int(input())
+arr = []
+for n in range(N):
+    J, I = map(int, input().split())
+    for i in range(I, I+10):
+        for j in range(J, J+10):
+            M[i][j] = 1
+area = 0
+for i in range(101):
+    area += M[i].count(1)
+
+print(area)
 ```
 
-### 
+### 2564. 경비원
 
 ```python
+h, v = map(int,input().split())
 
+N = int(input())
+store = []
+for n in range(N):
+    s = list(map(int, input().split()))
+    store.append(s)
+
+d_p, dis = map(int, input().split())
+
+sum0 = 0
+
+for n in range(N):
+    if d_p == 1:
+        if store[n][0] == 3:
+            short = store[n][1]+dis
+        elif store[n][0] == 4:
+            short = store[n][1]+(h-dis)
+        elif store[n][0] == 2:
+            short = min(store[n][1] + dis + v, 2*h - store[n][1] - dis + v)
+        else:
+            short = abs(store[n][1]-dis)
+    elif d_p == 2:
+        if store[n][0] == 3:
+            short = v-store[n][1]+dis
+        elif store[n][0] == 4:
+            short = v-store[n][1]+(h-dis)
+        elif store[n][0] == 1:
+            short = min(store[n][1] + dis + v, 2*h - store[n][1] - dis + v)
+        else:
+            short = abs(store[n][1]-dis)
+    elif d_p == 3:
+        if store[n][0] == 1:
+            short = store[n][1]+dis
+        elif store[n][0] == 2:
+            short = store[n][1]+(v-dis)
+        elif store[n][0] == 4:
+            short = min(store[n][1] + dis + h, 2*v - store[n][1] - dis + h)
+        else:
+            short = abs(store[n][1]-dis)
+    elif d_p == 4:
+        if store[n][0] == 1:
+            short = h-store[n][1] + dis
+        elif store[n][0] == 2:
+            short = h-store[n][1] + (v - dis)
+        elif store[n][0] == 3:
+            short = min(store[n][1] + dis + h, 2 * v - store[n][1] - dis + h)
+        else:
+            short = abs(store[n][1] - dis)
+    sum0 += short
+
+print(sum0)
 ```
 
-### 
+### 2491. 수열
 
 ```python
+N = int(input())
 
+n = list(map(int, input().split()))
+cnt = 1
+l = 1
+for i in range(1, N):
+    if n[i-1] <= n[i]:
+        cnt += 1
+        if l < cnt:
+            l = cnt
+    else:
+        cnt = 1
+cnt = 1
+for i in range(1, N):
+    if n[i-1] >= n[i]:
+        cnt += 1
+        if l < cnt:
+            l = cnt
+    else:
+        cnt = 1
+print(l)
 ```
 
 ### 
