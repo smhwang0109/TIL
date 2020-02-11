@@ -96,7 +96,81 @@ print(count)
 ### 17135. 캐슬 디펜스
 
 ```python
+from pprint import pprint
+from copy import deepcopy
 
+#공격
+def attack(k, l):
+    result = 0
+    nearest = 1000000
+    n_list = []
+    for j in range(M):
+        for i in range(N):
+            if new_A[i][j] == 1:
+                if abs(k-i) + abs(l-j) <= D and abs(k-i) + abs(l-j) < nearest:
+                    nearest = abs(k-i) + abs(l-j)
+                    n_list = []
+                    n_list.append([i,j])
+                elif abs(k-i) + abs(l-j) <= D and abs(k-i) + abs(l-j) < nearest:
+                    n_list.append([i, j])
+    min_j = 1000000
+    for n in n_list:
+        if n[1] < min_j:
+            min_j = n[1]
+            result = n
+    if result:
+        return  result
+
+def down():
+    for i in range(N-1,-1,-1):
+        for j in range(M):
+            if new_A[i][j] == 1:
+                if i != N:
+                    new_A[i+1][j] = new_A[i][j]
+                new_A[i][j] = 0
+
+
+
+
+N, M, D = map(int, input().split())
+
+A = []
+for i in range(N):
+    a = list(map(int, input().split()))
+    A.append(a)
+A.append([0]*M)
+pprint(A)
+max_cnt = 0
+# 궁수 [N,a], [N,b], [N,c]
+for a in range(M-2):
+    for b in range(a, M-1):
+        for c in range(b, M):
+            new_A = deepcopy(A)
+            A_cnt = 0
+            while True:
+                att1 = attack(N, a)
+                att2 = attack(N, b)
+                att3 = attack(N, c)
+                if att1:
+                    new_A[att1[0]][att1[1]] = 0
+                    A_cnt += 1
+                if att2:
+                    new_A[att2[0]][att2[1]] = 0
+                    A_cnt += 1
+                if att3:
+                    new_A[att3[0]][att3[1]] = 0
+                    A_cnt += 1
+                down()
+                cnt = 0
+                for i in range(N):
+                    if new_A[i].count(1):
+                        cnt = 1
+                        break
+                if cnt == 0:
+                    break
+            if max_cnt < A_cnt:
+                max_cnt = A_cnt
+print(max_cnt)
 ```
 
 ### 
