@@ -139,7 +139,6 @@ for i in range(N):
     a = list(map(int, input().split()))
     A.append(a)
 A.append([0]*M)
-pprint(A)
 max_cnt = 0
 # 궁수 [N,a], [N,b], [N,c]
 for a in range(M-2):
@@ -156,10 +155,12 @@ for a in range(M-2):
                     A_cnt += 1
                 if att2:
                     new_A[att2[0]][att2[1]] = 0
-                    A_cnt += 1
+                    if att1 != att2:
+                        A_cnt += 1
                 if att3:
                     new_A[att3[0]][att3[1]] = 0
-                    A_cnt += 1
+                    if att1 != att3 and att2 != att3:
+                        A_cnt += 1
                 down()
                 cnt = 0
                 for i in range(N):
@@ -173,9 +174,42 @@ for a in range(M-2):
 print(max_cnt)
 ```
 
-### 
+### 15684. 사다리 조작
 
 ```python
+def check(i,j):
+    while i <= 2*H:
+        if A[i][j+1] == 1:
+            j += 2
+            i += 1
+        elif A[i][j-1] == 1:
+            j -= 2
+            i += 1
+        else:
+            i += 1
+
+
+N, M, H = map(int, input().split())
+A = []
+
+for i in range(H*2+1):
+    A.append([0] + [1, 0]*(N-1)+[1] + [0])
+print(A)
+for _ in range(M):
+    a, b = map(int,input().split())
+    A[a*2][b*2] = 1
+print(A)
+ab_list = []
+for i in range(2,2*N+1,2):
+    for j in range(2,2*H,2):
+        if A[i][j] == 0 and A[i][j+2] == 0 and A[i][j-2] == 0:
+            ab_list.append([a,b])
+
+
+i = 1
+for j in range(1,N*2,2):
+
+
 
 ```
 
