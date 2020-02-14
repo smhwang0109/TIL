@@ -1,3 +1,5 @@
+# Stack
+
 # BaekJoon study
 
 ### 10828. 스택
