@@ -52,6 +52,40 @@ for i in range(N):
         print(Stack.top())
 ```
 
+```python
+# 강사님 풀이
+
+import sys
+
+T = int(sys.stdin.readline())
+
+stack = []
+
+for _ in range(T):
+    D = sys.stdin.readline().split()
+    if D[0] == 'push':
+        stack.append(D[1])
+    elif D[0] == 'top':
+        if len(stack):
+            print(stack[-1])
+        else:
+            print(-1)
+    elif D[0] == 'size':
+        print(len(stack))
+    elif D[0] == 'pop':
+        if len(stack):
+            print(stack.pop())
+        else:
+            print(-1)
+    elif D[0] == 'empty':
+        if len(stack):
+            print(0)
+        else:
+            print(1)
+```
+
+
+
 ### 10773. 제로
 
 ```python
@@ -68,6 +102,27 @@ for _ in range(K):
     else:
         stack.pop()
 print(sum(stack))
+```
+
+```python
+# 강사님 풀이
+import sys
+
+T = int(sys.stdin.readline())
+
+stack = []
+
+for _ in range(T):
+    D = int(sys.stdin.readline())
+
+    if D == 0:
+        if len(stack) != 0:
+            stack.pop()
+    else:
+        stack.append(D)
+
+print(sum(stack))
+
 ```
 
 ### 9012. 괄호
@@ -94,6 +149,56 @@ for _ in range(T):
         result = 'NO'
 
     print(result)
+```
+
+```python
+# 강사님 풀이
+
+import sys
+
+T = int(sys.stdin.readline())
+
+for _ in range(T):
+    D = sys.stdin.readline().strip()
+    stack = []
+    for p in D:
+        if p == '(':
+            stack.append(p)
+        else:
+            if len(stack) != 0:
+                stack.pop()
+            else:
+                print('NO')
+                break
+    else:
+        if len(stack) == 0:
+            print('YES')
+        else:
+            print('NO')
+```
+
+```python
+# 강사님 풀이
+import sys
+
+T = int(sys.stdin.readline())
+
+for _ in range(T):
+    D = sys.stdin.readline().strip()
+    stack = 0
+    for p in D:
+        if p == '(':
+            stack += 1
+        else:
+            stack -= 1
+        if stack < 0:
+            print('NO')
+            break
+    else:
+        if not stack:
+            print('YES')
+        else:
+            print('NO')
 ```
 
 ### 1874. 스택 수열
@@ -138,14 +243,61 @@ for r in result:
 
 ### 1406. 에디터
 
-```
+```python
+from collections import deque
 
+S = input()
+M = int(input())
+stack = deque(S)
+temp = deque()
+for i in range(M):
+    order = input().split()
+    if order[0] == 'L':
+        if stack:
+            temp.appendleft(stack.pop())
+    elif order[0] == 'D':
+        if temp:
+            stack.append(temp.popleft())
+    elif order[0] == 'B':
+        if stack:
+            stack.pop()
+    elif order[0] == 'P':
+        stack.append(order[1])
+
+for i in temp:
+    stack.append(i)
+print(''.join(stack))
 ```
 
 ### 4949. 균형잡힌 세상
 
-```
+```python
+from collections import deque
 
+while True:
+    stack = deque()
+    result = 'yes'
+    S = input()
+    if S == '.':
+        break
+    for i in S:
+        if i == '(' or i == '[':
+            stack.append(i)
+        elif i == ')':
+            if stack and stack[-1] == '(':
+                stack.pop()
+            else:
+                result = 'no'
+                break
+        elif i == ']':
+            if stack and stack[-1] == '[':
+                stack.pop()
+            else:
+                result = 'no'
+                break
+    if stack:
+        result = 'no'
+    print(result)
 ```
 
 
@@ -206,6 +358,26 @@ for case in range(1, T+1):
             stack.append(i)
 
     print('#{} {}'.format(case, len(stack)))
+```
+
+```python
+# 강사님 풀이
+
+T = int(input())
+
+for tc in range(1, T+1):
+    stack = []
+    D = input()
+    for c in D:
+        if stack:
+            if stack[-1] == c:
+                stack.pop()
+            else:
+                stack.append(c)
+        else:
+            stack.append(c)
+    print('#{} {}'.format(tc, len(stack)))
+
 ```
 
 ### 
@@ -278,6 +450,38 @@ def solution(heights):
     return answer
 ```
 
+```python
+# 강사님 풀이
+def solution(heights):
+    answer = []
+    for i in range(len(heights)):
+        for j in range(i, -1, -1):
+            if heights[i] < heights[j]:
+                answer.append(j+1)
+                break
+        else:
+            answer.append(0)
+
+    return answer
+```
+
+```python
+# 강사님 풀이 Stack 풀이
+def solution(heights):
+    answer = []
+
+    for i in range(len(heights)):
+        stack = []
+        for j in range(i):
+            if heights[i] < heights[j]:
+                stack.append(j+1)
+        if len(stack) != 0:
+            answer.append(stack.pop())
+        else:
+            answer.append(0)
+    return answer
+```
+
 ### 주식가격
 
 ```python
@@ -301,6 +505,56 @@ def solution(prices):
 
 print(solution([1,2,3,2,3]))
 ```
+
+```python
+# 강사님 풀이
+def solution(prices):
+    answer = []
+    for i in range(len(prices)):
+        cnt = 0
+        for j in range(i+1, len(prices)):
+            if prices[i] <= prices[j]:
+                cnt += 1
+            else:
+                cnt += 1
+                break
+        answer.append(cnt)
+
+    return answer
+```
+
+```python
+# 강사님 풀이
+def solution(prices):
+    answer = []
+    for i in range(len(prices)):
+        cnt = 0
+        for j in range(i+1, len(prices)):
+            cnt += 1
+            if prices[i] > prices[j]:
+                break
+        answer.append(cnt)
+
+    return answer
+```
+
+```python
+# Stack 풀이
+def solution(prices):
+    stack = []
+    result = [0 for _ in range(len(prices))]
+    for i in range(len(prices)):
+        while stack and prices[stack[-1]] > prices[i]:
+            x = stack.pop()
+            result[x] = i - x
+        stack.append(i)
+    while stack:
+        x = stack.pop()
+        result[x] = i - x
+    return result
+```
+
+
 
 ### 쇠막대기
 
@@ -327,6 +581,10 @@ def solution(arrangement):
                 stack.pop()
     answer += cnt
     return answer
+
+```
+
+```
 
 ```
 
