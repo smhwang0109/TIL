@@ -31,7 +31,7 @@ def DFS2(v):
 
 import sys
 
-sys.stdin = open('input.txt')
+sys.stdin = open('input2.txt')
 
 V, E = map(int, input().split())
 
@@ -43,4 +43,5 @@ for i in range(E):
     G[u].append(v)
     G[v].append(u)
 
+print(G)
 DFS2(1)
