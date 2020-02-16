@@ -44,3 +44,296 @@ for tc in range(1, T+1):
 
 ### 1260. DFS와 BFS
 
+```python
+from collections import deque
+
+def DFS(s):
+    stack = deque()
+    visited = [0] * (N+1)
+    stack.append(s)
+    visited[s] = 1
+    print(s,end='')
+    while True:
+        for i in D[s]:
+            if visited[i] == 0:
+                stack.append(i)
+                visited[i] = 1
+                s = i
+                print('', s, end='')
+                break
+        else:
+            stack.pop()
+            if stack:
+                s = stack[-1]
+            else:
+                break
+def BFS(s):
+    stack = deque()
+    visited = [0] * (N + 1)
+    stack.append(s)
+    visited[s] = 1
+    print(s, end='')
+    while True:
+        for i in D[s]:
+            if visited[i] == 0:
+                stack.append(i)
+                visited[i] = 1
+                s = i
+                print('', s, end='')
+        else:
+            stack.popleft()
+            if stack:
+                s = stack[0]
+            else:
+                break
+
+N, M, V = map(int, input().split())
+D = [[] for _ in range(N+1)]
+for _ in range(M):
+    n1, n2 = map(int, input().split())
+    D[n1].append(n2)
+    D[n2].append(n1)
+for i in range(1, N+1):
+    D[i].sort()
+DFS(V)
+print()
+BFS(V)
+```
+
+### 2606. 바이러스
+
+```python
+def DFS(s):
+    stack = []
+    visited = [0]*(N+1)
+    visited[s] = 1
+    stack.append(s)
+    cnt = 0
+    while True:
+        for i in D[s]:
+            if visited[i] == 0:
+                visited[i] = 1
+                stack.append(i)
+                cnt += 1
+                s = i
+                break
+        else:
+            stack.pop()
+            if stack:
+                s = stack[-1]
+            else:
+                break
+    return cnt
+
+
+N = int(input())
+V = int(input())
+D = [[] for _ in range(N+1)]
+
+for _ in range(V):
+    n1, n2 = map(int, input().split())
+    D[n1].append(n2)
+    D[n2].append(n1)
+print(DFS(1))
+
+```
+
+```python
+def BFS(s):
+    stack = deque()
+    visited = [0]*(N+1)
+    visited[s] = 1
+    stack.append(s)
+    cnt = 0
+    while True:
+        for i in D[s]:
+            if visited[i] == 0:
+                visited[i] = 1
+                stack.append(i)
+                cnt += 1
+                s = i
+        else:
+            stack.popleft()
+            if stack:
+                s = stack[0]
+            else:
+                break
+    return cnt
+
+from _collections import deque
+
+N = int(input())
+V = int(input())
+D = [[] for _ in range(N+1)]
+
+for _ in range(V):
+    n1, n2 = map(int, input().split())
+    D[n1].append(n2)
+    D[n2].append(n1)
+print(BFS(1))
+
+```
+
+### 2667. 단지번호붙이기
+
+```python
+from _collections import deque
+
+def BFS(i,j):
+    M[i][j] = 2
+    stack = deque()
+    h_cnt = 1
+    while True:
+        for k in range(4):
+            if M[i+di[k]][j+dj[k]] == 1:
+                h_cnt += 1
+                stack.append([i+di[k], j+dj[k]])
+                M[i+di[k]][j+dj[k]] = 2
+        if stack:
+            s = stack.popleft()
+            i = s[0]
+            j = s[1]
+        else:
+            break
+
+    return h_cnt
+
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
+N = int(input())
+M = [[0]*(N+2)]
+for i in range(N):
+    m = list(map(int,list(input())))
+    M.append([0] + m + [0])
+M.append([0]*(N+2))
+cnt = 0
+result = []
+for i in range(1,N+1):
+    for j in range(1,N+1):
+        if M[i][j] == 1:
+            cnt += 1
+            result.append(BFS(i,j))
+result = sorted(result)
+print(cnt)
+for r in result:
+    print(r)
+```
+
+### 1012. 유기농 배추
+
+```python
+from _collections import deque
+
+def BFS(i,j):
+    A[i][j] = 2
+    stack = deque()
+    while True:
+        for k in range(4):
+            if A[i+di[k]][j+dj[k]] == 1:
+                stack.append([i+di[k], j+dj[k]])
+                A[i+di[k]][j+dj[k]] = 2
+        if stack:
+            s = stack.popleft()
+            i = s[0]
+            j = s[1]
+        else:
+            break
+
+
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
+
+T = int(input())
+for tc in range(1, T+1):
+    M, N, K = map(int,input().split())
+    A = [[0]*(M+2) for _ in range(N+2)]
+    for _ in range(K):
+        j, i = map(int, input().split())
+        A[i+1][j+1] = 1
+    cnt = 0
+    for i in range(1, N+1):
+        for j in range(1, M+1):
+            if A[i][j] == 1:
+                cnt += 1
+                BFS(i,j)
+    print(cnt)
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+

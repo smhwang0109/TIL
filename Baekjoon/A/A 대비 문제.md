@@ -210,9 +210,67 @@ i = 1
 for j in range(1,N*2,2):
 ```
 
-### 
+### 17070. 파이프 옮기기 1
 
 ```python
+from _collections import deque
+import sys
+
+def check(s):
+    temp = deque()
+    if s[1] == '가로':
+        if A[s[0][0]][s[0][1]+1] == 0:
+            temp.append([[s[0][0],s[0][1]+1],'가로',s[2]])
+        if A[s[0][0]][s[0][1]+1] == 0 and A[s[0][0]+1][s[0][1]] == 0 and A[s[0][0]+1][s[0][1]+1] == 0:
+            temp.append([[s[0][0]+1, s[0][1] + 1], '대각선',s[2]])
+    elif s[1] == '세로':
+        if A[s[0][0]+1][s[0][1]] == 0:
+            temp.append([[s[0][0]+1,s[0][1]],'세로',s[2]])
+        if A[s[0][0]][s[0][1]+1] == 0 and A[s[0][0]+1][s[0][1]] == 0 and A[s[0][0]+1][s[0][1]+1] == 0:
+            temp.append([[s[0][0]+1, s[0][1] + 1], '대각선',s[2]])
+    elif s[1] == '대각선':
+        if A[s[0][0]][s[0][1]+1] == 0:
+            temp.append([[s[0][0],s[0][1]+1],'가로',s[2]])
+        if A[s[0][0]+1][s[0][1]] == 0:
+            temp.append([[s[0][0]+1,s[0][1]],'세로',s[2]])
+        if A[s[0][0]][s[0][1]+1] == 0 and A[s[0][0]+1][s[0][1]] == 0 and A[s[0][0]+1][s[0][1]+1] == 0:
+            temp.append([[s[0][0]+1, s[0][1] + 1], '대각선',s[2]])
+    return temp
+
+def BFS(s):
+    cnt = 0
+    stack = []
+    stack.append(s)
+    visited = []
+    while True:
+        check_list = check(s)
+        for c in check_list:
+            if c[0] == [N-1,N-1]:
+                cnt += c[2]
+            for v in stack:
+                if v[:2] == c[:2]:
+                    v[2] += c[2]
+                    break
+            else:
+                stack.append(c)
+                s = c
+        stack.pop(0)
+        if stack:
+            s = stack[0]
+        else:
+            break
+    return cnt
+
+
+
+N = int(sys.stdin.readline())
+A = deque()
+for i in range(N):
+    a = list(map(int, sys.stdin.readline().split()))
+    A.append(a + [-1])
+A.append([-1]*(N+1))
+S = [[0,1],'가로',1]
+print(BFS(S))
 
 ```
 
