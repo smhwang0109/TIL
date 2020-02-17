@@ -44,4 +44,4 @@ for i in range(E):
     G[v].append(u)
 
 print(G)
-DFS2(1)
+DFS(1)
