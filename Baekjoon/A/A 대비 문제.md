@@ -196,47 +196,47 @@ def check(i,j, new_A):
         return -1
 
 def cnt_up1():
-    for n in ladder_possible:
-        A[n[0]][n[1]] = 1
+    for n in range(len(ladder_possible)):
+        A[ladder_possible[n][0]][ladder_possible[n][1]] = 1
         for j in range(1,N*2,2):
             if check(1,j, A) == -1:
-                A[n[0]][n[1]] = 0
+                A[ladder_possible[n][0]][ladder_possible[n][1]] = 0
                 break
         else:
             return 1
     return -1
 
 def cnt_up2():
-    for n1 in ladder_possible:
-        for n2 in ladder_possible:
+    for n1 in range(len(ladder_possible)-1):
+        for n2 in range(n1+1, len(ladder_possible)):
             if n1 != n2:
-                A[n1[0]][n1[1]] = 1
-                A[n2[0]][n2[1]] = 1
+                A[ladder_possible[n1][0]][ladder_possible[n1][1]] = 1
+                A[ladder_possible[n2][0]][ladder_possible[n2][1]] = 1
                 for j in range(1,N*2,2):
                     if check(1,j, A) == -1:
-                        A[n2[0]][n2[1]] = 0
+                        A[ladder_possible[n2][0]][ladder_possible[n2][1]] = 0
                         break
                 else:
                     return 2
-        A[n1[0]][n1[1]] = 0
+        A[ladder_possible[n1][0]][ladder_possible[n1][1]] = 0
     return -1
 
 def cnt_up3():
-    for n1 in ladder_possible:
-        for n2 in ladder_possible:
-            for n3 in ladder_possible:
+    for n1 in range(len(ladder_possible)-2):
+        for n2 in range(n1+1,len(ladder_possible)-1):
+            for n3 in range(n2+1,len(ladder_possible)):
                 if n1 != n2 and n1 != n3 and n2 != n3:
-                    A[n1[0]][n1[1]] = 1
-                    A[n2[0]][n2[1]] = 1
-                    A[n3[0]][n3[1]] = 1
+                    A[ladder_possible[n1][0]][ladder_possible[n1][1]] = 1
+                    A[ladder_possible[n2][0]][ladder_possible[n2][1]] = 1
+                    A[ladder_possible[n3][0]][ladder_possible[n3][1]] = 1
                     for j in range(1,N*2,2):
                         if check(1,j, A) == -1:
-                            A[n3[0]][n3[1]] = 0
+                            A[ladder_possible[n3][0]][ladder_possible[n3][1]] = 0
                             break
                     else:
                         return 3
-            A[n2[0]][n2[1]] = 0
-        A[n1[0]][n1[1]] = 0
+            A[ladder_possible[n2][0]][ladder_possible[n2][1]] = 0
+        A[ladder_possible[n1][0]][ladder_possible[n1][1]] = 0
     return -1
 
 N, M, H = map(int, sys.stdin.readline().split())
@@ -269,100 +269,6 @@ if result != 0:
             result = cnt_up3()
 print(result)
 ```
-
-```python
-from itertools import combinations
-from copy import deepcopy
-import sys
-from pprint import pprint
-
-def check(i,j, new_A):
-    initial_j = j
-    while i < 2*H+1:
-        if new_A[i][j+1] == 1:
-            j += 2
-            i += 1
-        elif new_A[i][j-1] == 1:
-            j -= 2
-            i += 1
-        else:
-            i += 1
-    if initial_j == j:
-        return 1
-    else:
-        return -1
-
-def cnt_up1():
-    store = []
-    for l in ladder_possible:
-        new_A = deepcopy(A)
-        new_A[l[0]][l[1]] = 1
-        store.append(new_A)
-        for j in range(1, N * 2, 2):
-            if check(1, j, new_A) == -1:
-                break
-        else:
-            return 1
-    return store
-
-def cnt_up2(store):
-    for l in range(len(ladder_possible)):
-        for k in range(len(store)):
-            new_A = deepcopy(store[k])
-            if l != k:
-                new_A[ladder_possible[l][0]][ladder_possible[l][1]] = 1
-            for j in range(1, N * 2, 2):
-                if check(1, j, new_A) == -1:
-                    break
-        else:
-            pprint(new_A)
-            return 2
-    return -1
-
-def cnt_up3():
-    for l in combinations(ladder_possible, 3):
-        new_A = deepcopy(A)
-        for n in l:
-            new_A[n[0]][n[1]] = 1
-        for j in range(1,N*2,2):
-            if check(1,j, new_A) == -1:
-                break
-        else:
-            return 3
-    return -1
-
-N, M, H = map(int, sys.stdin.readline().split())
-A = []
-
-for i in range(H*2+2):
-    A.append([0] + [1, 0]*N)
-
-for _ in range(M):
-    a, b = map(int,sys.stdin.readline().split())
-    A[a*2][b*2] = 1
-ladder_possible = []
-for i in range(2,2*H+1,2):
-    for j in range(2,2*N,2):
-        if A[i][j] == 0 and A[i][j+2] == 0 and A[i][j-2] == 0:
-            ladder_possible.append([i,j])
-i = 1
-result = -1
-for j in range(1, N * 2, 2):
-    if check(1, j, A) == -1:
-        break
-else:
-    result = 0
-
-if result != 0:
-    result = cnt_up1()
-    if result != 1:
-        result = cnt_up2(result)
-        if result == -1:
-            result = cnt_up3()
-print(result)
-```
-
-
 
 ### 17070. 파이프 옮기기 1
 
