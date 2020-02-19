@@ -360,21 +360,24 @@ def recursion(X):
     global max0
     if max0 < temp_sum:
         max0 = temp_sum
-
     for i in range(2,len(X)-1,2):
         temp = deepcopy(X)
-        temp[i] = Calculate(temp[i],temp[i+1],temp[i+2])
-        temp.pop(i+1)
-        temp.pop(i+1)
-        recursion(temp)
+        if type(temp[i+2]) == str and type(temp[i]) == str:
+            temp[i] = Calculate(temp[i],temp[i+1],temp[i+2])
+            temp.pop(i+1)
+            temp.pop(i+1)
+            recursion(temp)
 
 
 N = int(input())
 A = list(input())
 result = []
 max0 = -(2**31+1)
-recursion(A)
-print(max0)
+if len(A) == 1:
+    print(A[0])
+else:
+    recursion(A)
+    print(max0)
 
 
 ```
