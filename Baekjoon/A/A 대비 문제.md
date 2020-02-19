@@ -334,9 +334,48 @@ print(BFS(S))
 
 ```
 
-### 
+### 16637. 괄호 추가하기
 
 ```python
+from copy import deepcopy
+
+def Calculate(a,c,b):
+    if c == '+':
+        return int(a)+int(b)
+    elif c == '-':
+        return int(a)-int(b)
+    elif c == '*':
+        return int(a)*int(b)
+
+def recursion(X):
+    for i in range(0,len(X)-1):
+        if i == 0:
+            temp_sum = int(X[i])
+        elif X[i] == '+':
+            temp_sum += int(X[i+1])
+        elif X[i] == '-':
+            temp_sum -= int(X[i+1])
+        elif X[i] == '*':
+            temp_sum *= int(X[i+1])
+    global max0
+    if max0 < temp_sum:
+        max0 = temp_sum
+
+    for i in range(2,len(X)-1,2):
+        temp = deepcopy(X)
+        temp[i] = Calculate(temp[i],temp[i+1],temp[i+2])
+        temp.pop(i+1)
+        temp.pop(i+1)
+        recursion(temp)
+
+
+N = int(input())
+A = list(input())
+result = []
+max0 = -(2**31+1)
+recursion(A)
+print(max0)
+
 
 ```
 
