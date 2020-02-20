@@ -382,16 +382,149 @@ else:
 
 ```
 
-### 
+### 14499. 주사위 굴리기
 
 ```python
-
+N, M, x, y, K = map(int, input().split())
+m = []
+D = {}
+under = 6
+over = 1
+side = [5,3,2,4]
+for i in range(1,7):
+    D[i] = 0
+for i in range(N):
+    t = list(map(int, input().split()))
+    m.append(t)
+order = list(map(int, input().split()))
+for o in order:
+    #동
+    if o == 1:
+        if y+1 < M:
+            temp_u = under
+            temp_o = over
+            under = side[1]
+            over = side[3]
+            side = [side[0], temp_o, side[2], temp_u]
+            y += 1
+            if m[x][y] != 0:
+                D[under] = m[x][y]
+                m[x][y] = 0
+            else:
+                m[x][y] = D[under]
+            print(D[over])
+    #서
+    elif o == 2:
+        if y-1 >= 0:
+            temp_u = under
+            temp_o = over
+            under = side[3]
+            over = side[1]
+            side = [side[0], temp_u, side[2], temp_o]
+            y -= 1
+            if m[x][y] != 0:
+                D[under] = m[x][y]
+                m[x][y] = 0
+            else:
+                m[x][y] = D[under]
+            print(D[over])
+    #북
+    elif o == 3:
+        if x-1 >= 0:
+            temp_u = under
+            temp_o = over
+            under = side[0]
+            over = side[2]
+            side = [temp_o, side[1], temp_u, side[3]]
+            x -= 1
+            if m[x][y] != 0:
+                D[under] = m[x][y]
+                m[x][y] = 0
+            else:
+                m[x][y] = D[under]
+            print(D[over])
+    #남
+    elif o == 4:
+        if x+1 < N:
+            temp_u = under
+            temp_o = over
+            under = side[2]
+            over = side[0]
+            side = [temp_u, side[1], temp_o, side[3]]
+            x += 1
+            if m[x][y] != 0:
+                D[under] = m[x][y]
+                m[x][y] = 0
+            else:
+                m[x][y] = D[under]
+            print(D[over])
 ```
 
-### 
+### 17136. 색종이 붙이기
 
 ```python
+from pprint import pprint
+from copy import deepcopy
 
+def check(n, i, j):
+    if i+n-1 < 10 and j+n-1 < 10:
+        for k in range(n):
+            if 0 in P[i+k][j:j+n]:
+                return 0
+        return 1
+    return 0
+
+def cover(n ,i, j, P):
+    for k in range(n):
+        for l in range(n):
+            P[i + k][j + l] = 0
+def recover(n ,i, j, P):
+    for k in range(n):
+        for l in range(n):
+            P[i + k][j + l] = 1
+
+def recursion(cnt, P, D, L):
+    global result
+    if cnt >= result:
+        return
+    for l in range(L,1,-1):
+        for i in range(10):
+            for j in range(10):
+                if P[i][j] == 1:
+                    if D[l] > 0:
+                        if check(l, i, j) == 1:
+                            cover(l, i, j, P)
+                            D[l] -= 1
+                            recursion(cnt+1, P, D, l)
+                            D[l] += 1
+                            recover(l, i, j, P)
+    temp = 0
+    for i in range(10):
+        temp += P[i].count(1)
+    if temp > 5:
+        return
+
+    if result > cnt + temp:
+        result = cnt + temp
+        return
+
+
+P = []
+
+for i in range(10):
+    p = list(map(int, input().split()))
+    P.append(p)
+
+D = {}
+for i in range(1,6):
+    D[i] = 5
+
+cnt = 0
+result = 26
+recursion(cnt, P, D, 5)
+if result == 26:
+    result = -1
+print(result)
 ```
 
 ### 
