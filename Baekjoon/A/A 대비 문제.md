@@ -463,56 +463,64 @@ for o in order:
 ### 17136. 색종이 붙이기
 
 ```python
-from pprint import pprint
-from copy import deepcopy
+import sys
 
-def check(n, i, j):
+def check(n, i, j,p):
     if i+n-1 < 10 and j+n-1 < 10:
         for k in range(n):
-            if 0 in P[i+k][j:j+n]:
+            if 0 in p[i+k][j:j+n]:
                 return 0
         return 1
     return 0
 
-def cover(n ,i, j, P):
+def cover(n ,i, j, p):
     for k in range(n):
         for l in range(n):
-            P[i + k][j + l] = 0
-def recover(n ,i, j, P):
+            p[i + k][j + l] = 0
+
+def recover(n ,i, j, p):
     for k in range(n):
         for l in range(n):
-            P[i + k][j + l] = 1
+            p[i + k][j + l] = 1
 
 def recursion(cnt, P, D, L):
     global result
+    if L == 0:
+        for i in range(10):
+            if 1 in P[i]:
+                return
+        if result > cnt:
+            result = cnt
+            return
+    else:
+        for i in range(10):
+            if 1 in P[i]:
+                break
+        else:
+            if result > cnt:
+                result = cnt
+                return
     if cnt >= result:
         return
-    for l in range(L,1,-1):
-        for i in range(10):
-            for j in range(10):
-                if P[i][j] == 1:
+    for i in range(10):
+        for j in range(10):
+            if P[i][j] == 1:
+                for l in range(5,0,-1):
                     if D[l] > 0:
-                        if check(l, i, j) == 1:
+                        if check(l, i, j, P) == 1:
                             cover(l, i, j, P)
                             D[l] -= 1
-                            recursion(cnt+1, P, D, l)
+                            recursion(cnt + 1, P, D,l)
                             D[l] += 1
                             recover(l, i, j, P)
-    temp = 0
-    for i in range(10):
-        temp += P[i].count(1)
-    if temp > 5:
-        return
+                return
 
-    if result > cnt + temp:
-        result = cnt + temp
-        return
 
 
 P = []
 
 for i in range(10):
-    p = list(map(int, input().split()))
+    p = list(map(int, sys.stdin.readline().split()))
     P.append(p)
 
 D = {}
