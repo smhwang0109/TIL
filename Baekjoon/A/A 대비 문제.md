@@ -535,10 +535,61 @@ if result == 26:
 print(result)
 ```
 
-### 
+### 17281. ⚾
 
 ```python
+from itertools import permutations
+import sys
 
+def play_game(o, n):
+    e = 0
+    player = 0
+    out = 0
+    cnt = 0
+    score = 0
+    i = 0
+    while True:
+        if N_list[e][o[i]] != 0 and N_list[e][o[i]] != 4:
+            cnt += N_list[e][o[i]]
+            player += 1
+            if cnt >= 4:
+                score += player-1
+                cnt = N_list[e][o[i]]
+                player = 1
+        elif N_list[e][o[i]] == 4:
+            player += 1
+            score += player
+            cnt = 0
+            player = 0
+        else:
+            out += 1
+            if out == 3:
+                out = 0
+                cnt = 0
+                player = 0
+                e += 1
+                if e == n:
+                    return score
+        i += 1
+        if i == 9:
+            i = 0
+
+
+
+N = int(sys.stdin.readline())
+N_list = []
+for n in range(N):
+    N_list.append(list(map(int, sys.stdin.readline().split())))
+order = []
+for p in permutations(range(1, 9), 8):
+    order.append(list(p)[:3] + [0] + list(p)[3:])
+max0 = 0
+for o in order:
+    s = play_game(o,N)
+    if max0 < s:
+        max0 = s
+
+print(max0)
 ```
 
 ### 
