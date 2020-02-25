@@ -592,6 +592,111 @@ for o in order:
 print(max0)
 ```
 
+### 17406. 배열 돌리기 4
+
+```python
+from itertools import permutations
+from copy import deepcopy
+import sys
+
+def rotation(r,c,s):
+    for n in range(1,s+1):
+        for i in range(2*n):
+            new_A[r - n - 1][c - n + i] = temp_A[r - n - 1][c - n - 1 + i]
+            new_A[r - n + i][c + n - 1] = temp_A[r - n - 1 + i][c + n - 1]
+            new_A[r + n - 1][c + n - i - 2] = temp_A[r + n - 1][c + n - 1 - i]
+            new_A[r + n - i - 2][c - n - 1] = temp_A[r + n - 1 - i][c - n - 1]
+
+
+N, M, K = map(int, sys.stdin.readline().split())
+
+A = []
+order = []
+for _ in range(N):
+    A.append(list(map(int, sys.stdin.readline().split())))
+for _ in range(K):
+    order.append(list(map(int, sys.stdin.readline().split())))
+
+min0 = 1000000
+for P in permutations(order, K):
+    new_A = deepcopy(A)
+    for p in P:
+        temp_A = deepcopy(new_A)
+        rotation(p[0], p[1], p[2])
+    for a in new_A:
+        s = sum(a)
+        if min0 > s:
+            min0 = s
+
+print(min0)
+```
+
+### 17471. 게리맨더링
+
+```python
+from itertools import combinations
+import sys
+
+def check2(a, j, v):
+    if a[0] in D[j]:
+        return 1
+    else:
+        for k in D[j]:
+            if k in a and k not in v:
+                v.append(j)
+                if check2(a, k, v) == 1:
+                    return 1
+        return -1
+
+def check(a):
+    for j in range(1, len(a)):
+        visited = []
+        if check2(a, a[j], visited) == -1:
+            return -1
+    return 1
+
+
+input = sys.stdin.readline
+D = {}
+
+N = int(input())
+population = [0] + list(map(int, input().split()))
+S = sum(population)
+for i in range(N):
+    D[i+1] = list(map(int, input().split()))[1:]
+
+
+min0 = 1000000
+for n in range(1, N//2+1):
+    for C in combinations(range(1,N+1), n):
+        rest = list(range(1, N + 1))
+        for c in C:
+            rest.remove(c)
+        if check(C) == 1 and check(rest) == 1:
+            cnt = 0
+            for i in C:
+                cnt += population[i]
+            sub = abs((S - cnt) - cnt)
+            if min0 > sub:
+                min0 = sub
+if min0 == 1000000:
+    min0 = -1
+print(min0)
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
 ### 
 
 ```python
@@ -609,6 +714,296 @@ print(max0)
 ```python
 
 ```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+
 
 
 
