@@ -685,10 +685,149 @@ print(min0)
 
 ```
 
-### 
+### 17492. 다리만들기 2
 
 ```python
+import sys
+from pprint import pprint
+from copy import deepcopy
 
+def find(initial_i,initial_j,cnt):
+    m[initial_i][initial_j] = cnt
+    for k in range(4):
+        i = initial_i + di[k]
+        j = initial_j + dj[k]
+        if i >= 0 and i < N and j >= 0 and j < M:
+            if m[i][j] == 1:
+                find(i,j,cnt)
+
+def find_spot(initial_i,initial_j, cnt):
+    r = []
+    for k in range(4):
+        i = initial_i + di[k]
+        j = initial_j + dj[k]
+        if i >= 0 and i < N and j >= 0 and j < M:
+            if m[i][j] == 0:
+                b = make_bridge(i, j, k)
+                if b:
+                    r = [i,j,k,b[0],b[1]]
+        if r:
+            r.append(cnt)
+            D_bridge[cnt].append(r)
+
+def make_bridge(i,j,k):
+    cnt = 0
+    while True:
+        if i >= 0 and i < N and j >= 0 and j < M:
+            if m[i][j] == 0:
+                i += di[k]
+                j += dj[k]
+                cnt += 1
+            else:
+                if cnt >= 2:
+                    return [cnt, m[i][j]]
+                return
+        else:
+            return
+
+def BFS(cnt, final):
+    if cnt >= final:
+        result_check(result)
+        return
+    for d in D_bridge[cnt]:
+        D[d[4]].append(d[5])
+        D[d[5]].append(d[4])
+        result.append(d)
+        BFS(cnt+1, final)
+        result.remove(d)
+        D[d[4]].remove(d[5])
+        D[d[5]].remove(d[4])
+
+def result_check(result):
+    global minv
+    for j in range(3, cnt):
+        v = []
+        if not check(j, v):
+            return
+    else:
+        for i in range(len(result)):
+            D[result[i][5]].remove(result[i][4])
+            D[result[i][4]].remove(result[i][5])
+            for j in range(3, cnt):
+                v = []
+                if not check(j, v):
+                    break
+            else:
+                D[result[i][5]].append(result[i][4])
+                D[result[i][4]].append(result[i][5])
+                d = result.pop(i)
+                r_cnt = 0
+                for k in result:
+                    r_cnt += k[3]
+                if minv > r_cnt:
+                    minv = r_cnt
+                result.insert(i,d)
+                return
+            D[result[i][5]].append(result[i][4])
+            D[result[i][4]].append(result[i][5])
+        r_cnt = 0
+        for k in result:
+            r_cnt += k[3]
+        if minv > r_cnt:
+            minv = r_cnt
+        return
+
+def check(j, v):
+    if 2 in D[j]:
+        return True
+    else:
+        for i in D[j]:
+            if i not in v:
+                v.append(j)
+                if check(i,v):
+                    return True
+        return False
+
+
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+m = []
+
+for _ in range(N):
+    m.append(list(map(int, input().split())))
+
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
+D = {}
+D_bridge = {}
+cnt = 2
+for i in range(N):
+    for j in range(M):
+        if m[i][j] == 1:
+            find(i,j,cnt)
+            D[cnt] = []
+            D_bridge[cnt] = []
+            cnt += 1
+final = cnt
+R = []
+for i in range(N):
+    for j in range(M):
+        if m[i][j] != 0:
+            find_spot(i,j, m[i][j])
+
+minv = 100000
+for d in D_bridge:
+    if not d:
+        minv = -1
+        break
+else:
+    result = []
+    f_result = []
+    BFS(2, final)
+if minv == 100000:
+    minv = -1
+print(minv)
 ```
 
 ### 
