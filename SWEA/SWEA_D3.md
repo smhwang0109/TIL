@@ -1871,6 +1871,26 @@ for case in range(1,T+1):
 
 ```
 
+### 9640. 수열 찾기
+
+```python
+T = int(input())
+for case in range(1, T+1):
+    num_list = list(map(int, input().split()))[1:]
+    M = int(input())
+    board = [list(map(int,input().split())) for _ in range(M)]
+    for i in range(M):
+        for j in range(M):
+            if board[i][j] in num_list:
+                num_list.remove(board[i][j])
+    if num_list:
+        result = 0
+    else:
+        result = 1
+
+    print('#{} {}'.format(case, result))
+```
+
 
 
 
