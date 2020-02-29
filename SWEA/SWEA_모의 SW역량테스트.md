@@ -1,0 +1,253 @@
+# SW Expert Academy Algorithm 모의
+
+### 1952. 수영장
+
+```python
+from copy import deepcopy
+
+def check(i, temp):
+    final_price = deepcopy(temp)
+    if i == 10:
+        global minv
+        s = sum(final_price)
+        if minv > s:
+            minv = s
+        return
+    if type(final_price[i]) == list:
+        final_price[i] = month_3
+        if type(final_price[i+1]) == list:
+            final_price[i+1] = 0
+            if type(final_price[i+2]) == list:
+                final_price[i+2] = 0
+                check(i+1, final_price)
+                final_price[i+1] = [month_3]
+                check(i+1, final_price)
+                final_price[i+2] = [month_3]
+                check(i+1, final_price)
+            else:
+                final_price[i + 2] = 0
+                check(i+1, final_price)
+                final_price[i+1] = [month_3]
+                check(i+1, final_price)
+        elif type(final_price[i+2]) == list:
+            final_price[i+1] = 0
+            final_price[i+2] = 0
+            check(i+1, final_price)
+            final_price[i+2] = [month_3]
+            check(i+1, final_price)
+        else:
+            final_price[i+1] = 0
+            final_price[i+2] = 0
+            check(i+1, final_price)
+        if final_price[i+1] == 0:
+            final_price[i+1] = price[i+1]
+        if final_price[i+2] == 0:
+            final_price[i+2] = price[i+2]
+        final_price[i] = price[i]
+    check(i+1, final_price)
+
+
+
+T = int(input())
+for case in range(1, T+1):
+    day, month, month_3, year = map(int, input().split())
+    plan = list(map(int, input().split()))
+    minv = year
+    m = month//day+1
+    price = [0]*12
+    for i in range(12):
+        if plan[i] >= m:
+            if month >= month_3:
+                price[i] = month_3
+            else:
+                price[i] = month
+        else:
+            if plan[i]*day >= month_3:
+                price[i] = month_3
+            else:
+                price[i] = plan[i]*day
+    final_price = [0]*12
+    for i in range(10):
+        sum3 = price[i] + price[i + 1] + price[i + 2]
+        if sum3 >= month_3:
+            final_price[i] = [month_3]
+        else:
+            final_price[i] = price[i]
+    final_price[10] = price[10]
+    final_price[11] = price[11]
+    check(0, final_price)
+    print('#{} {}'.format(case, minv))
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+### 
+
+```python
+
+```
+
+
+
+
+
