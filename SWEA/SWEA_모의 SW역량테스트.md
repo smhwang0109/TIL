@@ -79,9 +79,86 @@ for case in range(1, T+1):
     print('#{} {}'.format(case, minv))
 ```
 
-### 
+### 4008. 숫자 만들기
 
 ```python
+def ins(a,b,c,d,k):
+    if k == (2*N-3):
+        if 0 not in num_list:
+            calc(num_list)
+            return
+    if a != 0:
+        for i in range(1, 2 * N - 1, 2):
+            if num_list[i] == 0:
+                num_list[i] = '+'
+                ins(a - 1, b, c, d, i)
+                num_list[i] = 0
+                break
+    if b != 0:
+        for i in range(1, 2 * N - 1, 2):
+            if num_list[i] == 0:
+                num_list[i] = '-'
+                ins(a,b-1,c,d,i)
+                num_list[i] = 0
+                break
+    if c != 0:
+        for i in range(1, 2 * N - 1, 2):
+            if num_list[i] == 0:
+                num_list[i] = '*'
+                ins(a,b,c-1,d,i)
+                num_list[i] = 0
+                break
+    if d != 0:
+        for i in range(1, 2 * N - 1, 2):
+            if num_list[i] == 0:
+                num_list[i] = '/'
+                ins(a,b,c,d-1,i)
+                num_list[i] = 0
+                break
+
+def calc(L):
+    global minv
+    global maxv
+    result = num_list[0]
+    for i in range(1, 2*N-1, 2):
+        if L[i] == '+':
+            result += num_list[i+1]
+        elif L[i] == '-':
+            result -= num_list[i+1]
+        elif L[i] == '*':
+            result *= num_list[i+1]
+        elif L[i] == '/':
+            result /= num_list[i+1]
+            result = int(result)
+    if maxv < result:
+        maxv = result
+    if minv > result:
+        minv = result
+
+
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    a,b,c,d = map(int, input().split())
+    maxv = -100000000
+    minv = 100000000
+    sign = []
+    for i in range(a):
+        sign.append('+')
+    for i in range(b):
+        sign.append('-')
+    for i in range(c):
+        sign.append('*')
+    for i in range(d):
+        sign.append('/')
+    num = list(map(int, input().split()))
+    num_list = []
+    for i in range(N):
+        num_list.append(num[i])
+        num_list.append(0)
+    num_list.pop()
+    ins(a,b,c,d,0)
+    print('#{} {}'.format(case, maxv-minv))
 
 ```
 

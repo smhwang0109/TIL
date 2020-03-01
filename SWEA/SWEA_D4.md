@@ -150,12 +150,20 @@ for case in range(1, T+1):
 ### 1486. 장훈이의 높은 선반
 
 ```python
+from itertools import combinations
 
-```
+T = int(input())
+for case in range(1, T+1):
+    N, B = map(int,input().split())
+    l = list(map(int,input().split()))
+    minv = 1000000
+    for n in range(1, N+1):
+        for k in combinations(l,n):
+            s = sum(k)
+            if s >= B and minv > s:
+                minv = s
+    print('#{} {}'.format(case, minv-B))
 
-### 4008. 숫자 만들기
-
-```python
 
 ```
 
