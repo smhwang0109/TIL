@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Grid</title>
+    <style>
+        #grid{
+            border:5px solid pink;
+            display: grid;
+            /*
+            첫번째 column은 150px(150px) 두번째는 나머지 공간을 다 쓴다.(1fr)
+            grid-template-columns: 150px 1fr;
+            */
+            /*
+            전체의 3분의 2를 첫번째가 3분의 1을 두번째가 사용
+            */
+            grid-template-columns: 2fr 1fr;
+        }
+        div{
+            border:5px solid gray;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    아무런 의미가 없는 tag들
+    <div></div> : block element
+    <span></span> : inline element
+    -->
+    <!--부모 태그 생성-->
+    <div id="grid">
+        <div>NAVIGATION</div>
+        <div>ARTICLE</div>
+    </div>
+    
+</body>
+</html>
