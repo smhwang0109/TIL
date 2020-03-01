@@ -100,7 +100,7 @@ id 선택자 -> class 선택자 -> 태그 선택자
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>BoxModel</title>
     <style>
         /*
         CSS의 주석
@@ -149,7 +149,7 @@ id 선택자 -> class 선택자 -> 태그 선택자
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>BoxModel</title>
     <style>
         /*
         페이지에서 검사 눌러서 보면 어떤 기능들인지 볼 수 있다.
@@ -235,9 +235,254 @@ id 선택자 -> class 선택자 -> 태그 선택자
 
 CSS, HTML, JavaScript의 기술들이 각각의 브라우저 몇버전에서 사용 가능한지 알려주는 사이트
 
-
-
 ```	html
-
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Grid</title>
+    <style>
+        #grid{
+            border:5px solid pink;
+            display: grid;
+            /*
+            첫번째 column은 150px(150px) 두번째는 나머지 공간을 다 쓴다.(1fr)
+            grid-template-columns: 150px 1fr;
+            */
+            /*
+            전체의 3분의 2를 첫번째가 3분의 1을 두번째가 사용
+            */
+            grid-template-columns: 2fr 1fr;
+        }
+        div{
+            border:5px solid gray;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    아무런 의미가 없는 tag들
+    <div></div> : block element
+    <span></span> : inline element
+    -->
+    <!--부모 태그 생성-->
+    <div id="grid">
+        <div>NAVIGATION</div>
+        <div>ARTICLE</div>
+    </div>
+    
+</body>
+</html>
 ```
 
+그리드 써먹기
+
+```html
+<!doctype html>
+<html>
+<head>
+  <title>WEB - CSS</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+        margin:0;
+    }
+    a {
+      color:black;
+      text-decoration: none;
+    }
+    h1 {
+      font-size:45px;
+      text-align: center;
+      border-bottom:1px solid gray;
+      margin:0;
+      padding: 20px;
+    }
+    ol {
+        border-right:1px solid gray;
+        margin: 0;
+        width: 100px;
+    }
+    #grid{
+      display:grid;
+      grid-template-columns: 150px 1fr;
+    }
+    /*grid 태그 밑에 있는 ol*/
+    #grid ol{
+      padding-left: 33px;
+    }
+    #article{
+      padding-left: 25px;
+    }
+  </style>
+</head>
+
+
+<body>
+  <h1><a href="index.html">WEB</a></h1>
+  <div id="grid">
+    <ol>
+      <li><a href="1.html">HTML</a></li>
+      <li><a href="2.html">CSS</a></li>
+      <li><a href="3.html">JavaScript</a></li>
+    </ol>
+    <div id="article">
+      <h2>CSS</h2>
+      <p>
+        Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language.[1] Although most often used to set the visual style of web pages and user interfaces written in HTML and XHTML, the language can be applied to any XML document, including plain XML, SVG and XUL, and is applicable to rendering in speech, or on other media. Along with HTML and JavaScript, CSS is a cornerstone technology used by most websites to create visually engaging webpages, user interfaces for web applications, and user interfaces for many mobile applications.
+      </p>
+    </div>
+  </div>
+  </body>
+  </html>
+```
+
+
+
+
+
+### 반응형 디자인(MediaQuery)
+
+```html
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>MediaQuery</title>
+    <style>
+        div{
+            border: 10px solid green;;
+            font-size: 60px;
+        }
+        /*
+        화면의 크기가 최소 300px일때
+        == 화면의 크기가 300px보다 클 때
+        */
+        @media(min-width:300px) {
+            div{
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        Responsive
+    </div>
+</body>
+</html>
+```
+
+미디어쿼리 써먹기
+
+```html
+<!doctype html>
+<html>
+<head>
+  <title>WEB - CSS</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+        margin:0;
+    }
+    a {
+      color:black;
+      text-decoration: none;
+    }
+    h1 {
+      font-size:45px;
+      text-align: center;
+      border-bottom:1px solid gray;
+      margin:0;
+      padding: 20px;
+    }
+    ol {
+        border-right:1px solid gray;
+        margin: 0;
+        width: 100px;
+    }
+    #grid{
+      display:grid;
+      grid-template-columns: 150px 1fr;
+    }
+    #grid ol{
+      padding-left: 33px;
+    }
+    #article{
+      padding-left: 25px;
+    }
+    @media(max-width: 500px){
+      #grid{
+      display:block;
+      }
+      ol {
+        border-right: none;
+      }
+      h1 {
+        border-bottom:none;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+  <h1><a href="index.html">WEB</a></h1>
+  <div id="grid">
+    <ol>
+      <li><a href="1.html">HTML</a></li>
+      <li><a href="2.html">CSS</a></li>
+      <li><a href="3.html">JavaScript</a></li>
+    </ol>
+    <div id="article">
+      <h2>CSS</h2>
+      <p>
+        Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language.[1] Although most often used to set the visual style of web pages and user interfaces written in HTML and XHTML, the language can be applied to any XML document, including plain XML, SVG and XUL, and is applicable to rendering in speech, or on other media. Along with HTML and JavaScript, CSS is a cornerstone technology used by most websites to create visually engaging webpages, user interfaces for web applications, and user interfaces for many mobile applications.
+      </p>
+    </div>
+  </div>
+  </body>
+  </html>
+```
+
+
+
+### CSS 코드의 재사용
+
+<style></style> 태그 안에 있던 CSS 코드를 .css 파일로 저장한 후 사용
+
+```html
+<!doctype html>
+<html>
+<head>
+  <title>WEB - CSS</title>
+  <meta charset="utf-8">
+  <!--CSS를 한번에 사용할 수 있게 해주는 코드-->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+  <h1><a href="index.html">WEB</a></h1>
+  <div id="grid">
+    <ol>
+      <li><a href="1.html">HTML</a></li>
+      <li><a href="2.html">CSS</a></li>
+      <li><a href="3.html">JavaScript</a></li>
+    </ol>
+    <div id="article">
+      <h2>CSS</h2>
+      <p>
+        Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a document written in a markup language.[1] Although most often used to set the visual style of web pages and user interfaces written in HTML and XHTML, the language can be applied to any XML document, including plain XML, SVG and XUL, and is applicable to rendering in speech, or on other media. Along with HTML and JavaScript, CSS is a cornerstone technology used by most websites to create visually engaging webpages, user interfaces for web applications, and user interfaces for many mobile applications.
+      </p>
+    </div>
+  </div>
+  </body>
+  </html>
+```
+
+**장점**
+
+1. 코드의 효율화 (한번의 수정으로 많은 페이지 변경 가능)
+2. 캐싱 기능으로 네트워크에서 .css 파일을 한번만 받아와서 다양한 페이지에 사용 가능해서 더 적은 트래픽을 사용
