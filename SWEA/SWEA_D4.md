@@ -167,10 +167,36 @@ for case in range(1, T+1):
 
 ```
 
-### 
+### 1861. 정사각형 방
 
 ```python
+def check(cnt, i, j):
+    for k in range(4):
+        if i + di[k] >= 0 and i + di[k] < N and j + dj[k] >= 0 and j + dj[k] < N:
+            if rooms[i][j] + 1 == rooms[i+di[k]][j+dj[k]]:
+                return check(cnt+1, i+di[k], j+dj[k])
+    return cnt
 
+
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    rooms = []
+    for _ in range(N):
+        rooms.append(list(map(int,input().split())))
+    di = [1,-1,0,0]
+    dj = [0,0,1,-1]
+    max_cnt = 0
+    for i in range(N):
+        for j in range(N):
+            cnt = check(1, i, j)
+            if max_cnt < cnt:
+                minv = rooms[i][j]
+                max_cnt = cnt
+            elif max_cnt == cnt:
+                if minv > rooms[i][j]:
+                    minv = rooms[i][j]
+    print('#{} {} {}'.format(case, minv, max_cnt))
 ```
 
 ### 

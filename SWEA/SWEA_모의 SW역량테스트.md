@@ -183,10 +183,72 @@ for case in range(1, T+1):
 
 ```
 
-### 
+### 1953. 탈주범 검거
 
 ```python
+from pprint import pprint
 
+def check(i, j, t, T):
+    global N, M
+    if t > T:
+        return
+    else:
+        if type(root[i][j]) == list:
+            root[i][j] = root[i][j][0]
+        if root[i][j] == 1:
+            order = [0, 1, 2, 3]
+        elif root[i][j] == 2:
+            order = [0, 1]
+        elif root[i][j] == 3:
+            order = [2, 3]
+        elif root[i][j] == 4:
+            order = [1, 2]
+        elif root[i][j] == 5:
+            order = [0, 2]
+        elif root[i][j] == 6:
+            order = [0, 3]
+        elif root[i][j] == 7:
+            order = [1, 3]
+        root[i][j] = [root[i][j], t]
+        p = 0
+        for k in order:
+            if i + di[k] >= 0 and i + di[k] < N and j + dj[k] >= 0 and j + dj[k] < M:
+                if k == 0:
+                    res = [1, 2, 4, 7]
+                elif k == 1:
+                    res = [1, 2, 5, 6]
+                elif k == 2:
+                    res = [1, 3, 6, 7]
+                elif k == 3:
+                    res = [1, 3, 4, 5]
+                if type(root[i + di[k]][j + dj[k]]) == list:
+                    if root[i + di[k]][j + dj[k]][1] > t and root[i + di[k]][j + dj[k]][0] in res:
+                        p += 1
+                        check(i + di[k], j + dj[k], t + 1, T)
+                else:
+                    if root[i + di[k]][j + dj[k]] in res:
+                        p += 1
+                        check(i + di[k], j + dj[k], t + 1, T)
+
+        if p == 0:
+            return
+
+
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
+T = int(input())
+for case in range(1, T+1):
+    N, M, i, j, L = map(int, input().split())
+    root = []
+    for _ in range(N):
+        root.append(list(map(int, input().split())))
+    check(i, j, 1, L)
+    cnt = 0
+    for i in range(N):
+        for j in range(M):
+            if type(root[i][j]) == list:
+                cnt += 1
+    print('#{} {}'.format(case, cnt))
 ```
 
 ### 
