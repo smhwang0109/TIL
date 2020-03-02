@@ -162,9 +162,24 @@ for case in range(1, T+1):
 
 ```
 
-### 
+### 5658. 보물상자 비밀번호
 
 ```python
+T = int(input())
+for case in range(1, T+1):
+    N, K = map(int, input().split())
+    n = N // 4
+    num = list(input())
+    result = set()
+    for k in range(n):
+        for i in range(0, N, n):
+            result.add(''.join(num[i:i+n]))
+        num.insert(0, num.pop())
+    result = list(result)
+    for i in range(len(result)):
+        result[i] = int(result[i], 16)
+    result = sorted(result)
+    print('#{} {}'.format(case, result[-K]))
 
 ```
 
