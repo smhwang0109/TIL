@@ -230,10 +230,41 @@ for case in range(1, T+1):
 
 ```
 
-### 
+### 2819. 격자판의 숫자 이어 붙이기
 
 ```python
+def check(i, j, n, S):
+    if n == 7:
+        result.add(S)
+        final.add(S)
+        return
+    for k in range(4):
+        if i + di[k] >= 0 and i + di[k] < 4 and j + dj[k] >= 0 and j + dj[k] < 4:
+            S = S[:n]
+            if type(M[i+di[k]][j+dj[k]]) == set:
+                for m in M[i+di[k]][j+dj[k]]:
+                    S = S[:n] + m[:7-n]
+                    result.add(S)
+                    final.add(S)
+            else:
+                check(i + di[k], j + dj[k], n+1, S + M[i+di[k]][j+dj[k]])
 
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
+
+T = int(input())
+for case in range(1, T+1):
+    M = []
+    for _ in range(4):
+        M.append(input().split())
+    final = set()
+    for i in range(4):
+        for j in range(4):
+            S = M[i][j]
+            result = set()
+            check(i, j, 1, S)
+            M[i][j] = result
+    print('#{} {}'.format(case, len(final)))
 ```
 
 ### 
