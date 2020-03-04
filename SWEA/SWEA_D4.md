@@ -199,9 +199,34 @@ for case in range(1, T+1):
     print('#{} {} {}'.format(case, minv, max_cnt))
 ```
 
-### 
+### 1865. 동철이의 일 분배
 
 ```python
+def recursion(i, N, S):
+    global  maxv
+    if maxv >= S*100:
+        return
+    if i == N:
+        if maxv < S*100:
+            maxv = S*100
+        return
+    for j in range(N):
+        if v[j] == 0:
+            v[j] = 1
+            recursion(i+1, N, S*P[i][j]*10**-2)
+            v[j] = 0
+
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    P = []
+    for _ in range(N):
+        P.append(list(map(int, input().split())))
+    v = [0]*N
+    S = 1
+    maxv = 0
+    recursion(0, N, S)
+    print('#{} %.6f'.format(case) %round(maxv, 6))
 
 ```
 

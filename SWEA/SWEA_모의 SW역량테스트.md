@@ -251,9 +251,46 @@ for case in range(1, T+1):
     print('#{} {}'.format(case, cnt))
 ```
 
-### 
+### 4012. 요리사
 
 ```python
+from itertools import combinations
+
+def combi():
+    result = []
+    for i in range(N//2):
+        for c in combinations(range(i+1,N), N//2-1):
+            temp = [i]
+            for j in c:
+                temp.append(j)
+            result.append(temp)
+    return result
+
+def sum_f(L):
+    result = 0
+    for c in combinations(L, 2):
+        result += S[c[0]][c[1]] + S[c[1]][c[0]]
+    return result
+
+T = int(input())
+for case in range(1, T+1):
+    N = int(input())
+    S = []
+    for _ in range(N):
+        S.append(list(map(int, input().split())))
+    num_list = combi()
+    res = list(range(N))
+    minv = 1000000
+    for num in num_list:
+        for n in num:
+            res.remove(n)
+        a = abs(sum_f(num) - sum_f(res))
+        if minv > a:
+            minv = a
+        for n in num:
+            res.append(n)
+
+    print('#{} {}'.format(case, minv))
 
 ```
 
