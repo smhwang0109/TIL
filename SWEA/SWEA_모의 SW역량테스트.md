@@ -294,10 +294,76 @@ for case in range(1, T+1):
 
 ```
 
-### 
+### 5656. 벽돌 깨기
 
 ```python
+from copy import deepcopy
 
+def attack(n, L, N, W, H):
+    global minv
+    if n > N:
+        S = W*H
+        for i in range(H):
+            S -= L[i].count(0)
+        if minv > S:
+            minv = S
+        return
+    p = True
+    for j in range(W):
+        for i in range(H):
+            if L[i][j] != 0:
+                p = False
+                temp = deepcopy(L)
+                temp = change(i, j, temp)
+                attack(n+1, temp, N, W, H)
+                break
+    if p:
+        S = W * H
+        for i in range(H):
+            S -= L[i].count(0)
+        if minv > S:
+            minv = S
+        return
+
+
+def change(i, j, temp):
+    global W, H
+    que = [[i, j]]
+    while que:
+        i, j = que.pop(0)
+        R = temp[i][j]
+        temp[i][j] = 0
+        for r in range(1, R):
+            for k in range(4):
+                if i + r*di[k] >= 0 and i + r*di[k] < H and j + r*dj[k] >= 0 and j + r*dj[k] < W:
+                    if temp[i + r * di[k]][j + r * dj[k]] > 1:
+                        que.append([i + r * di[k], j + r * dj[k]])
+                    elif temp[i + r * di[k]][j + r * dj[k]] == 1:
+                        temp[i + r * di[k]][j + r * dj[k]] = 0
+    for j in range(W):
+        p = []
+        for i in range(H):
+            if temp[i][j] != 0:
+                p.append(temp[i][j])
+        for i in range(H - len(p)):
+            temp[i][j] = 0
+        for i in range(H - len(p), H):
+            temp[i][j] = p.pop(0)
+    return temp
+
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
+
+T = int(input())
+for case in range(1, T+1):
+    N, W, H = map(int, input().split())
+    minv = W*H
+    M = []
+    for _ in range(H):
+        M.append(list(map(int, input().split())))
+    attack(1,M,N,W,H)
+
+    print('#{} {}'.format(case, minv))
 ```
 
 ### 
