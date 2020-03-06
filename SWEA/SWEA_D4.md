@@ -267,9 +267,41 @@ for case in range(1, T+1):
     print('#{} {}'.format(case, len(final)))
 ```
 
-### 
+### 3752. 가능한 시험 점수
 
 ```python
+from copy import deepcopy
+
+def use(D, S):
+    print(D)
+    print(S)
+    score.add(S)
+    if sum(D.values()) != 0:
+        for n in D.keys():
+            temp = deepcopy(D)
+            while temp[n]:
+                temp[n] -= 1
+                print('S =', S)
+                print('n =', n)
+                use(temp, S+n)
+                use(temp, S)
+
+
+
+
+T = int(input())
+for case in range(1, T+1):
+    D = {}
+    N = int(input())
+    for n in map(int, input().split()):
+        if n not in D:
+            D[n] = 1
+        else:
+            D[n] += 1
+    score = {0}
+    S = 0
+    use(D, S)
+    print(score)
 
 ```
 
