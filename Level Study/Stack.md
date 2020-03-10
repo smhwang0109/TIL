@@ -302,6 +302,35 @@ while True:
     print(result)
 ```
 
+### 2493. 탑
+
+```python
+import sys
+from _collections import deque
+
+input = sys.stdin.readline
+
+N = int(input())
+Q = deque(map(int, input().split()))
+stack = deque()
+result = [0]*N
+for i in range(N-1, -1, -1):
+    q = Q.pop()
+    if not stack:
+        stack.append([q, i])
+    else:
+        while stack:
+            if stack[-1][0] <= q:
+                s = stack.pop()
+                result[s[1]] = i+1
+            else:
+                break
+        stack.append([q, i])
+
+print(' '.join(map(str, result)))
+
+```
+
 
 
 
