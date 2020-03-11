@@ -268,10 +268,9 @@ import sys
 def search(i, j, cnt):
     global N, M
     for k in range(4):
-        if i+di[k] == N-1 and j+dj[k] == M-1:
-            return cnt+1
         if 0 <= i+di[k] < N and 0 <= j+dj[k] < M:
-            if maze[i+di[k]][j+dj[k]] == 1 and [i+di[k], j+dj[k]] not in visited:
+            if maze[i+di[k]][j+dj[k]] == 1 and visited[i+di[k]][j+dj[k]] == 0:
+                visited[i + di[k]][j + dj[k]] = 1
                 que.append([i+di[k], j+dj[k], cnt+1])
 
 que = deque()
@@ -285,14 +284,13 @@ maze = []
 for _ in range(N):
     maze.append(list(map(int, list(input())[:-1])))
 que.append([0,0,1])
-visited = []
+visited = [[0]*M for _ in range(N)]
 while que:
     i, j, cnt = que.popleft()
-    if [i, j, cnt] not in visited:
-        visited.append([i, j, cnt])
-        result = search(i, j, cnt)
-        if result:
-            break
+    if i == N - 1 and j == M - 1:
+        result = cnt
+        break
+    search(i, j, cnt)
 print(result)
 ```
 
