@@ -36,6 +36,8 @@ rem == rootem : 가지고 있는 것 그대로
 
 #### block과 inline의 특징 꼭 시험에 나온다!!!
 
+모든 태그를 인라인과 블록으로 나누어 생각하자
+
 
 
 
@@ -45,3 +47,8 @@ rem == rootem : 가지고 있는 것 그대로
 ![image-20200310115519743](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20200310115519743.png)
 
 ![image-20200310115740234](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20200310115740234.png)
+
+![image-20200311113552839](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20200311113552839.png)
+
+inline에 width와 height를 지정할 수 있게 하는게 inline-block
+
