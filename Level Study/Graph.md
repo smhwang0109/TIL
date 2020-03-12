@@ -294,28 +294,181 @@ while que:
 print(result)
 ```
 
-### 
+### 7576. 토마토
 
 ```python
+from _collections import deque
+
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
+
+M, N = map(int, input().split())
+farm = [list(map(int, input().split())) for _ in range(N)]
+
+que = deque()
+for i in range(N):
+    for j in range(M):
+        if farm[i][j] == 1:
+            que.append([i,j,0])
+
+while que:
+    i, j, cnt = que.popleft()
+    for k in range(4):
+        if 0 <= i+di[k] < N and 0 <= j+dj[k] < M:
+            if farm[i+di[k]][j+dj[k]] == 0:
+                que.append([i+di[k],j+dj[k],cnt+1])
+                farm[i+di[k]][j+dj[k]] = 1
+
+for i in range(N):
+    for j in range(M):
+        if farm[i][j] == 0:
+            cnt = -1
+        break
+    if cnt == -1:
+        break
+
+print(cnt)
+```
+
+### 7569. 토마토
+
+```python
+from _collections import deque
+import sys
+
+input = sys.stdin.readline
+
+di = [1,-1,0,0,0,0]
+dj = [0,0,1,-1,0,0]
+dh = [0,0,0,0,1,-1]
+
+M, N, H = map(int, input().split())
+farm = []
+for __ in range(H):
+    temp = []
+    for _ in range(N):
+        temp.append(list(map(int, input().split())))
+    farm.append(temp)
+
+que = deque()
+for h in range(H):
+    for i in range(N):
+        for j in range(M):
+            if farm[h][i][j] == 1:
+                que.append([h,i,j,0])
+
+while que:
+    h, i, j, cnt = que.popleft()
+    for k in range(6):
+        nh = h+dh[k]
+        ni = i+di[k]
+        nj = j+dj[k]
+        if 0<= nh < H and 0 <= ni < N and 0 <= nj < M:
+            if farm[nh][ni][nj] == 0:
+                que.append([nh, ni, nj, cnt+1])
+                farm[nh][ni][nj] = 1
+
+for h in range(H):
+    for i in range(N):
+        if 0 in farm[h][i]:
+            cnt = -1
+            break
+        if cnt == -1:
+            break
+    if cnt == -1:
+        break
+
+print(cnt)
+```
+
+### 1697. 숨바꼭질
+
+```python
+from _collections import deque
+
+N, K = map(int, input().split())
+visited = [0] * 100001
+que = deque()
+if N == K:
+    cnt = 0
+else:
+    que.append([N, 0])
+    visited[N] = 1
+while que:
+    x, cnt = que.popleft()
+    if x+1 == K or x-1 == K or 2*x == K:
+        cnt += 1
+        break
+    if x+1 != K and x+1 <= 100000 and visited[x+1] == 0:
+            visited[x+1] = 1
+            que.append([x+1, cnt+1])
+    if x-1 != K and x-1 >= 0 and visited[x-1] == 0:
+            visited[x-1] = 1
+            que.append([x-1, cnt+1])
+    if 2*x != K and 2*x <= 100000 and visited[2*x] == 0:
+            visited[2*x] = 1
+            que.append([2*x, cnt+1])
+print(cnt)
 
 ```
 
-### 
+### 벽 부수고 이동하기
 
 ```python
+from _collections import deque
 
-```
+di = [1,-1,0,0]
+dj = [0,0,1,-1]
 
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
+N, M = map(int, input().split())
+maze = [list(map(int, list(input()))) for _ in range(N)]
+if N == 1 and M == 1:
+    cnt = 1
+else:
+    True_visited = [[0]*M for _ in range(N)]
+    False_visited = [[0] * M for _ in range(N)]
+    que = deque()
+    que.append([0, 0, 1, True])
+    True_visited[0][0] = 1
+    False_visited[0][0] = 1
+    flag = 0
+    while que:
+        i, j, cnt, canI = que.popleft()
+        for k in range(4):
+            ni = i + di[k]
+            nj = j + dj[k]
+            if ni == N-1 and nj == M-1:
+                flag = 1
+                cnt += 1
+                break
+            if 0 <= ni < N and 0 <= nj < M:
+                if canI:
+                    visited = True_visited
+                    if visited[ni][nj] == 0:
+                        if maze[ni][nj] == 0:
+                            que.append([ni, nj, cnt+1, canI])
+                            visited[ni][nj] = 1
+                            False_visited[ni][nj] = 1
+                        if canI and maze[ni][nj] == 1:
+                            que.append([ni, nj, cnt+1, False])
+                            visited[ni][nj] = 1
+                            False_visited[ni][nj] = 1
+                else:
+                    visited = False_visited
+                    if visited[ni][nj] == 0:
+                        if maze[ni][nj] == 0:
+                            que.append([ni, nj, cnt+1, canI])
+                            visited[ni][nj] = 1
+                        if canI and maze[ni][nj] == 1:
+                            que.append([ni, nj, cnt+1, False])
+                            visited[ni][nj] = 1
+        else:
+            if not que and not flag:
+                cnt = -1
+                break
+        if flag:
+            break
+print(cnt)
 ```
 
 ### 
