@@ -1,0 +1,59 @@
+/* 03_home.css */
+/* 아래에 코드를 작성해 주세요. */
+header{
+    display: table;
+    table-layout: fixed;
+    height: 50vw;
+    width: 100%;
+    background-size: cover;
+    background-image: url(images/header.jpg);
+    color: white;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3vw;
+}
+.main{
+    display: table-cell;
+    height: 50%;
+    vertical-align: bottom;
+}
+.button-cell{
+    display: table-cell;
+    height: 50%;
+    vertical-align: top;
+}
+.main-button{
+    margin-top: 50px;
+    font-size: 1.5vw;
+    padding: 1vw;
+    background-color: #4A6EF3;
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+.third:hover{
+    background-color: rgb(45, 66, 143);
+}
+
+
+section{
+    display: table;
+    text-align: center;
+    height: 50vw;
+    width: 100%;
+}
+#Used{
+    margin: 7vw;
+    vertical-align: middle;
+    font-size: 3vw;
+    font-weight: bold;
+}
+.table-row{
+    display: table-row;
+}
+.table-cell{
+    display: table-cell;
+}
+.table-cell>img{
+    height: 30vw;
+}
