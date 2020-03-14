@@ -5,33 +5,40 @@ header{
     table-layout: fixed;
     height: 50vw;
     width: 100%;
+    min-width: 500px;
+    min-height: 250px;
     background-size: cover;
     background-image: url(images/header.jpg);
     color: white;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 3vw;
+
 }
-.main{
+.home-main{
     display: table-cell;
     height: 50%;
     vertical-align: bottom;
+}
+.home-main>h1{
+    font-size: 3rem;
+    min-height: 50px;
 }
 .button-cell{
     display: table-cell;
     height: 50%;
     vertical-align: top;
 }
-.main-button{
+.home-main-button{
     margin-top: 50px;
-    font-size: 1.5vw;
-    padding: 1vw;
+    font-size: 1rem;
+    padding: 0.5em;
+    min-width: 16px;
     background-color: #4A6EF3;
     border-radius: 5px;
     border: none;
     color: white;
 }
-.third:hover{
+.home-main-button:hover{
     background-color: rgb(45, 66, 143);
 }
 
@@ -41,11 +48,13 @@ section{
     text-align: center;
     height: 50vw;
     width: 100%;
+    min-width: 500px;
+    min-height: 250px;
 }
 #Used{
-    margin: 7vw;
+    margin: 5% 0;
     vertical-align: middle;
-    font-size: 3vw;
+    font-size: 2rem;
     font-weight: bold;
 }
 .table-row{
@@ -56,4 +65,5 @@ section{
 }
 .table-cell>img{
     height: 30vw;
+    min-height: 150px;
 }

@@ -5,6 +5,7 @@ nav{
     top: 0;
     height: 80px;
     width: 100%;
+    min-width: 500px;
     background-color: grey;
 }
 .nav-logo{
@@ -23,14 +24,12 @@ nav:after{
 }
 .nav-items{
     float: right;
-    width: 40%;
     margin-right: 1vw;
     padding: 0;
     line-height: 80px;
 }
 .nav-item{
     display: inline-block;
-    width: 33%;
     margin: 0px 16px;
 }
 .nav-item a{
