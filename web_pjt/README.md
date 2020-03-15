@@ -1,3 +1,3 @@
 # README
 
-- [ ] web_pjt_01
+- [x] web_pjt_01

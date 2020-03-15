@@ -1,18 +1,20 @@
 /* 03_home.css */
 /* 아래에 코드를 작성해 주세요. */
+.main{
+    margin: 80px auto 60px;
+}
 header{
     display: table;
     table-layout: fixed;
     height: 50vw;
     width: 100%;
-    min-width: 500px;
-    min-height: 250px;
+    min-width: 720px;
+    min-height: 360px;
     background-size: cover;
     background-image: url(images/header.jpg);
     color: white;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-
 }
 .home-main{
     display: table-cell;
@@ -20,8 +22,7 @@ header{
     vertical-align: bottom;
 }
 .home-main>h1{
-    font-size: 3rem;
-    min-height: 50px;
+    font-size: 7vw;
 }
 .button-cell{
     display: table-cell;
@@ -34,7 +35,7 @@ header{
     padding: 0.5em;
     min-width: 16px;
     background-color: #4A6EF3;
-    border-radius: 5px;
+    border-radius: 7px;
     border: none;
     color: white;
 }
@@ -48,7 +49,7 @@ section{
     text-align: center;
     height: 50vw;
     width: 100%;
-    min-width: 500px;
+    min-width: 720px;
     min-height: 250px;
 }
 #Used{
@@ -64,6 +65,12 @@ section{
     display: table-cell;
 }
 .table-cell>img{
-    height: 30vw;
-    min-height: 150px;
+    width: 33%;
+    height: auto;
+}
+.image-explanation{
+    display: inline-block;
+    width: 33%;
+    font-size: 1.5rem;
+    margin-bottom: 7vh;
 }
