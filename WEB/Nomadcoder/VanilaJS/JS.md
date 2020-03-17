@@ -43,3 +43,42 @@ const title = document.getElementById("title");
 const title = document.querySelector("#title");
 ```
 
+## if else
+
+```js
+if (20 > 5 && "nicolas" === "nicolas") {
+    console.log("yes");
+} else {
+    console.log("no");
+}
+```
+
+## classlist
+
+class에 무언가가 들어있을 때 추가하고 제거하는 등의 조작을 할 수 있다.
+
+```js
+const title = document.querySelector("#title");
+
+const CLICKED_CLASS = "clicked";
+
+function handleclick() {
+    const hasClass = title.classList.contains(CLICKED_CLASS);
+    if (hasClass) {
+        title.classList.remove(CLICKED_CLASS);
+    } else {
+        title.classList.add(CLICKED_CLASS);
+    }
+}
+/* 같은 것
+function handleclick() {
+    title.classList.toggle(CLICKED_CLASS);
+}
+*/
+
+function init() {
+    title.addEventListener("click", handleclick);
+}
+init();
+```
+
