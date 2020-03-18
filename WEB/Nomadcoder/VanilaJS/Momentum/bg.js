@@ -1,6 +1,11 @@
 const body = document.querySelector("body");
 
-const IMG_NUMBER = 3;
+const IMG_NUMBER = 5;
+
+function setBgImg(imgNumber) {
+    body.style.backgroundImage = `url("images/${imgNumber + 1}.jpg")`;
+    body.style.backgroundSize = "cover";
+}
 
 function paintImage(imgNumber) {
     const image = new Image();
@@ -16,6 +21,7 @@ function genRandom() {
 
 function init() {
     const randomNumber = genRandom();
+    // setBgImg(randomNumber);
     paintImage(randomNumber);
 }
 
