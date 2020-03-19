@@ -22,6 +22,15 @@ pip install django
 2. 프로젝트이름 폴더 안에 settings.py 안에 INSTALLED_APPS 리스트에 추가
    - '앱이름.apps.app이름(첫글자 대문자)Config'
 
+\* 참고
+
+- `django.contrib.admin`: 관리자 페이지 제공
+- `django.contrib.auth`: 인증 시스템 제공
+- `django.contrib.contenttypes`: 컨텐트 타입 프레임워크
+- `django.contrib.sessions`: 세션 프레임워크
+- `django.contrib.messages`: 메세지 프레임워크
+- `django.contrib.staticfiles`: 정적 파일 관리 프레임워크
+
 
 
 ## HTML 파일 만들기
