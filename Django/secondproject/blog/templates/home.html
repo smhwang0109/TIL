@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 {% for blog in blogs.all %}
     <h1>{{blog.title}}</h1>
     <p>{{blog.pub_date}}</p>
@@ -5,3 +8,5 @@
     <br>
     <br>
 {% endfor %}
+    <button><a href="/new/">새로만들기</a></button>
+{% endblock %}
