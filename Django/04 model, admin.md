@@ -73,7 +73,7 @@ model을 관리하는 역할
     from django.contrib import admin
     from .models import Blog(클래스)
     
-    admin.site.register(Blog(클래스이름)
+    admin.site.register(Blog(클래스이름))
     ```
 
 - admin page(127.0.0.1:8000/admin)에 들어가면 블로그글을 만들 수 있다.
