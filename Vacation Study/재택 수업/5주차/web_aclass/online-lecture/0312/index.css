@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    border: 1px solid gray;
+}
+.clearfix::after{
+    display: block;
+    content: "";
+    clear: both;
+}
+li{
+    display: inline-block;
+    margin: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+.middle{
+    text-align: center;
+}
+#Title{
+    font-size: 3vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    margin: 2.5vw 0;
+}
+img[alt="bicycles"]{
+    width: 100vw;
+}
+img[alt="commuter"]{
+    width: 50vw;
+}

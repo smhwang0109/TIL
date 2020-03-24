@@ -1,0 +1,70 @@
+/* pdf에 정의된 초기화는 미리 작성 해두었습니다. */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+h4 {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: Arial;
+}
+
+p {
+	font-family: Arial;
+}
+
+/* 아래에 카드 레이아웃을 직접 만들어보세요. */
+body {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 700px;
+	height: 630px;
+	padding: 18px;
+	border: 2px solid rgba(128, 128, 128, 0.781);
+}
+
+.img-section {
+	display: flex;
+	flex-direction: column-reverse;
+	width: 660px;
+	height: 330px;
+	background-image: url(영금정.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	text-align: center;
+}
+
+.img-tag {
+	height: 30px;
+	width: 100%;
+	color: white;
+	background-color: rgba(128, 128, 128, 0.678);
+}
+
+.title-section {
+	border-bottom: 1.5px solid rgba(128, 128, 128, 0.733);
+}
+
+.title {
+	display: inline;
+}
+.time {
+	float: right;
+	color: gray;
+}
+
+.contents {
+	padding: 10px;
+	background-color: rgba(230, 230, 230, 0.808);
+}

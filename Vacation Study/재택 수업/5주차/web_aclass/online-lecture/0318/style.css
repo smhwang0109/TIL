@@ -1,0 +1,77 @@
+/* 아래에 자유롭게 꾸며 주세요! */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    margin-top: 13vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 15px;
+    width: 50vw;
+    height: 60vh;
+    padding: 0 20px;
+    color: black;
+}
+
+section{
+    margin: 20px 0;
+}
+
+h3{
+    margin: 8px 0;
+    
+}
+
+h1{
+    margin-bottom: 20px;
+    padding: 20px 100px;
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right, #3886FF 0%, #4b0082 100%);
+    border-image-slice: 1;
+    
+    
+}
+
+p{
+    margin-top: 5px;
+    font-size: 10px;
+    color: darkblue;
+}
+
+input{
+    width: 350px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: rgba(148, 148, 148, 0.199);
+    border: none;
+}
+
+button{
+    width: 350px;
+    padding: 10px 0;
+    background-color: #4c008275;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: #4c0082c7;
+}
