@@ -1,0 +1,50 @@
+결과 : xx1110x1x100011xxx11000111x1x00111010
+
+가정 : input값으로 N과 다음 줄에 2^N X 2^N 영역의 정보가 흰색은 1, 검은색은 0으로 주어진다.
+
+def check(L): # L : 체크할 리스트
+    do sample <- L[0][0]
+    for i in range(L의 길이):
+        for j in range(L의 길이):
+            if sample과 L[i][j]가 같지 않다면:
+                return False
+    return True
+
+def make(c, L): # c : check 함수의 결과 값
+    do 전역변수 result 선언
+    if c가 True라면:
+        do result <- result + L[0][0]
+    else:
+        do devide(L)
+
+def devide(L): # L : 영역을 분할할 리스트
+    do 전역변수 result 선언
+    do result <- result + 'x'
+    
+    # 왼쪽위, 오른쪽위, 왼쪽아래, 오른쪽아래 순서로 리스트를 생성한다.
+    do l_u <- [L[i][:(len(L)//2)] for i in range(len(L)//2)]
+    do r_u <- [L[i][(len(L)//2):] for i in range(len(L)//2)]
+    do l_d <- [L[i][:(len(L)//2)] for i in range(len(L)//2, len(L))]
+    do r_d <- [L[i][(len(L)//2):] for i in range(len(L)//2, len(L))]
+    
+    # 해당 리스트가 한 개의 색깔인지 체크한다.
+    do c <- check(l_u)
+    do make(l_u)
+    do c <- check(r_u)
+    do make(r_u)
+    do c <- check(l_d)
+    do make(l_d)
+    do c <- check(l_d)
+    do make(l_d)
+
+# input 값을 정수형과 2차 리스트로 받는다.
+do N <- int(input())
+do M <- [list(map(int, input().split())) for _ in range(2**N)]
+do result <- ''
+
+# 리스트가 한 개의 색깔인지 체크한다.
+do c <- check(M)
+do make(c, M)
+
+# 최종 문자열을 출력한다.
+do print(result)
