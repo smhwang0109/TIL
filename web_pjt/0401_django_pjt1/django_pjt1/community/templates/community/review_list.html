@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+<a class="nav-item nav-link active" href="/community/">리뷰 보기 <span class="sr-only">(current)</span></a>
+<a class="nav-item nav-link" href="/community/new_review/">글 쓰기</a>
+{% endblock %}
+
+{% block content %}
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">내용</th>
+        <th scope="col">평점</th>
+        <th scope="col">작성 시간</th>
+        <th scope="col">수정/삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><a href="/community/review_detail/{{review.pk}}/">{{review.title}}</a></td>
+        <td>{{review.content|truncatechars:15}}</td>
+        <td>{{review.rank}}점</td>
+        <td>{{review.created_at}}</td>
+        <td>
+          <a href="/community/edit_review/{{review.pk}}/">수정</a>/
+          <a href="/community/delete_review/{{review.pk}}/">삭제</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

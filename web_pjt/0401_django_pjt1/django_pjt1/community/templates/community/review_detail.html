@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block navbar %}
+<a class="nav-item nav-link active" href="/community/">리뷰 보기 <span class="sr-only">(current)</span></a>
+<a class="nav-item nav-link" href="/community/new_review/">글 쓰기</a>
+{% endblock %}
+
+{% block content %}
+<div class="row bg-secondary rounded py-3">
+  <div class="col-10">
+    <h2 class="text-light">{{review.title}}</h2>
+    <small class="text-light">최초 작성 : {{review.created_at}}</small>
+    <br>
+    <small class="text-light">최종 작성 : {{review.updated_at}}</small>
+  </div>
+  <div class="col-2">
+    <a href="/community/edit_review/{{review.pk}}/" class="text-white">수정하기</a><br>
+    <a href="/community/delete_review/{{review.pk}}/" class="text-white">삭제하기</a>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-12 border rounded py-3">
+    <p class="py-5">{{review.content}}</p>
+    <p class="font-weight-bold">평점 : {{review.rank}}</p>
+  </div>
+</div>
+{% endblock %}
