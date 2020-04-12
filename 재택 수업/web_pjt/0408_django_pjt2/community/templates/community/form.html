@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block navbar %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'community:index' %}">Home</a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link" href="{% url 'community:create' %}">New <span class="sr-only">(current)</span></a>
+  </li>
+{% endblock %}
+
+{% block content %}
+  <div class="row border rounded py-3 mb-3">
+    {% if request.resolver_match.url_name == 'create' %}
+    <h2>리뷰 작성</h2>
+    {% else %}
+    <h2>리뷰 수정</h2>
+    {% endif %}
+  </div>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-dark">작성 완료</button>
+  </form>
+{% endblock %}

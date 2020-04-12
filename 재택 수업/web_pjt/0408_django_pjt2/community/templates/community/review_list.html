@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar %}
+  <li class="nav-item active">
+    <a class="nav-link" href="{% url 'community:index' %}">Home <span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'community:create' %}">New</a>
+  </li>
+{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">영화 제목</th>
+        <th scope="col">평점</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td><a class="text-dark" href="{% url 'community:detail' review.pk %}">{{review.title}}</a></td>
+          <td>{{review.movie_title}}</td>
+          <td class="d-flex align-items-center"><img class="mr-2" width="15" height="15" src="{% static 'community/img/rank.png' %}" alt="평점이미지"> {{review.rank}}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <th scope="row">리뷰가 없습니다.</th>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <hr>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-dark"><a class="text-white" href="{% url 'community:create' %}">글 작성</a></button>
+  </div>
+{% endblock %}

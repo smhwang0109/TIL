@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar %}
+  <li class="nav-item active">
+    <a class="nav-link" href="{% url 'community:index' %}">Home <span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'community:create' %}">New</a>
+  </li>
+{% endblock %}
+
+{% block content %}
+  <div class="row border rounded py-3">
+    <div class="col-10">
+      <h2 class="d-flex" >{{review.title}} <span class="badge badge-secondary d-inline-flex align-items-center ml-3"><img class="mr-2" width="15" height="15" src="{% static 'community/img/rank.png' %}" alt="평점이미지"> {{review.rank}}</span></h2>
+      <p>영화 : {{review.movie_title}}</p>
+      <small>최초 작성 : {{review.created_at}}</small>
+      <br>
+      <small>최종 작성 : {{review.updated_at}}</small>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-secondary my-2"><a class="text-white" href="{% url 'community:update' review.pk %}">수정</a></button>
+      <form class="d-inline my-2" action="{% url 'community:delete' review.pk %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-secondary">삭제</button>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-12 border rounded py-3">
+      <p class="py-5">{{review.content}}</p>
+      <p class="font-weight-bold">평점 : {{review.rank}}</p>
+    </div>
+  </div>
+
+{% endblock %}
