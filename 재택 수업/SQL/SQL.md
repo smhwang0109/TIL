@@ -57,6 +57,13 @@ SELECT 컬럼 FROM 테이블명 LIMIT 숫자 OFFSET 숫자
 SELECT * FROM flights;
 ```
 
+csv파일 불러오기
+
+```sql
+.mode csv
+.import 파일명(ex)users.csv 테이블명(ex)users_user
+```
+
 
 
 
