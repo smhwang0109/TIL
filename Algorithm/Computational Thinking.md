@@ -48,6 +48,20 @@
 
 
 
-## 집합과 조합론
+## 3. 집합과 조합론
 
 ![image-20200423152955001](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20200423152955001.png)
+
+
+
+
+
+## 4. 기초 수식
+
+![image-20200424104921643](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20200424104921643.png)
+
+
+
+## 5. 재귀
+
+![image-20200424110021201](C:\Users\user\AppData\Roaming\Typora\typora-user-images\image-20200424110021201.png)
