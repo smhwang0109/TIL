@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>INDEX</h2>
+  <a href="{% url 'articles:create' %}">NEW</a>
+  {% for article in articles %}
+    <ul>
+      <li><a href="{% url 'profile' article.user.username %}">{{ article.user }}</a>의 {{ article.pk }}번글</li>
+      <li>제목: {{ article.title }}</li>
+      <li>내용: {{ article.content }}</li>
+      {% include 'articles/like.html' %}
+    </ul>
+    <ul>
+      {% for hashtag in article.hashtags.all %}
+      <li>#{{ hashtag.content }}</li>
+      {% if request.user == article.user %}
+      <form action="{% url 'articles:delete_hashtag' article.pk hashtag.pk %}" method="POST">
+        {% csrf_token %}
+        <button>삭제</button>
+      </form>
+      {% endif%}
+      {% endfor %}
+    </ul>
+    {% if request.user == article.user %}
+    <form action="{% url 'articles:add_hashtag' article.pk %}" method="POST">
+      {% csrf_token %}
+      {{ hashtag_form.as_p }}
+      <button>해시태그 작성</button>
+    </form>
+    {% endif %}
+    <hr>
+  {% endfor %}
+{% endblock %}

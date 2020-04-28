@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ person.username }}님의 프로필</h1>
+<p>팔로워 : {{ person.followers.count }}명</p>
+<ul>
+  {% for follower in person.followers.all %}
+  <li>{{ follower.username }}</li>
+  {% endfor %}
+</ul>
+<p>팔로잉 : {{ person.followings.count }}명</p>
+<ul>
+  {% for following in person.followings.all %}
+  <li>{{ following.username }}</li>
+  {% endfor %}
+</ul>
+{% if request.user != person %}
+  {% if request.user in person.followers %}
+  <a href="{% url 'follow' person.username %}">언팔로우</a>
+  {% else %}
+  <a href="{% url 'follow' person.username %}">팔로우</a>
+  {% endif %}
+{% endif %}
+<h2>{{ person.username }}님이 작성한 글 : {{ person.article_set.count }}개</h2>
+<hr>
+{% for article in person.article_set.all %}
+  <p>제목 : {{ article.title }}</p>
+  <p>내용 : {{ article.content }}</p>
+  {% include 'articles/like.html' %}
+  <hr>
+{% endfor %}
+{% endblock %}
