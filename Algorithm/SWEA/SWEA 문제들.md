@@ -16,3 +16,22 @@ for tc in range(1, T+1):
     print('#{} {}'.format(tc, result))
 ```
 
+
+
+### 이진수2
+
+```python
+T = int(input())
+for tc in range(1, T+1):
+    n = float(input())
+    result = ''
+    while n:
+        n = n*2
+        result += str(int(n))
+        n %= 1
+        if len(result) > 12:
+            result = 'overflow'
+            break
+    print('#{} {}'.format(tc, result))
+```
+
