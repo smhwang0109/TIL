@@ -88,3 +88,84 @@ for tc in range(1, T+1):
     print('#{} {}'.format(tc, minv))
 ```
 
+
+
+### 5201. 컨테이너 운반
+
+```python
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    w = list(map(int, input().split()))
+    t = list(map(int, input().split()))
+    new_w = list(reversed(sorted(w)))
+    new_t = list(reversed(sorted(t)))
+    sumv = 0
+    temp = 0
+    for t in new_t:
+        for i in range(temp, len(new_w)):
+            if t >= new_w[i]:
+                sumv += new_w[i]
+                break
+        temp = i+1
+    print('#{} {}'.format(tc, sumv))
+```
+
+
+
+### 5202. 화물도크
+
+```python
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    L = [list(map(int, input().split())) for _ in range(N)]
+    new_L = sorted(L, key=lambda l: l[1])
+    cnt = 1
+    S = new_L[0]
+    for i in range(1, N):
+        if new_L[i][0] >= S[1]:
+            S = new_L[i]
+            cnt += 1
+
+    print('#{} {}'.format(tc, cnt))
+```
+
+
+
+### 5203. 베이비진 게임
+
+```python
+def check():
+    for i in range(len(L)):
+        if i%2:
+            p2[L[i]] += 1
+            if i >= 5:
+                for j in range(len(p2)):
+                    if p2[j] >= 3:
+                        return 2
+                    if p2[j] >= 1:
+                        if j + 1 <= 9 and p2[j+1] >= 1:
+                            if j + 2 <= 9 and p2[j+2] >= 1:
+                                return 2
+        else:
+            p1[L[i]] += 1
+            if i >= 4:
+                for j in range(len(p1)):
+                    if p1[j] >= 3:
+                        return 1
+                    if p1[j] >= 1:
+                        if j + 1 <= 9 and p1[j+1] >= 1:
+                            if j + 2 <= 9 and p1[j+2] >= 1:
+                                return 1
+    return 0
+
+
+T = int(input())
+for tc in range(1, T+1):
+    L = list(map(int, input().split()))
+    p1 = [0] * 10
+    p2 = [0] * 10
+    print('#{} {}'.format(tc, check()))
+```
+
