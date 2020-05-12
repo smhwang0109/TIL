@@ -60,7 +60,7 @@ def music_comments(request, music_pk):
         return Response(serializer.data)
     return HttpResponseBadRequest
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['PUT', 'DELETE'])
 def comment_put_delete(request, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     serializer = CommentSerializer(comment)
@@ -91,9 +91,6 @@ class ArtistSerializer(serializers.ModelSerializer):
         model = Artist
         fields = ['id', 'name']
 
-class ArtistDetailSerializer(ArtistSerializer):
-    class Meta(ArtistSerializer.Meta):
-        fields = ArtistSerializer.Meta.fields + ['musics_count']
 
 class MusicSerializer(serializers.ModelSerializer):
     class Meta:
@@ -105,8 +102,16 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['id', 'content']
 
+class ArtistDetailSerializer(ArtistSerializer):
+    music_set = MusicSerializer(many=True)
+    musics_count = serializers.IntegerField(source='music_set.count', read_only=True)
+
+    class Meta(ArtistSerializer.Meta):
+        fields = ArtistSerializer.Meta.fields + ['music_set', 'musics_count']
+
+
 class MusicDetailSerializer(MusicSerializer):
-    comments = CommentSerializer(many=True)
+    comments = CommentSerializer(source='comment_set', many=True)
 
     class Meta(MusicSerializer.Meta):
         fields = MusicSerializer.Meta.fields + ['comments']
