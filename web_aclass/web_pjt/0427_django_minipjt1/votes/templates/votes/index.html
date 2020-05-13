@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>투표해보자~</h1>
+<hr>
+<a href="{% url 'votes:random' %}">랜덤으로 보기</a>
+<hr>
+{% for vote in votes %}
+<a href="{% url 'votes:detail' vote.pk %}"><p>{{ vote.question }}</p></a>
+<hr>
+{% empty %}
+<p>투표가 없습니다.</p>
+{% endfor %}
+{% endblock %}
