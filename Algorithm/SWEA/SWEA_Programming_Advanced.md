@@ -169,3 +169,32 @@ for tc in range(1, T+1):
     print('#{} {}'.format(tc, check()))
 ```
 
+
+
+### 5207. 이진 탐색
+
+```python
+def check(l, r, n, d):
+    m = (l+r)//2
+    if n == A[m]:
+        return True
+    elif A[m] > n and d !='left':
+        return check(l, m-1, n, 'left')
+    elif A[m] < n and d !='right':
+        return check(m+1, r, n, 'right')
+    return False
+
+
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    A = list(map(int, input().split()))
+    A.sort()
+    B = list(map(int, input().split()))
+    sumv = 0
+    for n in B:
+        if check(0, N-1, n, -1):
+            sumv += 1
+    print('#{} {}'.format(tc, sumv))
+```
+
