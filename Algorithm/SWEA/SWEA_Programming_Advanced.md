@@ -198,3 +198,32 @@ for tc in range(1, T+1):
     print('#{} {}'.format(tc, sumv))
 ```
 
+
+
+### 5209. 최소생산비용
+
+```python
+def solution(i, visited, sumv):
+    global N, minv
+    if sumv >= minv:
+        return
+    if i >= N:
+        minv = sumv
+        return
+    for j in range(N):
+        if visited[j] == 0:
+            visited[j] = 1
+            solution(i+1, visited, sumv+L[i][j])
+            visited[j] = 0
+
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    L = [list(map(int, input().split())) for _ in range(N)]
+    visited = [0] * N
+    minv = 99 * N
+    solution(0, visited, 0)
+    print('#{} {}'.format(tc, minv))
+```
+
