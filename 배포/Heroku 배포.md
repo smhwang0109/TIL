@@ -34,6 +34,23 @@ $ heroku-dotenv push
 
 
 
+### Heroku error 1
+
+![Heroku error 1](C:\Users\user\house\TIL\배포\Heroku error 1.JPG)
+
+1. Procfile 확인
+2. 코드 오타 확인(heroku run python manage.py migrate 로 확인 가능)
+
+#### 참고
+
+https://dev.to/lawrence_eagles/causes-of-heroku-h10-app-crashed-error-and-how-to-solve-them-3jnl
+
+
+
+
+
+
+
 ### 참고
 
 [https://ggilrong.tistory.com/entry/heroku%EC%97%90-django-%EC%95%B1%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0](https://ggilrong.tistory.com/entry/heroku에-django-앱배포하기)
