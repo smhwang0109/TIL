@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event listener</title>
+</head>
+<body>
+  <button id="myButton">얍</button>
+  <script>
+    const myButton = document.querySelector('#myButton')
+    
+    function confirmMessage(event) {
+      confirm('얍?')
+    }
+
+    // 요소.addEventListener('이벤트', 이벤트 발생시 실행할 함수)
+    myButton.addEventListener('click', confirmMessage)
+    
+    myButton.addEventListener('click', function(event) {
+      confirm('얍!')
+    })
+
+
+  </script>
+</body>
+</html>

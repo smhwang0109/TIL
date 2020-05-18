@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>this</title>
+</head>
+<body>
+  <script>
+    // JS OOP 언어이다? O
+    // this => 무조건 어떤 object를 지칭
+
+    // method => 객체안에 정의된 함수(.methodName() 으로 실행하는 함수)
+    // function => method가 아닌 모든 함수 (지금만 이렇게 정의, 원래는 method가 함수 안에 포함)
+
+    // function () {} 정의 할 때,
+    // this 가 window가 아닌 경우
+    // 1. method 안의 this -> 해당 method가 정의된 객체(object)
+    // 2. 생성자 함수 안의 this
+
+    // method 정의할때, 반드시 function() {}로 정의한다.
+
+    const obj = {
+      name: 'obj',
+      method1: function () {
+        console.log(this) // obj
+      },
+      objInObj: {
+        name: 'oio',
+        // oioMethod: function () {} -> 아래와 완전히 같음
+        oioMethod() { // ES6 syntax sugar: 코드를 짦고 쉽게
+          console.log(this) // objInObj
+        }
+      },
+
+      arr: [0, 1, 2],
+      newArr: [],
+      method2 () {
+        /*
+        this.arr.forEach(function(number) {
+          console.log(this) // 여기서는 this가 window (function은 객체가 아니기 때문에)
+        })
+        */
+        /*
+        this.arr.forEach(function(number) {
+          console.log(this)
+        }.bind(this)) // 이렇게 붙여주면 this가 obj
+        */ // 그러나, 이게 싫어서 화살표 함수 나왔다.
+        this.arr.forEach(
+        (number) => {
+          this.newArr.push(number * 100)
+        })
+
+      }
+    }
+  </script>
+</body>
+</html>
