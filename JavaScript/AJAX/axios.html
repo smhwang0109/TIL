@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">// 반드시 위에 있어야 함</script>
+  <script>
+    // promise => 성공/실패
+    // 성공했을 때, 어떤 일을 한다 .then()
+    // 실패했을 때, 어떤 일을 한다 .catch()
+    console.log(1)
+    axios.get('https://koreanjson.com/posts/1')
+      .then(function (res) { return res.data })
+      .then(function (data) { return data.content })
+      .then(function (content) { console.log(content) })
+    console.log(2)
+  </script>
+</body>
+</html>

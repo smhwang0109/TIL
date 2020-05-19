@@ -18,6 +18,7 @@
     myButton.addEventListener('click', confirmMessage)
     
     myButton.addEventListener('click', function(event) {
+      event.target.classlist.add('btn', 'btn-primary')
       confirm('얍!')
     })
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아-트</title>
+</head>
+<body>
+
+  <label for="userInput">input:</label>
+  <input id="userInput" type="text">
+  <pre id="resultArea">
+
+  </pre>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    /* 1. input#userInput의 'input' 이벤트 때,*/
+    const userInput = document.querySelector('#userInput')
+    userInput.addEventListener('input', function(event) {
+      // input type="text"는, 포커스아웃/엔터만 change로 인식
+      // 그래서 input으로 변경
+      const inputText = userInput.value
+      /* 2. value 값을 '/artii/pong/'으로 보낸다.*/
+      axios.get('/artii/pong/', {
+        params: {
+          inputText: inputText,
+        }
+      })
+        /* 3. pong 이 받아서 다시 JSON으로 응답을 보낸다.action-checkbox*/
+        .then(function (res) { 
+          /* 4. 응답 JSON 의 내용을 div#resultArea에 표시한다. */
+          console.log(res.data)
+          const resultArea = document.querySelector('#resultArea')
+          resultArea.innerText = res.data.content
+        })
+    })
+
+
+  </script>
+</body>
+</html>
