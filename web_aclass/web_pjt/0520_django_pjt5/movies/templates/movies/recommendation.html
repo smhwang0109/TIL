@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'movies/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mx-0">
+  <h1 class="mt-5 font-weight-bold">좋아하는 영화를 선택해 주세요</h1>
+  <div class="main d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+      <div class="row-inner">
+        {% for movie in random_movies|slice:":4" %}
+          {% if not request.user in movie.like_users.all %}
+            <div id="card-{{ movie.pk }}" class="tile col-3">
+                <div class="tile-media">
+                  <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="like-buttons" data-id="{{movie.id}}" alt="영화 포스터">
+                </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="main d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+      <div class="row-inner">
+        {% for movie in random_movies|slice:"4:8" %}
+          {% if not request.user in movie.like_users.all %}
+            <div id="card-{{ movie.pk }}" class="tile col-3">
+                <div class="tile-media">
+                  <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="like-buttons" data-id="{{movie.id}}" alt="영화 포스터">
+                </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="main d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+      <div class="row-inner">
+        {% for movie in random_movies|slice:"8:12" %}
+          {% if not request.user in movie.like_users.all %}
+            <div id="card-{{ movie.pk }}" class="tile col-3">
+                <div class="tile-media">
+                  <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="like-buttons" data-id="{{movie.id}}" alt="영화 포스터">
+                </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="main d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+      <div class="row-inner">
+        {% for movie in random_movies|slice:"12:16" %}
+          {% if not request.user in movie.like_users.all %}
+            <div id="card-{{ movie.pk }}" class="tile col-3">
+                <div class="tile-media">
+                  <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="like-buttons" data-id="{{movie.id}}" alt="영화 포스터">
+                </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="main d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+      <div class="row-inner">
+        {% for movie in random_movies|slice:"16:20" %}
+          {% if not request.user in movie.like_users.all %}
+            <div id="card-{{ movie.pk }}" class="tile col-3">
+                <div class="tile-media">
+                  <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="like-buttons" data-id="{{movie.id}}" alt="영화 포스터">
+                </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 d-flex justify-content-start mb-5">
+      <a href="{% url 'movies:recommendation' %}"><button class="btn btn-danger">좋아하는 영화가 없어요...</button></a>
+    </div>
+    <div class="offset-6 col-3 d-flex justify-content-end mb-5">
+      <a href="{% url 'movies:index' %}"><button class="btn btn-danger">다 선택했어요!</button></a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const likeButtonList = document.querySelectorAll('.like-buttons')
+  likeButtonList.forEach(likeButton => {
+    likeButton.addEventListener('click', e => {
+      const movieID = e.target.dataset.id  //html5 관례
+
+      {% if user.is_authenticated %}
+      axios.get(`/movies/${movieID}/like/`)
+        .then(res => {
+          console.log(movieID)
+          const card = document.querySelector(`#card-${movieID}`)
+          if (res.data.liked) {
+            card.parentNode.removeChild(card)
+          }
+          // console.log(res.data.count)
+
+        })
+      {% else %}
+      alert('로그인 하지 않으면 좋아요를 누를 수 없습니다.')
+      {% endif %}
+    })
+  })
+</script>
+{% endblock %}
+
+{% for movie in random_movies %}
+      <div class="card bg-dark col-3 my-2 pt-2" style="width: 18rem; border: 10px black solid; border-radius: 25px;">
+        {% if user in movies.like_users.all %}
+        <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="card-img-top like-buttons" data-id="{{movie.id}}" style="opacity: 0.4;" alt="영화 포스터">
+        {% else %}
+        <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="card-img-top like-buttons" data-id="{{movie.id}}" style="opacity: 1.0;" alt="영화 포스터">
+        {% endif %}
+      </div>
+    {% endfor %}
