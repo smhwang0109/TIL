@@ -227,3 +227,143 @@ for tc in range(1, T+1):
     print('#{} {}'.format(tc, minv))
 ```
 
+
+
+### 5247. 연산
+
+```python
+from collections import deque
+
+def BFS(n):
+    global M
+    visited[n] = 1
+    que = deque()
+    que.append(n)
+    while que:
+        n = que.popleft()
+        if n == M:
+            return visited[n] - 1
+        a = n + 1
+        b = n - 1
+        c = n * 2
+        d = n - 10
+        for i in [a, b, c, d]:
+            if 0 < i <= 1000000 and not visited[i]:
+                que.append(i)
+                visited[i] = visited[n] +1
+
+
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    visited = [0] * 1000001
+    result = BFS(N)
+    print('#{} {}'.format(tc, result))
+
+```
+
+
+
+### 5248. 그룹 나누기
+
+```python
+from collections import deque
+
+def make(n):
+    que = deque()
+    que.append(n)
+    while que:
+        n = que.popleft()
+        for v in V[n]:
+            if not visited[v]:
+                que.append(v)
+                visited[v] = 1
+                
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    V = [[] for _ in range(N+1)]
+    L = list(map(int, input().split()))
+    visited = [0] * (N+1)
+    for i in range(0, 2*M, 2):
+        n1 = L[i]
+        n2 = L[i+1]
+        V[n1].append(n2)
+        V[n2].append(n1)
+
+    cnt = 0
+    for i in range(1, N+1):
+        if not visited[i]:
+            visited[i] = 1
+            make(i)
+            cnt += 1
+
+    print('#{} {}'.format(tc, cnt))
+
+```
+
+
+
+### 5249. 최소 신장 트리
+
+```python
+import heapq
+
+T = int(input())
+for tc in range(1, T+1):
+    V, E = map(int, input().split())
+    D = {v:[] for v in range(V+1)}
+    L = [list(map(int, input().split())) for _ in range(E)]
+    key = [float('INF')] * (V+1)
+    MST = [0] * (V+1)
+    for s,e,c in L:
+        D[s].append((e, c))
+        D[e].append((s, c))
+    pq = []
+    heapq.heappush(pq, (0, 0))
+    result = 0
+    while pq:
+        C, node = heapq.heappop(pq)
+        if MST[node]: continue
+        MST[node] = 1
+        result += C
+        minv = float('INF')
+        for n, c in D[node]:
+            if not MST[n] and key[n] > c:
+                key[n] = c
+                heapq.heappush(pq, (c, n))
+    print('#{} {}'.format(tc, result))
+```
+
+
+
+### 5251. 최소 이동 거리
+
+```python
+T = int(input())
+for tc in range(1, T+1):
+    N, E = map(int, input().split())
+    D = {i:[] for i in range(N+1)}
+    for i in range(E):
+        s, e, c = map(int, input().split())
+        D[s].append([e, c])
+
+    dist = [float('inf')] * (N+1)
+    visited = [0] * (N+1)
+    dist[0] = 0
+    cnt = 0
+    while cnt < N+1:
+        minv = float('inf')
+        for i in range(N+1):
+            if not visited[i] and dist[i] < minv:
+                minv = dist[i]
+                u = i
+        cnt += 1
+        visited[u] = 1
+        for w, cost in D[u]:
+            if dist[w] > dist[u] + cost:
+                dist[w] = dist[u] + cost
+    print('#{} {}'.format(tc, dist[N]))
+
+```
+
