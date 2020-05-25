@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <button @click="getLuckySix">GET LUCKY 6</button>
+    <ul>
+      <li v-for="number in myNumbers">
+        {{ number }}
+      </li>
+    </ul>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      // [1..45] 에서 6개를 '랜덤'하게 뽑는다.
+      data: {
+        allNumbers: _.range(1, 46),
+        myNumbers: [],
+      },
+      methods: {
+        getLuckySix() {
+          this.myNumbers = _.sampleSize(this.allNumbers, 6)
+          // JS는 기본적으로 숫자를 문자열로 인식하고 정렬한다. '1' '111' '2' 이렇게!
+          // 하지만 빼기를 하면 숫자로 계산하기 때문에 이를 이용해 정렬
+          // python tutor에서 javascript tutor로 보면 좋다.
+          this.myNumbers.sort((a, b) => a - b)
+          // this.myNumbers.sort(function() {
+          //   return a - b
+          // })
+          
+        }
+        // makeAllNumbers () {
+        //   for (let i=0; i<45; i++) {
+        //     this.allNumbers.push(i+1)
+        //   }
+        // }
+      }
+    })
+  </script>
+</body>
+</html>
