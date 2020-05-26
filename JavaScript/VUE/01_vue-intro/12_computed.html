@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue JS</title>
+</head>
+<body>
+  <h1>Bankrupted</h1>
+  <div id="app">
+    {{ bankruptedPeople }}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        accounts: [
+          { name: 'neo', balance: 500, isBankrupted: true },
+          { name: 'tak', balance: 700, isBankrupted: false },
+          { name: 'john', balance: 350, isBankrupted: false },
+          { name: 'justin', balance: 200, isBankrupted: true },
+        ],
+      },
+      methods: {
+      },
+
+      // computed :
+      // 함수인데, Data를 CUD하지 않고, 조회(Read, return)만 하고 싶을 때.
+      // 캐싱에 이득이 있다.
+      computed: {
+        // computed에서는 함수지만 이름은 명사형으로 짓는다.
+        // 왜냐하면 함수로 쓰지만 결과가 그 함수이름의 배열이 되기 때문이다.
+        // bankruptedPeople 배열이 된다.
+        bankruptedPeople: function () {
+          // filter는 새로운 배열을 리턴한다.
+          const newArr = this.accounts.filter((account) => {
+            return account.isBankrupted
+          })
+          return newArr
+        }
+      }
+    })
+  </script>
+</body>
+</html>

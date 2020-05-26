@@ -227,7 +227,63 @@ WHERE EMPNO=TO_NUMBER('100')
 
 
 
+## 내장형 함수
 
+> 형변환 함수, 문자열 및 숫자형 함수, 날짜형 함수
+
+
+
+### 문자열 함수
+
+```SQL
+ASCII(문자)
+
+CHAR(ASCII 코드값)
+
+SUBSTR(문자열, M, N) -- M번째부터 N개
+
+CONCAT(문자열1, 문자열2) -- 문자열 합치기
+
+UPPER/LOWER(문자열)
+
+LENGTH 혹은 LEN(문자열)
+
+RTRIM/LTRIM(문자열, 지정 문자)
+
+TRIM(문자열, 지정 문자) -- 양쪽에서 지정 문자 삭제
+```
+
+
+
+### 날짜형 함수
+
+```SQL
+SYSDATE -- 오늘 날짜
+
+EXTRACT(YEAR FROM SYSDATE)  -- 연도 가져오기
+
+TO_CHAR(SYSDATE, 'YYYY/MM/DD')  -- 날짜 변환 포맷
+```
+
+
+
+### 숫자형 함수
+
+```SQL
+ABS()
+
+SIGN()
+
+MOD(숫자1, 숫자2)  --나눗셈
+
+CEIL/CEILING()
+
+FLOOR()
+
+ROUND(숫자, M)  -- 소수점 M자리에서 반올림
+
+TRUNC(숫자, M)  -- 소수점 M자리에서 절삭
+```
 
 
 
