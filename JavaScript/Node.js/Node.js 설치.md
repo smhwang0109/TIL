@@ -26,6 +26,8 @@ vue create 만들폴더명
 
 cd 만든 폴더명
 
+vue add router
+
 npm run serve
 ```
 

@@ -1,26 +1,18 @@
 <template>
   <div id="app">
-    <!-- step 3 : 사용한다. -->
-    <MyComponent />
-    <!-- <GreatComponent/> -->
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/contact">Contact</router-link> |
+      <router-link to="/ping">Ping</router-link>
+    </div>
+    <hr>
+    <!-- 여기에 컴포넌트 넣는다/ block content 같은 느낌 -->
+    <router-view/>
+    <!-- 컴포넌트 랜더링 -->
+    <hr>
   </div>
 </template>
-
-<script>
-// 컴포넌트 사용하기
-// step 1 : import 한다.
-import MyComponent from './components/MyComponent.vue'
-// import GreatComponent from './components/GreatComponent.vue'
-
-export default {
-  name: 'App',
-  components: {
-    // step 2 : 등록한다.
-    MyComponent,
-    // GreatComponent,
-  }
-}
-</script>
 
 <style>
 #app {
@@ -29,6 +21,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
