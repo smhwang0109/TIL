@@ -1,4 +1,4 @@
-# SQL(Structured Query Language)
+# SQL 기본
 
 sqlite 생성
 
@@ -104,6 +104,9 @@ DELETE FROM 테이블명 WHERE 삭제할 레코드;
 
 ```SQL
 INSERT INTO 테이블명[(칼럼, 칼럼)] VALUES(칼럼내용, 칼럼내용);
+
+-- NOLOGGING을 사용해서 로그파일 기록을 최소화시켜 성능을 향상시킨다.
+ALTER TABLE 테이블명 NOLOGGING;
 ```
 
 
@@ -120,7 +123,13 @@ UPDATE 테이블명 SET 칼럼명=바꾼후레코드 [WHERE 칼럼명=기존레�
 
 ```SQL
 DELETE FROM 테이블명 [WHERE 칼럼명=레코드]; -- WHERE 입력 안하면 테이블 내의 모든 레코드 삭제
+
+-- DELETE는 테이블 용량이 초기화되지 않는다.
+-- TRUNCATE는 테이블 용량이 초기화된다.
+TRUNCATE FROM 테이블명;
 ```
+
+
 
 
 
@@ -133,6 +142,9 @@ DELETE FROM 테이블명 [WHERE 칼럼명=레코드]; -- WHERE 입력 안하면 
 ```SQL
 -- 기본
 SELECT 칼럼 FROM 테이블명 WHERE 칼럼명=레코드
+
+-- 출력시 '님'이 붙어서 나옴
+SELECT 칼럼||'님' FROM 테이블명;
 
 -- ORDER BY
 SELECT 칼럼 FROM 테이블명
@@ -233,6 +245,16 @@ WHERE EMPNO=TO_NUMBER('100')
 
 
 
+### DUAL 테이블
+
+> 자동 생성 테이블
+>
+> 임시 테이블
+>
+> 모든 사용자가 사용 가능
+
+
+
 ### 문자열 함수
 
 ```SQL
@@ -283,7 +305,422 @@ FLOOR()
 ROUND(숫자, M)  -- 소수점 M자리에서 반올림
 
 TRUNC(숫자, M)  -- 소수점 M자리에서 절삭
+
+COALESCE(NULL, '2', '1') -- NULL이 아닌 인자값 반환 => '2' 반환
 ```
+
+
+
+## DECODE와 CASE
+
+### DECODE
+
+> IF문을 구현할 수 있다.
+
+```SQL
+SELECT DECODE(EMPNO, 1000, 'TRUE', 'FALSE') FROM EMP;
+```
+
+
+
+### CASE
+
+> IF-THEN-ELSE -END구현할 수 있다.
+
+```SQL
+SELECT CASE
+		WHEN EMPNO = 1000 THEN 'A'
+		WHEN EMPNO = 1001 THEN 'B'
+		ELSE 'C'
+	END
+FROM EMP;
+```
+
+
+
+## ROWNUM과 ROWID과 WITH
+
+### ROWNUM
+
+> MYSQL의 LIMIT와 같은것
+>
+> 조회되는 행 수를 제한 할 때
+
+```SQL
+SELECT * FROM DEPT WHERE ROWNUM <= 15;
+
+-- 페이지 조회 하려면 FROM 에 SELECT 넣는 서브쿼리를 사용해야 가능하다.
+
+SELECT * FROM ( SELECT ROWNUM LIST, DEPTNAME FROM DEPT) WHERE LIST BETWEEN 2 AND 10;
+```
+
+
+
+### ROWID
+
+> 고유한 값
+
+```SQL
+SELECT ROWID, DEPTNAME FROM DEPT;
+```
+
+
+
+### WITH
+
+> 변수 할당처럼 사용 가능
+
+```SQL
+WITH W_EMP AS (SELECT * FROM EMP WHERE DEPTNO=30)
+SELECT * FROM W_EMP;
+```
+
+
+
+
+
+## DCL(Data Control Language)
+
+### GRANT
+
+> 사용자에게 권한 부여
+
+```SQL
+-- 구조
+GRANT privileges ON object TO user;
+
+-- privileges(권한) 종류
+SELECT/INSERT/UPDATE/DELETE
+REFERENCES -- 참조 제약조건 생성 권한
+ALTER
+INDEX -- 인덱스 생성 권한
+ALL
+
+-- WITH GRANT OPTION
+WITH GRANT OPTION 
+-- 특정 사용자에게 권한을 부여할 수 있는 권한
+-- A->B->C 일때 A가 B 권한 취소하면 C도 취소됨
+
+WITH ADMIN OPTION
+-- 모든 권한 부여
+-- A->B->C 일때 A가 B 권한 취소하면 C는 취소 안됨
+```
+
+
+
+### REVOKE
+
+> 권한 취소
+
+```SQL
+REVOKE privileges ON object FROM user;
+```
+
+
+
+## TCL(Transaction Control Language)
+
+### COMMIT
+
+>INSERT, UPDATE, DELETE 문으로 변경한 데이터를 데이터 베이스에 반영
+>
+>완료시 LOCK이 해제된다.
+>
+>COMMIT 실행되면 하나의 트랜잭션 과정을 종료한다.
+
+```SQL
+COMMIT;
+```
+
+*** AUTO COMMIT**
+
+> DDL, DCL 사용 시 자동 COMMIT
+>
+> SET AUTOCOMMIT ON;을 실행하면 자동 커밋
+
+
+
+### ROLLBACK
+
+> 데이터 변경 사항 모두 취소하고 트랜잭션 종료
+>
+> LOCK 해제되고 다른 사용자들도 데이터베이스 행조작 가능
+
+```SQL
+ROLLBACK;
+```
+
+
+
+### SAVEPOINT
+
+> 트랜잭션을 작게 분할하는 것
+
+```SQL
+SAVEPOINT [SAVEPOINT명]
+
+-- ROLLBACK 시
+ROLLBACK TO [SAVEPOINT명]
+-- 그냥 ROLLBACK만 입력하면 SAVEPOINT 유무와 관계없이 모든 변경사항을 저장하지 않음.
+```
+
+
+
+
+
+# SQL 활용
+
+## JOIN
+
+### EQUI(등가) 조인 (교집합)
+
+> 해시 조인으로 조인한다.
+
+#### EQUI 조인
+
+> WHERE구에  "="을 사용하여 정의
+
+```SQL
+--기본
+SELECT * FROM 테이블1, 테이블2
+WHERE 테이블1.칼럼1 = 테이블2.칼럼2
+
+SELECT * FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+AND EMP.ENAME LIKE '임%'
+ORDER BY ENAME;
+```
+
+
+
+#### INNER JOIN
+
+> INNER JOIN으로 테이블 정의하고 ON구에 "="을 사용하여 정의
+
+```SQL
+--기본
+SELECT * FROM 테이블1 INNER JOIN 테이블2
+ON 테이블1.칼럼1 = 테이블2.칼럼2
+
+SELECT * FROM EMP INNER JOIN DEPT
+ON EMP.DEPTNO = DEPT.DEPTNO
+AND EMP.ENAME LIKE '임%'
+ORDER BY ENAME;
+```
+
+
+
+#### INTERSECT
+
+> 정확하게 교집합 되는 칼럼만 조회 시 사용
+
+```SQL
+SELECT DEPTNO FROM EMP
+INTERSECT
+SELECT DEPTNO FROM DEPT;
+
+-- DEPTNO만 출력
+```
+
+
+
+### NON-EQUI(비등가) 조인
+
+> "="외에 다른 것들을 사용 ("<", ">=" 등)
+
+
+
+### OUTER JOIN
+
+> 교집합이 아닌 이외 칼럼을 추가로 합칠 때 사용
+
+```SQL
+-- FULL OUTER JOIN
+-- (+)로 표현 가능
+
+SELECT * FROM DEPT, EMP
+WHERE EMP.DEPTNO (+)= DEPT.DEPTNO;
+
+-- LEFT/RIGHT OUTER JOIN
+SELECT * FROM DEPT LEFT OUTER JOIN EMP
+WHERE EMP.DEPTNO = DEPT.DEPTNO;
+```
+
+
+
+
+
+### CROSS JOIN
+
+> 조인구 없이 조인한다.
+>
+> 카테시안 곱이 발생 (그냥 두 개 행 갯수 곱한 만큼의 연산수라는 뜻)
+
+```SQL
+SELECT * FROM EMP CROSS JOIN DEPT;
+
+SELECT * FROM EMP, DEPT;
+```
+
+
+
+
+
+### UNION
+
+> 두 개의 테이블 하나로 합치는 것
+>
+> 두 개의 테이블에 칼럼 수 혹은 데이터 형식이 다르면 오류가 발생
+
+#### UNION
+
+> 중복을 제거하고 합친다.
+>
+> 정렬도 한다.
+
+```SQL
+SELECT * FROM EMP
+UNION
+SELECT * FROM EMP;
+```
+
+
+
+#### UNION ALL
+
+> 중복을 제거하거나 정렬하지 않는다.
+
+```SQL
+SELECT * FROM EMP
+UNION ALL
+SELECT * FROM EMP;
+```
+
+
+
+### MINUS (차집합)
+
+```SQL
+SELECT DEPTNO FROM DEPT
+MINUS
+SELECT DEPTNO FROM EMP;
+
+-- DEPT 테이블에 있는 것만 조회된다.
+```
+
+
+
+
+
+
+
+## 계층형 조회 (CONNECT BY)
+
+> 트리 형태로 조회
+>
+> 역방향도 가능
+>
+> `START WITH`, `CONNECT BY PRIOR` 사용
+
+```SQL
+CREATE TABLE EMP_TREE (
+    EMPNO NUMBER(10) PRIMARY KEY,
+    ENAME VARCHAR2(20),
+    DEPTNO NUMBER(10),
+    MGR NUMBER(10)
+);
+
+INSERT INTO EMP_TREE VALUES(1000, 'TEST1', 20, NULL);
+INSERT INTO EMP_TREE VALUES(1001, 'TEST2', 30, 1000);
+INSERT INTO EMP_TREE VALUES(1002, 'TEST3', 30, 1000);
+INSERT INTO EMP_TREE VALUES(1003, 'TEST4', 20, 1000);
+INSERT INTO EMP_TREE VALUES(1004, 'TEST5', 30, 1000);
+INSERT INTO EMP_TREE VALUES(1005, 'TEST6', 30, 1001);
+INSERT INTO EMP_TREE VALUES(1006, 'TEST7', 10, 1001);
+INSERT INTO EMP_TREE VALUES(1007, 'TEST8', 20, 1002);
+INSERT INTO EMP_TREE VALUES(1008, 'TEST9', 10, 1002);
+
+-- 최대 깊이 조회
+SELECT MAX(LEVEL)
+FROM EMP_TREE
+START WITH MGR IS NULL -- MGR이 NULL인 부분이 시작점
+CONNECT BY PRIOR EMPNO = MGR; -- 조인 조건
+
+-- LPAD : LEVEL마다 공백을 4배수씩 넣어준다. 
+SELECT LEVEL, LPAD(' ', 4*(LEVEL-1) ) || EMPNO, MGR, CONNECT_BY_ISLEAF
+FROM EMP_TREE
+START WITH MGR IS NULL
+CONNECT BY PRIOR EMPNO = MGR;
+
+-- CONNECT BY 키워드
+LEVEL -- 항목 깊이
+
+CONNECT_BY_ROOT -- 최상위 값
+
+CONNECT_BY_ISLEAF -- 최하위인지 아닌지
+
+SYS_CONNECT_BY_PATH -- 전체 경로 표시
+
+NOCYCLE -- 순환구조 발생지점까지만 전개
+
+CONNECT_BY_ISCYCLE -- 순환구조 발생 지점 표시
+```
+
+
+
+
+
+
+
+## 서브 쿼리
+
+> SELECT 문 내에 다시 SELECT 문 사용하는 SQL문
+
+- 인라인 뷰 : FROM구에 SELECT
+
+- 스칼라 서브쿼리 : SELECT문에 SELECT
+
+- 서브쿼리 : WHERE구에 SELECT
+
+
+
+### 단일 행 서브쿼리, 다중 행 서브쿼리
+
+- 단일 행 서브쿼리
+  - 결과가 반드시 한 행만 조회
+  - 비교 연산자 =, <, <= 등 사용
+- 다중 행 서브쿼리
+  - 여러 개의 행 반환
+  - 다중 행 비교 연산자
+    - IN (SUBQUERY) : MAIN QUERY의 비교조건이 SUBQUERY의 결과 중 하나만 동일하면 참 (OR 조건)
+    - ALL (SUBQUERY) : MAIN QUERY와 SUBQUERY가 모두 동일하면 참
+    - ANY (SUBQUERY) : MAIN QUERY의 비교조건이 SUBQUERY의 결과 중 하나 이상 동일하면 참
+    - EXISTS (SUBQUERY) : MAIN QUERY와 SUBQUERY의 결과가 하나라도 존재하면 참
+
+
+
+### 스칼라 SUBQUERY
+
+> 반드시 한 행과 한 칼럼만 반환하는 서브쿼리
+>
+> 여러 행이 반환되면 오류가 발생
+
+
+
+### 연관(Correlated) SUBQUERY
+
+> Subquery 내에서 Main Query 내의 칼럼을 사용하는 것
+
+```SQL
+SELECT * FROM EMP A
+WHERE A.DEPTNO = 
+( SELECT DEPTNO FROM DEPT B
+WHERE B.DEPTNO=A.DEPTNO);
+```
+
+
+
+
 
 
 
