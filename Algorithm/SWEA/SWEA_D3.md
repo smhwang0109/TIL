@@ -1241,6 +1241,63 @@ for case in range(1, T + 1):
     print('#{} {}'.format(case, ''.join(map(str, numbers))))
 ```
 
+```python
+# 나중 풀이
+
+def BFS(number, n, i):
+    global N
+    if n >= N:
+        temp.append(int(''.join(number)))
+        return 0
+    if list(reversed(sorted(number))) == number:
+        if not (N - n)%2:
+            temp.append(int(''.join(number)))
+            return 1
+        else:
+            temp_number = list(map(int, number))
+            if temp_number.count(max(temp_number)) >= 2:
+                temp.append(int(''.join(number)))
+                return 1
+            else:
+                number[-1], number[-2] = number[-2], number[-1]
+                temp.append(int(''.join(number)))
+                return 1
+    origin = int(''.join(number))
+    cnt = 0
+    maxv = max(number[i+1:])
+    for j in range(i+1, len(number)):
+        if maxv == number[j]:
+            number[i], number[j] = number[j], number[i]
+            if int(''.join(number)) >= origin:
+                cnt += 1
+                if BFS(number, n+1, i+1):
+                    return 1
+            number[i], number[j] = number[j], number[i]
+    if not cnt:
+        if BFS(number, n, i+1):
+            return 1
+
+
+T = int(input())
+for tc in range(1, T+1):
+    number, N = input().split()
+    N = int(N)
+    temp = []
+    BFS(list(number), 0, 0)
+    print('#{} {}'.format(tc, max(temp)))
+```
+
+```python
+# 메모이제이션 풀이
+
+```
+
+
+
+
+
+
+
 ### 4615. 재미있는 오셀로 게임
 
 ```python
