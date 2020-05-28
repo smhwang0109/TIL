@@ -172,6 +172,12 @@ SELECT 칼럼 FROM 테이블명 WHERE 칼럼 IN 리스트;
 SELECT 칼럼 FROM 테이블명 WHERE (칼럼1, 칼럼2) IN ((칼럼1요소1, 칼럼2요소1), (칼럼1요소2, 칼럼2요소2));
 SELECT 칼럼 FROM 테이블명 WHERE 칼럼 IS NULL; -- NULL값 조회
 
+-- NULL 함수
+NVL(칼럼명, '변경될 값') -- NULL이면 다른 값으로 변경
+NVL2(칼럼명, 'NULL이면 변경될 값', 'NULL이 아니면 변경될 값')
+NULLIF(칼럼명1, 칼럼명2) -- 두개 값이 같으면 NULL 아니면 칼럼명1을 반환
+COALESCE(칼럼명1, 칼럼명2, 칼럼명3 ...) -- NULL이 아닌 최소의 인자값을 반환
+
 -- GROUP BY
 SELECT 그룹화할칼럼1, 집계함수(칼럼2) FROM 테이블명 
 GROUP BY 칼럼1
@@ -717,6 +723,243 @@ WHERE A.DEPTNO =
 ( SELECT DEPTNO FROM DEPT B
 WHERE B.DEPTNO=A.DEPTNO);
 ```
+
+
+
+## 그룹 함수
+
+### ROLLUP
+
+> 전체 합계를 구하는 함수
+
+```SQL
+SELECT DECODE(DEPTNO, NULL, '전체합계', DEPTNO), SUM(EMPNO)
+FROM EMP_TREE
+GROUP BY ROLLUP(DEPTNO);
+
+SELECT DEPTNO, MGR, SUM(EMPNO)
+FROM EMP_TREE
+GROUP BY ROLLUP(DEPTNO, MGR);
+-- DEPTNO 별로 그룹 짓고 그 안에서 MGR별 그룹 합계 출력하고 해당 DEPTNO 그룹 합계 출력
+-- 그리고 맨 아래 모든 총합 출력
+```
+
+
+
+### GROUPING
+
+> 어떤 속성으로 묶였는지 표시하기 위한 함수 (0 또는 1로 표현)
+
+```SQL
+SELECT DEPTNO, GROUPING(DEPTNO), MGR, GROUPING(MGR), SUM(EMPNO)
+FROM EMP_TREE
+GROUP BY ROLLUP(DEPTNO, MGR);
+
+-- GROUPING(MGR)이 1이면 해당 DEPTNO의 MGR 총합 표시하는 곳
+-- GROUPING(DEPTNO)가 1이면 DEPTNO의 총합 표시하는 곳
+```
+
+
+
+### GROUPING SET
+
+> GROUP BY에 적힌 순서 상관 없이 해당하는 칼럼의 소계 구하는 함수
+
+```SQL
+SELECT DEPTNO, MGR, SUM(EMPNO)
+FROM EMP_TREE
+GROUP BY GROUPING SETS (DEPTNO, MGR);
+```
+
+
+
+### CUBE
+
+> 조합할 수 있는 모든 경우의 수 조합된 결과
+
+```SQL
+SELECT DEPTNO, MGR, SUM(EMPNO)
+FROM EMP_TREE
+GROUP BY CUBE(DEPTNO, MGR);
+```
+
+
+
+## 윈도우 함수
+
+### 윈도우 함수
+
+```SQL
+-- 기본
+SELECT WINDOW_FUNCTION(ARGUMENTS)
+	OVER (PARTITION BY 칼럼
+         ORDER BY WINDOWING절)
+FORM 테이블명;
+
+-- 구조
+ARGUMENTS -- WINDOW_FUNCTION(SUM, AVG 등)의 종류에 따라 들어가는 인수
+
+PARTITION BY -- 전체 집합을 기준에 의해 소그룹으로 나눈다.
+
+WINDOWING절 -- 행 기준의 범위 정한다. ROWS는 물리적 결과의 행 수, RANGE는 논리적인 값에 의한 범위
+
+-- WINDOWING
+ROWS -- 부분집합인 윈도우 크기를 물리적 단위로 행의 집합을 지정
+
+RANGE -- 논리적인 주소에 의해 행 집합을 지정
+
+BETWEEN~AND
+
+UNBOUNDED PRECEDING -- 윈도우의 시작 위치가 첫번째 행
+
+UNBOUNDED FOLLOWING -- 윈도우의 마지막 위치가 마지막 행
+
+CURRENT ROW -- 시작위치나 마지막 위치가 현재 행
+
+
+-- EX) 마지막 열에는 처음부터 끝까지 토탈 합만 쭉 나온다.
+SELECT EMPNO, SAL, 
+	SUM(SAL) OVER(ORDER BY SAL
+                 ROWS BETWEEN UNBOUNDED PRECEDING
+                 AND UNBOUNDED FOLLOWING) TOTSAL
+FROM EMP;
+
+-- EX) 현재 행까지 누적 합 구하기
+SELECT EMPNO, SAL, 
+	SUM(SAL) OVER(ORDER BY SAL
+                 ROWS BETWEEN UNBOUNDED PRECEDING
+                 AND CURRENT ROW) TOTSAL
+FROM EMP;
+```
+
+
+
+### 순위 함수
+
+> RANK 함수
+
+```SQL
+-- 종류
+RANK -- 동일한 순위는 동일한 값이 부여(2등 2명이면 3등 없고 4등부터)
+
+DENSE_RANK -- 동일한 순위를 하나의 건수로 계산(2등 2명이어도 둘 다 2등하고 3등부터)
+
+ROW_NUMBER -- 동일한 순위에 고유의 순위 부여(2등 2명이면 한명은 2등 한명은 3등)
+
+-- EX)
+SELECT ENAME, SAL,
+	RANK() OVER(ORDER BY SAL DESC) ALL_RANK,
+	DENSE_RANK() OVER(ORDER BY SAL DESC) DENSE_RANK,
+	ROW_NUMBER() OVER(ORDER BY SAL DESC) ROW_NUM,
+FROM EMP;
+```
+
+
+
+### 집계 함수(AGGREGATE)
+
+```SQL
+-- 종류
+SUM, AVG, COUNT, MAX/MIN
+```
+
+
+
+### 행 순서 관련 함수
+
+```SQL
+-- 종류
+FIRST_VALUE
+
+LAST_VALUE
+
+LAG -- 이전 행을 가지고 온다.
+
+LEAD -- 특정 위치의 행을 가지고 온다. 기본값 1
+
+-- EX) LAG
+SELECT DEPTNO, ENAME, SAL,
+LAG(SAL) OVER(ORDER BY SAL DESC) AS PRE_SAL
+FROM EMP;
+
+-- EX) LEAD 2번째 뒤에 있는 값 가져온다.
+SELECT DEPTNO, ENAME, SAL,
+LEAD(SAL, 2) OVER(ORDER BY SAL DESC) AS PRE_SAL
+FROM EMP;
+```
+
+
+
+### 비율 관련 함수
+
+```SQL
+-- 종류
+CUME_DIST -- 파티션별 누적 백분율
+
+PERCENT_RANK -- 파티션별 제일 먼저 나온 것 0 제일 늦게 나온 것 1로 순서별 백분율
+
+NTILE -- 파티션별 인자로 들어온 순자만큼 등급을 나눈다.
+
+RATIO_TO_REPORT -- 파티션별 전체 SUM(칼럼)에 대한 행 별 칼럼 값 백분율
+
+-- EX)
+SELECT DEPTNO, EMPNO,
+NTILE(3) OVER(PARTITION BY DEPTNO ORDER BY EMPNO DESC) AS NTILE_EMPNO
+FROM EMP_TREE;
+```
+
+
+
+## 테이블 파티션
+
+### RANGE PARTITION
+
+>  값의 범위를 기준으로 나누어 저장하는 것
+
+
+
+### LIST PARTITION
+
+> 특정 값을 기준으로 분할
+
+
+
+### HASH PARTITION
+
+> 데이터베이스 관리 시스템이 내부적으로 해시 함수를 사용해서 테이블을 분할
+
+
+
+### COMPOSITE PARTITION
+
+> 여러 개의 파티션 기법을 조합해서 사용하는 것
+
+
+
+### 파티션 인덱스
+
+- Global Index : 여러 개의 파티션에서 하나의 인덱스 사용 (Oracle은 지원 X)
+- Local Index : 파티션 별로 각자의 인덱스 사용
+- Prefixed Index : 파티션 키와 인덱스 키가 동일
+- Non-Prefixed Index : 파티션 키와 인덱스 키가 다르다. (Oracle은 지원 X)
+
+
+
+
+
+
+
+# SQL 최적화의 원리
+
+## 옵티마이저와 실행계획
+
+### 옵티마이저
+
+> 실행 계획을 세우는 소프트웨어
+
+
+
+
 
 
 
