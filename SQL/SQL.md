@@ -302,7 +302,7 @@ ABS()
 
 SIGN()
 
-MOD(숫자1, 숫자2)  --나눗셈
+MOD(숫자1, 숫자2)  --나머지
 
 CEIL/CEILING()
 
