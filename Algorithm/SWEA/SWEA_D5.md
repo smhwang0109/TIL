@@ -93,10 +93,40 @@ for tc in range(1, T+1):
     print('#{} {} {}'.format(tc, result, cnt))
 ```
 
-### 
+### 5521. 상원이의 생일파티
 
 ```python
+from collections import deque
 
+def find():
+    q = deque()
+    q.append([1, 0])
+    visited[1] = 1
+    cnt = 0
+    while q:
+        n, bridge = q.popleft()
+        if bridge == 2:
+            continue
+        for i in F[n]:
+            if not visited[i]:
+                visited[i] = 1
+                q.append([i, bridge + 1])
+                cnt += 1
+    return cnt
+
+
+T = int(input())
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    F = [0]
+    for n in range(N):
+        F.append([])
+    visited = [0] * (N+1)
+    for m in range(M):
+        a, b = map(int, input().split())
+        F[a].append(b)
+        F[b].append(a)
+    print("#{} {}".format(tc, find()))
 ```
 
 ### 

@@ -305,9 +305,43 @@ for case in range(1, T+1):
 
 ```
 
-### 
+### 1249. 보급로
 
 ```python
+import heapq
+
+def BFS():
+    q = []
+    heapq.heappush(q, [0, 0, 0])
+    visited[0][0] = 1
+    while q:
+        cnt, i, j = heapq.heappop(q)
+        if M[i][j] == 0:
+            for k in range(4):
+                n_i = i + di[k]
+                n_j = j + dj[k]
+                if n_i == N - 1 and n_j == N - 1:
+                    return cnt
+                if 0 <= n_i < N and 0 <= n_j < N:
+                    if not visited[n_i][n_j]:
+                        visited[n_i][n_j] = 1
+                        heapq.heappush(q, [cnt, n_i, n_j])
+        else:
+            M[i][j] -= 1
+            heapq.heappush(q, [cnt+1, i, j])
+
+
+
+
+di = [1, -1, 0, 0]
+dj = [0, 0, 1, -1]
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    M = [list(map(int, list(input()))) for _ in range(N)]
+    visited = [[0] * N for _ in range(N)]
+    print("#{} {}".format(tc, BFS()))
 
 ```
 
