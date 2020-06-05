@@ -345,10 +345,42 @@ for tc in range(1, T+1):
 
 ```
 
-### 
+### 1251. 하나로
 
 ```python
+import heapq
 
+def prim(i):
+    global N
+    q = []
+    dist = 0
+    for n in range(1, N):
+        heapq.heappush(q, [D[i][n], n])
+    i = 0
+    while q:
+        temp_dist, n = heapq.heappop(q)
+        if visited[n] == -1:
+            visited[n] = i
+            dist += temp_dist
+            i = n
+            for n in range(1, N):
+                if i == n and visited[n] != -1: continue
+                heapq.heappush(q, [D[min(i, n)][max(i, n)], n])
+    return dist
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    X = list(map(int, input().split()))
+    Y = list(map(int, input().split()))
+    D = [[0]*N for _ in range(N)]
+    for i in range(N):
+        for j in range(i+1, N):
+            D[i][j] = (X[i] - X[j])**2 + (Y[i] - Y[j])**2
+    visited = [-1] * N
+    visited[0] = 0
+    E = float(input())
+    print('#{} {}'.format(tc, round(E * prim(0))))
 ```
 
 ### 
