@@ -1,16 +1,10 @@
 <template>
   <div class="container">
     <!-- emit 듣고 함수 실행 -->
+    <SearchBar @input-change="onInputChange"/>
     <div class="row">
-      <SearchBar @input-change="onInputChange"/>
-    </div>
-    <div class="row">
-      <div class="col-9">
-        <VideoPlay :video="video"/>
-      </div>
-      <div class="col-3">
-        <VideoList :videos="videos"/>
-      </div>
+      <VideoDetail :video="selectedVideo"/>
+      <VideoList @video-select="onVideoSelect" :videos="videos"/>
     </div>
   </div>
 </template>
@@ -20,7 +14,7 @@ import axios  from 'axios'
 
 import SearchBar from './components/SearchBar.vue'
 import VideoList from './components/VideoList.vue'
-import VideoPlay from './components/VideoPlay.vue'
+import VideoDetail from './components/VideoDetail.vue'
 
 const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
 const API_URL = 'https://www.googleapis.com/youtube/v3/search'
@@ -30,13 +24,13 @@ export default {
   components: {
     SearchBar,
     VideoList,
-    VideoPlay,
+    VideoDetail,
   },
   data() {
     return {
       inputValue: '',
-      video: {},
       videos: [],
+      selectedVideo: null,
     }
   },
   methods: {
@@ -52,10 +46,17 @@ export default {
         }
       })
         .then(res => {
-          this.video = res.data.items[0]
-          this.videos = res.data.items.slice(1)
+          res.data.items.forEach(item => {
+            const parser = new DOMParser()
+            const doc = parser.parseFromString(item.snippet.title, 'text/html')
+            item.snippet.title = doc.body.innerText
+          })
+          this.videos = res.data.items
         })
         .catch(err => console.error(err))
+    },
+    onVideoSelect(video) {
+      this.selectedVideo = video
     }
   }
 }
