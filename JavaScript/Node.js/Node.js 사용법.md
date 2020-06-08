@@ -26,9 +26,13 @@ vue create 만들폴더명
 
 cd 만든 폴더명
 
+-- 라우터 추가
 vue add router
 
 npm run serve
+
+-- vuex 추가
+vue add vuex
 ```
 
 
