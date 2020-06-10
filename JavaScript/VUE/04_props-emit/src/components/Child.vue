@@ -1,8 +1,12 @@
 <template>
   <div class="child">
+    <p v-show="false">
+      안녕
+    </p>
     <h2>자식 컴포넌트</h2>
     <!-- 3. 사용한다. -->
     {{ propFromParent }}
+    <input @keyup:enter="hungrySignal">
     <button @click="hungrySignal">배고파요!</button>
   </div>
 </template>
