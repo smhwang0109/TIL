@@ -1,10 +1,11 @@
 <h1 align="center">Soomin's TIL 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/smhwang0109/TIL/README" target="_blank">
+  <a href="https://github.com/smhwang0109/TIL/blob/master/README.md" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
 </p>
+
 
 
 > Today I Learned!!!
