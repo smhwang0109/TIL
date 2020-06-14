@@ -6,11 +6,11 @@
   </a>
 </p>
 
-
-
 > Today I Learned!!!
 >
-> 개발은 경험이다. 매일, 꾸준히, 잘!
+> 개발은 경험이다.
+>
+> **매일, 꾸준히, 잘!**
 
 ### 🏠 [Homepage](https://github.com/smhwang0109/TIL)
 
@@ -20,7 +20,7 @@
 
 * Github: [@smhwang0109](https://github.com/smhwang0109)
 
-
+<br/><br/>
 
 ## :open_file_folder:Directory
 
@@ -30,9 +30,9 @@
 
 - Git, Markdown 사용법
 
+<br/>
 
-
-
+<br/>
 
 ### 01_Language​ :keyboard:
 
@@ -45,9 +45,9 @@
 - LectureNote
   - 강의 내용
 
+<br/>
 
-
-
+<br/>
 
 ### 02_Algorithm 👨‍💻
 
@@ -61,9 +61,9 @@
 
 각 사이트별 문제 번호와 풀이
 
+<br/>
 
-
-
+<br/>
 
 ### 03_Web :computer:
 
@@ -86,7 +86,9 @@
 
 - 배포 관련 자료
 
+<br/>
 
+<br/>
 
 ### 04_SQL :page_with_curl:
 
@@ -94,7 +96,9 @@
 
 - SQLD 관련 자료
 
+<br/>
 
+<br/>
 
 ### 05_Deeplearning(진행중) :bar_chart:
 
@@ -102,9 +106,9 @@
 
 - Deeplearning 공부 자료
 
+<br/>
 
-
-
+<br/>
 
 ## Show your support
 
