@@ -3,3 +3,5 @@
 ```bash
 npm run build
 ```
+
+폴더명 : dist
