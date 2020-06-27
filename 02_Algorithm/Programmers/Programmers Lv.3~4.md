@@ -89,16 +89,127 @@ print(solution([
 ]))
 ```
 
-### 
+
+
+### 지형 이동 (아직)
 
 ```python
+from collections import deque
+import heapq
 
+def BFS(i, j):
+    global answer, l, N, M, h, heap
+    q = deque()
+    q.append([i, j])
+    while q:
+        i, j = q.popleft()
+        M[i][j] = -1
+        for k in range(4):
+            new_i = i + di[k]
+            new_j = j + dj[k]
+            if 0 <= new_i < N and 0 <= new_j < N:
+                if M[new_i][new_j] != -1:
+                    val = abs(l[new_i][new_j] - l[i][j])
+                    if val <= h:
+                        q.append([new_i, new_j])
+                    else:
+                        if M[new_i][new_j] == 0 or M[new_i][new_j] > val:
+                            M[new_i][new_j] = val
+                            heapq.heappush(heap, [val, new_i, new_j])
+    print(M)
+    while heap:
+        val, i, j = heapq.heappop(heap)
+        if M[i][j] != -1:
+            answer += M[i][j]
+            BFS(i, j)
+            return
+
+
+di = [1, -1, 0, 0]
+dj = [0, 0, 1, -1]
+
+def solution(land, height):
+    global answer, l, N, M, h, heap
+    answer = 0
+    l = land
+    h = height
+    heap = [] # [옆칸과의 차이, i, j]
+    N = len(land)
+    M = [[0] * N for _ in range(N)]
+    BFS(0, 0)
+    return answer
+
+print(solution([[1, 4, 8, 10], [5, 5, 5, 5], [10, 10, 10, 10], [10, 10, 10, 20]], 3))
+print(solution([[10, 11, 10, 11], [2, 21, 20, 10], [1, 20, 21, 11], [2, 1, 2, 1]], 1))
 ```
 
-### 
-
 ```python
+from collections import deque
+import heapq
 
+def BFS(i, j, group):
+    global l, N, M, h
+    q = deque()
+    q.append([i, j])
+    while q:
+        i, j = q.popleft()
+        M[i][j] = group
+        for k in range(4):
+            new_i = i + di[k]
+            new_j = j + dj[k]
+            if 0 <= new_i < N and 0 <= new_j < N:
+                if not M[new_i][new_j]:
+                    val = abs(l[new_i][new_j] - l[i][j])
+                    if val <= h:
+                        q.append([new_i, new_j])
+
+def check():
+    global l, N, M, D
+    for i in range(N):
+        for j in range(N):
+            for k in range(4):
+                new_i = i + di[k]
+                new_j = j + dj[k]
+                if 0 <= new_i < N and 0 <= new_j < N:
+                    if M[new_i][new_j] != M[i][j]:
+                        D[M[i][j]].append([abs(l[new_i][new_j] - l[i][j]), M[new_i][new_j]])
+                        D[M[new_i][new_j]].append([abs(l[new_i][new_j] - l[i][j]), M[i][j]])
+
+
+di = [1, -1, 0, 0]
+dj = [0, 0, 1, -1]
+
+def solution(land, height):
+    global l, N, M, h, D
+    answer = 0
+    l = land
+    h = height
+    heap = [] # [옆칸과의 차이, i, j]
+    N = len(land)
+    M = [[0] * N for _ in range(N)]
+    group = 1
+    for i in range(N):
+        for j in range(N):
+            if not M[i][j]:
+                BFS(i, j, group)
+                group += 1
+    D = {k:[] for k in range(1, group)}
+    check()
+    heap = D[1]
+    visited = [0] * group
+    visited[1] = 1
+    while heap:
+        val, node = heapq.heappop(heap)
+        if not visited[node]:
+            answer += val
+            visited[node] = 1
+            for n in D[node]:
+                heapq.heappush(heap, n)
+
+    return answer
+
+print(solution([[1, 4, 8, 10], [5, 5, 5, 5], [10, 10, 10, 10], [10, 10, 10, 20]], 3))
+print(solution([[10, 11, 10, 11], [2, 21, 20, 10], [1, 20, 21, 11], [2, 1, 2, 1]], 1))
 ```
 
 ### 
