@@ -217,7 +217,31 @@ print(solution([[10, 11, 10, 11], [2, 21, 20, 10], [1, 20, 21, 11], [2, 1, 2, 1]
 ### N으로 표현
 
 ```python
+def solution(N, number):
+    s = str(N)
+    if N == number:
+        return 1
+    L = [0, {N}]
+    for i in range(2, 9):
+        temp_set = {int(s*i)}
+        for j in range(1, i//2 + 1):
+            for k in L[j]:
+                for l in L[i - j]:
+                    temp_set.add(k+l)
+                    temp_set.add(k-l)
+                    temp_set.add(l-k)
+                    temp_set.add(k*l)
+                    if k:
+                        temp_set.add(l//k)
+                    if l:
+                        temp_set.add(k//l)
+        if number in temp_set:
+            return i
+        L.append(temp_set)
+    return -1
 
+print(solution(5 ,12))
+print(solution(2 ,11))
 ```
 
 ### 
