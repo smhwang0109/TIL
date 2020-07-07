@@ -244,7 +244,7 @@ print(solution(5 ,12))
 print(solution(2 ,11))
 ```
 
-### 
+### 2Xn 타일링
 
 ```python
 
