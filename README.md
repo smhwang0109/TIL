@@ -45,6 +45,10 @@
 - LectureNote
   - 강의 내용
 
+#### 02_JavaScript
+
+- ES6 + DOM
+
 <br/>
 
 <br/>
