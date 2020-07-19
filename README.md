@@ -45,9 +45,17 @@
 - LectureNote
   - 강의 내용
 
+
+
 #### 02_JavaScript
 
 - ES6 + DOM
+
+
+
+#### 03_Kotlin(진행중)
+
+- 현재 진행 중
 
 <br/>
 
