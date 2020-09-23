@@ -1,6 +1,6 @@
 import sys, os
 sys.path.append(os.pardir)
-from modules.activation import sigmoid, softmax
+from modules.activation_function import sigmoid, softmax
 from modules.mnist import load_mnist
 import numpy as np
 import pickle
