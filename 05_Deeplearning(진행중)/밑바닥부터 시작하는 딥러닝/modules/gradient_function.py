@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 # 수치 미분
 def numerical_diff(f, x):
@@ -31,6 +32,7 @@ def numerical_gradient(f, x):
     grad = np.zeros_like(x)
 
     it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite']) # numpy iterator
+    start = time.time()
     while not it.finished:
         idx = it.multi_index
         tmp_val = x[idx]
