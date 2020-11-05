@@ -122,6 +122,16 @@
 
 <br/>
 
+### 06_CS(진행중) :bar_chart:
+
+---
+
+- CS 공부 자료
+
+<br/>
+
+<br/>
+
 ## Show your support
 
 도움이 되셨다면 ⭐️(**star**) 잊지 마세요! 
