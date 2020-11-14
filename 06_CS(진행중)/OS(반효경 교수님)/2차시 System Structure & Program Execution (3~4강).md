@@ -20,7 +20,9 @@ http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323
 - Interrupt line : I/O 디바이스에서 주는 정보를 전달하기 위한 장치
   - Interrupt(넓은 의미)
     - Interrupt(하드웨어 인터럽트) : I/O 장치나 타이머 같은 하드웨어가 발생시킨 인터럽트
-    - Trap(소프트웨어 인터럽트) : 사용자 프로그램에서 운영체제의 서비스를 받기 위해(ex. I/O 장치에 접근)(시스템콜을 위해) 인터럽트
+    - Trap(소프트웨어 인터럽트)
+      - System call : 사용자 프로그램에서 운영체제의 서비스를 받기 위해(ex. I/O 장치에 접근) 인터럽트
+      - Exception : 프로그램이 오류를 범한 경우
     - 인터럽트 벡터 : 해당 인터럽트가 들어오면 어디로 가야 하는지 인터럽트의 처리 루틴 주소를 가지고 있음
     - 인터럽트 처리 루틴 : 어떤 인터럽트가 들어오면 어떻게 해결해라를 운영체제에 등록해 놓은 함수
 - Device controller : I/O 디바이스를 전담하는 작은 CPU 기능 (하드웨어)
@@ -34,3 +36,37 @@ http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323
 - DMA(Direct Memory Access) controller : 원래 메모리 접근은 CPU만 가능하지만 DMA도 Memory에 접근 가능
   - I/O 장치가 CPU에 너무 많은 Interrupt를 하면 느려지기 때문에 DMA가 local buffer의 데이터를 Memory로 옮겨 저장하고 쌓아서 CPU에게 알려준다. 
 
+
+
+
+
+## 4강 System Structure & Program Execution 2
+
+>  컴퓨터 시스템에서 하드웨어와 프로그램들이 어떻게 돌아가는지 설명
+
+- 동기식 입출력 (synchronous I/O)
+  - I/O 요청 후 입출력 작업이 완료된 후에야 제어가 사용자 프로그램으로 넘어감
+  - 구현 방법 1
+    - I/O 가 끝날 때가지 CPU 기다림 -> 낭비
+  - 구현 방법 2
+    - I/O 완료될 때까지 다른 프로그램으로 넘긴다.
+- 비동기식 입출력(asynchronous I/O)
+  - I/O가 시작된 후 입출력 작업이 끝나기를 기다리지 않고 제어가 사용자 프로그램에 즉시 넘어감
+- 둘 다 인터럽트로 I/O가 끝난 것을 알려줌
+
+![2-2](C:\Users\42Maru\Soom\TIL\06_CS(진행중)\OS(반효경 교수님)\Images\2-2.PNG)
+
+
+
+![2-3](C:\Users\42Maru\Soom\TIL\06_CS(진행중)\OS(반효경 교수님)\Images\2-3.PNG)
+
+- Volatility : 휘발성
+- Primary : CPU에서 직접 접근할 수 있는 메모리 스토리지 매체 (byte 단위 접근)
+- Secondary : CPU가 직접 접근할 수 없는 메모리 (섹션 단위)
+- Caching : 빠른 매체로 정보를 읽어들여서 쓰는 것 => 재사용 목적
+
+
+
+### 프로그램의 실행
+
+40분20초
