@@ -69,4 +69,22 @@ http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323
 
 ### 프로그램의 실행
 
-40분20초
+![2-4](C:\Users\42Maru\Soom\TIL\06_CS(진행중)\OS(반효경 교수님)\Images\2-4.PNG)
+
+- Code : 기계어 코드를 담고 있는 부분
+- Data : 변수(전역변수) 같은 자료구조를 담고 있는 부분
+- Stack : 함수를 호출하거나 return 할 때 데이터를 쌓았다가 꺼내가는 부분
+
+
+
+- 물리적 메모리에는 당장 필요한 부분만 올리고, 당장 안쓰는 부분은 Swap area(하드 디스크)에 위치해 있다.
+
+- Address translation : 가상 메모리 주소에서 물리적 메모리 주소로 바뀌는 것
+
+
+
+![2-5](C:\Users\42Maru\Soom\TIL\06_CS(진행중)\OS(반효경 교수님)\Images\2-5.PNG)
+
+
+
+![2-6](C:\Users\42Maru\Soom\TIL\06_CS(진행중)\OS(반효경 교수님)\Images\2-6.PNG)
