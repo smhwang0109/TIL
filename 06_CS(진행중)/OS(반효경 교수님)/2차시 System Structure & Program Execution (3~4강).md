@@ -6,7 +6,7 @@ http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323
 
 >  컴퓨터 시스템에서 하드웨어와 프로그램들이 어떻게 돌아가는지 설명
 
-![2-1](.\Images\2-1.png)
+![2-1](./Images/2-1.PNG)
 
 - CPU : 일을 처리하는 프로세서
 
@@ -54,11 +54,11 @@ http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323
   - I/O가 시작된 후 입출력 작업이 끝나기를 기다리지 않고 제어가 사용자 프로그램에 즉시 넘어감
 - 둘 다 인터럽트로 I/O가 끝난 것을 알려줌
 
-![2-2](.\Images\2-2.png)
+![2-2](./Images/2-2.PNG)
 
 
 
-![2-3](.\Images\2-3.png)
+![2-3](./Images/2-3.PNG)
 
 - Volatility : 휘발성
 - Primary : CPU에서 직접 접근할 수 있는 메모리 스토리지 매체 (byte 단위 접근)
@@ -69,7 +69,7 @@ http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323
 
 ### 프로그램의 실행
 
-![2-4](.\Images\2-4.png)
+![2-4](./Images/2-4.PNG)
 
 - Code : 기계어 코드를 담고 있는 부분
 - Data : 변수(전역변수) 같은 자료구조를 담고 있는 부분
@@ -83,8 +83,8 @@ http://www.kocw.or.kr/home/cview.do?mty=p&kemId=1046323
 
 
 
-![2-5](.\Images\2-5.png)
+![2-5](./Images/2-5.PNG)
 
 
 
-![2-6](./Images/2-6.png)
+![2-6](./Images/2-6.PNG)
