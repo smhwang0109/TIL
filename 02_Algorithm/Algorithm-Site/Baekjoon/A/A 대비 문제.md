@@ -1,4 +1,4 @@
-# BaekJoon IM
+# BaekJoon A
 
 ### 17144. 미세먼지 안녕!
 
