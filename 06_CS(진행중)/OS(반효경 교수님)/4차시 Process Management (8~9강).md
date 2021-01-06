@@ -1,7 +1,3 @@
-
-
-
-
 # 4차시 Process Management (8~9강)
 
 ## 8강 Process Management 1
@@ -117,3 +113,4 @@ shared 메모리도 처음에는 kernel을 거쳐야 사용 가능
 
 
 출처 : https://core.ewha.ac.kr/publicview/C0101020140321144554159683?vmode=f
+
