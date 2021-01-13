@@ -4,64 +4,64 @@
 
 >  Process Synchronization 개요
 
-![6-1](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-1.PNG)
+![6-1](./Images/6-1.PNG)
 
-![6-2](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-2.PNG)
+![6-2](./Images/6-2.PNG)
 
-![6-3](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-3.PNG)
+![6-3](./Images/6-3.PNG)
 
 
 
-![6-4](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-4.PNG)
+![6-4](./Images/6-4.PNG)
 
 - 해결법
   - 하던 프로세스를 다 끝내고 인터럽트 과정으로 넘어가도록 한다.
 
-![6-5](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-5.PNG)
+![6-5](./Images/6-5.PNG)
 
-![6-6](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-6.PNG)
+![6-6](./Images/6-6.PNG)
 
-![6-7](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-7.PNG)
-
-
-
-![6-8](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-8.PNG)
+![6-7](./Images/6-7.PNG)
 
 
 
-![6-9](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-9.PNG)
+![6-8](./Images/6-8.PNG)
 
 
 
-![6-10](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-10.PNG)
+![6-9](./Images/6-9.PNG)
 
 
 
-![6-11](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-11.PNG)
+![6-10](./Images/6-10.PNG)
+
+
+
+![6-11](./Images/6-11.PNG)
 
 ## 12강 Process Synchronization 1
 
 >  Process Synchronization 알고리즘
 
-![6-12](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-12.PNG)
+![6-12](./Images/6-12.PNG)
 
-![6-13](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-13.PNG)
+![6-13](./Images/6-13.PNG)
 
 - 단점
   - 한번씩 교대로 들어가야 한다.
   - 한 프로세스가 안들어가면 다른 프로세스도 한번 나와서 계속 못들어간다.
 
-![6-14](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-14.PNG)
+![6-14](./Images/6-14.PNG)
 
 - 단점
   - 둘 다 flag가 true이면 아무도 못들어가고 있는다.
 
-![6-15](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-15.PNG)
+![6-15](./Images/6-15.PNG)
 
 - 단점
   - 세가지 조건을 모두 만족하지만 다른 프로세스가 수행될 동안 while문을 계속돌고 있어야 한다는 단점이 있다. (Busy Waiting)
 
-![6-16](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-16.PNG)
+![6-16](./Images/6-16.PNG)
 
 - 하드웨어 단에서 아예 읽고 쓰는 것을 하나의 instruction으로 만들면(Test_and_set) 간단히 해결이 가능하다. 
 - while 문에서
@@ -72,39 +72,53 @@
 
 ## 13강 Process Synchronization 2
 
->  Process Synchronization 개요
+>  Semaphore
 
-![6-17](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-17.PNG)
+![6-17](./Images/6-17.PNG)
 
-![6-18](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-18.PNG)
+![6-18](./Images/6-18.PNG)
 
- ![6-19](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-19.PNG)
 
-![6-20](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-20.PNG)
 
-![6-21](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-21.PNG)
+#### busy-waiting을 해결하기 위한 Block & Wakeup 방식
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
+ ![6-19](./Images/6-19.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
+공유데이터를 기다릴 때는 block 시켜 cpu를 사용하지 않게 한다.
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
+![6-20](./Images/6-20.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
+![6-21](./Images/6-21.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
+![6-22](./Images/6-22.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
+![6-23](./Images/6-23.PNG)
 
-![6-50](C:/Users/user/house/TIL/06_CS(진행중)/OS(반효경 교수님)/Images/6-50.PNG)
+![6-24](./Images/6-24.PNG)
+
+Deadlock 해결법
+
+![6-25](./Images/6-25.PNG)
+
+- semaphore P의 순서를 맞춰준다.
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
 
 
 
