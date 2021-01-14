@@ -1,5 +1,6 @@
-import heapq
+import heapq, sys
 
+input = lambda : sys.stdin.readline().strip()
 
 di = [1, -1, 0, 0]
 dj = [0, 0, 1, -1]
