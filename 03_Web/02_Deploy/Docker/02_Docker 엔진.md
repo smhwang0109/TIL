@@ -64,3 +64,167 @@ $ docker run -i -t --name myubuntu -p 3306:3306 -p 192.168.0.100:7777:80 ubuntu:
 
 
 
+## Docker 볼륨
+
+### 호스트 볼륨 공유
+
+> 호스트에 있는 디렉터리를 컨테이너의 폴더에서 공유 (-v 옵션)
+
+```bash
+$ docker run -d --name wordpressdb_hostvolume -e MYSQL_ROOT_PASSWORD=password\
+  -v /home/wordpress_db:/var/lib/mysql mysql:5.7 # -v [호스트의 공유 디렉터리]:[컨테이너의 공유 디렉터리]
+```
+
+
+
+### 볼륨 컨테이너
+
+> 볼륨을 사용하는 컨테이너를 다른 컨테이너와 공유(--volume-from)
+
+```bash
+$ docker run -i -t --name volumes_from_container\
+  --volume-from volume_overide ubuntu:17.10
+```
+
+
+
+### 도커 볼륨
+
+> 도커 자체에서 제공하는 볼륨 기능(docker volume)
+>
+> 도커 엔진에서 관리
+
+```bash
+$ docker volume create --name myvolume
+
+$ docker volume ls
+
+$ docker run -i -t --name myvolume_1 \
+-v myvolume:/root/ ubuntu:17.10 # -v [볼륨의 이름][컨테이너의 공유 디렉터리] (호스트 볼륨 공유와 같이 -v를 쓰지만 방식이 다르다.)
+
+$ docker inspect --type volume myvolume # 볼륨 내용 표시
+
+$ docker volume prune # 도커 볼륨 모두 삭제
+```
+
+
+
+## Docker 네트워크
+
+도커는 각 컨테이너에 외부와의 네트워크를 제공하기 위해 컨테이너마다 가상 네트워크 인터페이스를 호스트에 생성하며  이 인터페이스의 이름은 veth로 시작합니다. veth 인터페이스는 사용자가 직접 생성할 필요 없고, 컨테이너가 생성될 때 도커 엔진이 자동으로 생성합니다.
+
+```bash
+$ ifconfig # 윈도우는 ipconfig
+
+or
+
+$ ip addr
+
+# 네트워크 인터페이스를 확인하면 실행 중인 컨테이너 수만큼 veth로 시작하는 인터페이스가 생성
+# eth0 : 실제로 외부와 통신할 수 있는 호스트의 네트워크 인터페이스
+# veth... : 각 컨테이너의 eth0와 연결되어 있음
+# docker0 : 각 veth 인터페이스와 바인딩 되어 eth0 인터페이스와 이어주는 브릿지
+
+$ brctl show docker0 # docker0과 veth가 실제로 연결되었는지 확인 가능
+```
+
+
+
+### 도커 네트워크 기능
+
+```bash
+$ docker network ls # 도커에서 사용가능한 네트워크 종류 조회
+
+$ docker network inspect bridge
+```
+
+
+
+#### 브릿지 네트워크
+
+> docker0이 아닌 사용자 정의 브리지를 새로 생성해 각 컨테이너에 연결하는 네트워크 구조
+>
+> 기본적으로는 컨테이너를 생성할 때 자동으로 연결되는 docker0 브릿지를 활용하도록 설정되어 있음.
+
+```bash
+$ docker network create --driver bridge mybridge # 브릿지 생성
+
+$ docker run -i -t --name mynetwork_container\
+  --net mybridge ubuntu:17.10
+  
+$ docker network disconnect mybirdge mynetwork_container # 네트워크 연결 해제
+$ docker network connect mybirdge mynetwork_container # 네트워크 연결
+# connect와 disconnect는 특정 IP 대역을 갖는 네트워크 모드에만 적용이 가능
+
+# network 생성 시 다양한 요소를 직접 설정이 가능하다.
+$ docker network create --driver=bridge \
+  --subnet=172.72.0.0/16 \
+  --ip-range=172.72.0.0/24 \ # --subnet과 --ip-rang는 같은 대역이어야 한다.
+  --gateway=172.72.0.1/1 \
+  my_custom_network
+```
+
+
+
+#### 호스트 네트워크
+
+> 새로 생성할 필요 없이 기존의 host라는 이름의 네트워크를 사용하여 호스트의 네트워크 환경을 그대로 사용할 수 있음.
+
+```bash
+$ docker run -i -t --name network_host\
+  --net host ubuntu:17.10
+```
+
+
+
+#### 논 네트워크
+
+> 말 그대로 아무 네트워크도 사용하지 않는 것을 의미. (외부와의 연결이 단절)
+
+```bash
+$ docker run -i -t --name network_none \
+  --net none ubuntu:17.10
+```
+
+
+
+#### 컨테이너 네트워크
+
+> 다른 컨테이너의 네트워크 네임스페이스 환경을 공유 (내부 IP, 맥(MAC) 주소 등)
+
+```bash
+$ docker run -i -t --name network_container \
+  --net container:network_host ubuntu:17.10
+```
+
+
+
+#### 브릿지 네트워크와 --net-alias
+
+> 각 컨테이너의 네트워크에 alias(별명)를 붙여서 여러 컨테이너의 네트워크에 접근할 수 있음.
+
+```bash
+# 같은 alias로 3개의 컨테이너를 만듦
+$ docker run -i -t -d --name network_alias_container1 \
+  --net mybridge --net-alias soom101 ubuntu:17.10
+  
+$ docker run -i -t -d --name network_alias_container2 \
+  --net mybridge --net-alias soom101 ubuntu:17.10
+
+$ docker run -i -t -d --name network_alias_container3 \
+  --net mybridge --net-alias soom101 ubuntu:17.10
+
+# ping 보낼 컨테이너 생성
+$ docker run -i -t --name network_alias_ping \ 
+  --net mybridge ubuntu:17.10
+  
+root@16ad51cd5e:/# ping -c 1 soom101 
+# 요청을 보낼 때 마다 다른 3가지 컨테이너가 라운드로빈(하나의 CPU를 여러 프로세스들이 우선순위 없이 돌아가며 할당받는 방식) 방식으로 결정되어 하나씩 나옴.
+# 이는 도커의 DNS가 호스트 이름으로 유동적인 컨테이너의 IP를 찾아주기 때문.
+
+# dig 명령어로 DNS에 있는 도메인 이름에 대응하는 IP를 조회할 수 있음.
+root@16dg51sdg5s:/# apt-get update
+root@16dg51sdg5s:/# apt-get install dnsutils
+root@16dg51sdg5s:/# dig soom101 # 반복해서 조회 시 매번 IP 리스트 순서가 바뀜. (라운드로빈)
+```
+
