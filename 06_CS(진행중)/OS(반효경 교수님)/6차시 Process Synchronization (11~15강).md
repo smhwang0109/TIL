@@ -106,6 +106,93 @@ Deadlock 해결법
 
 - semaphore P의 순서를 맞춰준다.
 
+
+
+## 14강 Process Synchronization 3
+
+> Synchronization과 관련된 3가지 문제
+
+![6-26](./Images/6-26.PNG)
+
+
+
+### Bounded-Buffer Problem (Producer-Consumer Problem)
+
+![6-27](./Images/6-27.PNG)
+
+![6-28](./Images/6-28.PNG)
+
+
+
+### Readers and Writers Problem
+
+> DB를 읽고 쓰는 문제
+
+![6-50](./Images/6-29.PNG)
+
+- Writer는 한명만 해야 하지만, Reader는 여러 명이 가능하다.
+
+![6-30](./Images/6-30.PNG)
+
+- Writer 입장
+  - 기존 경우와 같이 lock을 걸었다가 풀어준다.
+- Reader 입장
+  - readcount를 기준으로 읽기 시작할 때 readcount == 1이면 처음으로 들어가는 reader이기 때문에 db 데이터에 writer가 못들어오게 block을 걸어준다. 
+    - mutex는 readcount를 lock 걸어주기 위한 semaphore
+  - 다 읽고 나갈 때는 마지막으로 나가는 reader(readcount == 0) 이면 db 데이터 wakeup 시켜준다.
+
+
+
+### Dining-Philosophers Problem
+
+![6-31](./Images/6-31.PNG)
+
+![6-32](./Images/6-32.PNG)
+
+![6-33](./Images/6-33.PNG)
+
+
+
+### Monitor
+
+![6-34](./Images/6-34.PNG)
+
+![6-35](./Images/6-35.PNG)
+
+- Monitor는 Monitor 내부의 procedure를 통해서만 데이터에 접근이 가능하게 한다.
+- Monitor 내부에서 procedure가 하나만 실행되기 때문에 자체적으로 동시접근을 막는다.
+- 즉, 자동으로 lock이 걸리기 때문에 프로그래머가 따로 생각해주지 않아도 된다.
+
+![6-36](./Images/6-36.PNG)
+
+![6-37](./Images/6-37.PNG)
+
+![6-38](./Images/6-38.PNG)
+
+- monitor 안에 있는 produce와 consume 2가지 procedure 중 하나만 실행하기 때문에 lock을 걸 필요가 없다.
+
+
+
+## 15강 Process Synchronization 4
+
+> Process Synchronization == Concurrency Control (병행 제어)
+
+
+
+![6-39](./Images/6-39.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
+![6-50](./Images/6-50.PNG)
+
 ![6-50](./Images/6-50.PNG)
 
 ![6-50](./Images/6-50.PNG)
@@ -120,6 +207,6 @@ Deadlock 해결법
 
 ![6-50](./Images/6-50.PNG)
 
-
+![6-50](./Images/6-50.PNG)
 
 출처 : https://core.ewha.ac.kr/publicview/C0101020140404144354492628?vmode=f
