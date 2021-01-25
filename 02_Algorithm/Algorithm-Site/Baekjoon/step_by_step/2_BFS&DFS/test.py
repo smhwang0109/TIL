@@ -16,21 +16,20 @@ def bfs(init_K):
     visited[init_K][0][0] = True
     while que:
         i, j, K, cnt = que.popleft()
+        for idx in range(4):
+            ni = i + di[idx]
+            nj = j + dj[idx]
+            if 0 <= ni < H and 0 <= nj < W and not board[ni][nj]:
+                if ni == H - 1 and nj == W - 1:
+                    return cnt + 1
+                flag = False
+                if visited[K][ni][nj]:
+                    flag = True
+                    continue
+                if not flag:
+                    visited[K][ni][nj] = True
+                    que.append([ni, nj, K, cnt + 1])
         for idx in range(8):
-            if idx < 4:
-                ni = i + di[idx]
-                nj = j + dj[idx]
-                if 0 <= ni < H and 0 <= nj < W and not board[ni][nj]:
-                    if ni == H - 1 and nj == W - 1:
-                        return cnt + 1
-                    flag = False
-                    for k in range(init_K, K - 1, -1):
-                        if visited[k][ni][nj]:
-                            flag = True
-                            continue
-                    if not flag:
-                        visited[K][ni][nj] = True
-                        que.append([ni, nj, K, cnt + 1])
             if K > 0:
                 ni = i + hi[idx]
                 nj = j + hj[idx]
@@ -38,10 +37,9 @@ def bfs(init_K):
                     if ni == H - 1 and nj == W - 1:
                         return cnt + 1
                     flag = False
-                    for k in range(init_K, K - 2, -1):
-                        if visited[k][ni][nj]:
-                            flag = True
-                            continue
+                    if visited[K-1][ni][nj]:
+                        flag = True
+                        continue
                     if not flag:
                         visited[K - 1][ni][nj] = True
                         que.append([ni, nj, K - 1, cnt + 1])
