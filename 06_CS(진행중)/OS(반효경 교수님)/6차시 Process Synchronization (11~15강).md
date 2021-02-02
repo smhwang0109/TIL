@@ -181,32 +181,6 @@ Deadlock 해결법
 
 ![6-39](./Images/6-39.PNG)
 
-![6-50](./Images/6-50.PNG)
 
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
-
-![6-50](./Images/6-50.PNG)
 
 출처 : https://core.ewha.ac.kr/publicview/C0101020140404144354492628?vmode=f
